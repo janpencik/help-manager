@@ -1,0 +1,1 @@
+!function(s){"use strict";s(document).ready(function(){0<s("#wp-help-manager-custom-css-custom-css").length&&wp.codeEditor.initialize(s("#wp-help-manager-custom-css-custom-css"),cm_settings)})}(jQuery);

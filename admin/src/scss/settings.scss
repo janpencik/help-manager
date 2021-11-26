@@ -1,0 +1,163 @@
+/**
+ * Settings styles
+ */
+
+// CodeMirror
+.CodeMirror {
+    border: 1px solid #ddd;
+}
+
+.wphm-settings-tabs {
+    display: inline-block;
+    margin: 10px 0 5px;
+    border-left: 1px solid #c3c4c7;
+    border-right: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+    .inner {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    a {
+        white-space: nowrap;
+        position: relative;
+        background-color: #fff;
+        border-top: 1px solid #c3c4c7;
+        border-bottom: 1px solid #c3c4c7;
+        padding: 10px 15px;
+        position: relative;
+        font-weight: 500;
+        text-decoration: none;
+        color: #50575e;
+        &.active {
+            color: #2271b1;
+            background-image: linear-gradient( 180deg, #f3f5f6, #fff);
+            border-bottom: 3px solid #2271b1;
+        }
+        &:hover {
+            color: #2271b1;
+        }
+        &:focus {
+            outline: none;
+            box-shadow: none;
+            z-index: 1;
+        }
+    }
+}
+.wphm-settings-row {
+    display: block;
+    width: 752px;
+    margin: 0 -8px;
+    max-width: calc( 100% + 16px );
+}
+.wphm-col {
+    width: 50%;
+    max-width: 100%;
+}
+.wphm-settings-box {
+    margin: 10px 8px 16px;
+    min-width: 255px;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+    background: #fff;
+    max-width: 100%;
+}
+.wphm-settings-box-header {
+    border-bottom: 1px solid #c3c4c7;
+    h2 {
+        font-size: 14px;
+        padding: 8px 12px;
+        margin: 0;
+        line-height: 1.4;
+        position: relative;
+        z-index: 1;
+        cursor: default;
+    }
+}
+.wphm-settings-box-inside {
+    margin: 11px 0;
+    padding: 0 12px 2px;
+    line-height: 1.4;
+    font-size: 13px;
+    .form-field {
+        margin: 1em -5px 0;
+        max-width: calc( 100% + 10px );
+        & > div {
+            // width: 100%;
+            padding: 0 5px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        & > div > label {
+            margin-bottom: 3px;
+            display: block;
+            font-weight: 600;
+        }
+        input[type=text], input[type=number] {
+            width: 100%;
+            display: block;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            display: inline-block;
+        }
+        input[type=checkbox] {
+            margin: 0;
+        }
+    }
+    .form-field-flex {
+        display: flex;
+        flex-wrap: wrap;
+        .full {
+            width: 100%;
+        }
+    }
+    .form-field-three {
+        div {
+            width: 50%;
+            @media (max-width: 782px) {
+                width: 100%;
+            }
+        }
+    }
+    .form-field-submit {
+        div {
+            display: block;
+        }
+    }
+    .form-field-radio {
+        user-select: none;
+        & > div {
+            width: calc( 50% - 10px );
+        }
+        & > div > label {
+            margin-bottom: .75em;
+        }
+        & > div > div {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            label {
+                padding-left: 6px;
+            }
+        }
+    }
+    .form-field-highlight {
+        & > div {
+            margin: 0 5px;
+            border: #ebebeb solid 1px;
+            background: #fafafa;
+            border-radius: 3px;
+            padding: 15px 12px 12px;
+        }
+        & > div + div {
+            margin-top: 10px;
+        }
+    }
+}
+#wphm-superadmins {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}

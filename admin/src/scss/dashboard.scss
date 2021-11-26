@@ -1,0 +1,59 @@
+/**
+ * Dashboard styles
+ */
+
+#wphm-dashboard-docs {
+    list-style: square;
+    .inside {
+        padding: 0;
+    }
+    ul {
+        margin: 0 5px 0 22px;
+        list-style: none;
+    }
+    a {
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+    li {
+        margin: 0;
+    }
+    li > a {
+        display: inline-block;
+        padding: 4px 0;
+        img {
+            position: relative;
+            top: 2px;
+            padding-right: 8px;
+        }
+    }
+    .wphm-dashboard-docs-search {
+        padding: 6px 12px 8px;
+        .search-box {
+            display: flex;
+        }
+        input[type=search] {
+            width: 200px;
+            max-width: 100%;
+            @media (max-width: 782px) {
+                width: 240px;
+            }
+        }
+        input[type=submit] {
+            margin-bottom: 0;
+        }
+    }
+    .wphm-dashboard-docs-list {
+        padding: 2px 12px 10px;
+        & > ul {
+            margin: 0 5px 0 0;
+        }
+    }
+    .wphm-dashboard-docs-actions {
+        a {
+            padding: 0.2em;
+        }
+    }
+}

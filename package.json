@@ -1,0 +1,31 @@
+{
+  "name": "wp-help-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bohemia Plugins",
+  "license": "MIT",
+  "dependencies": {
+    "clipboard": "^2.0.8",
+    "magnific-popup": "^1.1.0",
+    "reframe.js": "^3.0.3",
+    "select2": "^4.1.0-rc.0",
+    "sortablejs": "^1.14.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "*",
+    "browser-sync": "*",
+    "cssnano": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-postcss": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "gulp-concat": "*",
+    "postcss": "*",
+    "sass": "*"
+  },
+  "description": ""
+}
