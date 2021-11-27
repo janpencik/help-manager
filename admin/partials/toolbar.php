@@ -29,11 +29,14 @@ $screen_id = $screen->id;
 
     <!-- Navigation -->
     <ul class="filter-links">
+        <?php if( current_user_can( 'read_document' ) ) { ?>
         <li>
             <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>" <?php if( $screen_id === 'toplevel_page_wp-help-manager-documents' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Documents', 'wp-help-manager' ); ?>
             </a>
         </li>
+        <?php } ?>
+        <?php if( current_user_can( 'edit_document' ) ) { ?>
         <li>
             <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>" <?php if( $screen_id === 'edit-wp-help-docs' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Manage', 'wp-help-manager' ); ?>
@@ -44,11 +47,14 @@ $screen_id = $screen->id;
                 <?php esc_html_e( 'Add New', 'wp-help-manager' ); ?>
             </a>
         </li>
+        <?php } ?>
+        <?php if( current_user_can( 'access_wphm_settings' ) ) { ?>
         <li>
             <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-settings' ) ) ); ?>" <?php if( $screen_id === 'toplevel_page_wp-help-manager-settings' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Settings', 'wp-help-manager' ); ?>
             </a>
         </li>
+        <?php } ?>
     </ul>
 
 </div>

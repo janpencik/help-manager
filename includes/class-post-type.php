@@ -87,6 +87,7 @@ class Wp_Help_Manager_Post_Type {
             'menu_position'      => 2,
             'menu_icon'          => 'dashicons-editor-help',
             'supports'           => array( 'title', 'editor', 'revisions', 'page-attributes' ),
+            'capability_type'    => 'document'
         );
      
         register_post_type( $this->post_type_slug, $args );

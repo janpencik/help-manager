@@ -13,6 +13,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+if( ! $this->current_user_is_admin() ) {
+	wp_die( 'Sorry, you are not allowed to access this page.', 'wp-help-manager' );
+}
+
 ?>
 
 <!-- Main wrapper -->

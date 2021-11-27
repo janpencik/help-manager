@@ -2,6 +2,8 @@
 
 namespace Wp_Help_Manager;
 
+use WP_User;
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -178,25 +180,29 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 
-		// Top level menu item
-		add_menu_page(
-			__( 'Publishing Help', 'wp-help-manager' ),
-			__( 'Publishing Help', 'wp-help-manager' ),
-			'manage_options',
-			'wp-help-manager-documents',
-			array( $this, 'display_documents_page' ),
-			'dashicons-editor-help',
-        	2
-		);
+		if( current_user_can( 'read_document' ) ) {
 
-		// Submenu item - Settings
-		add_menu_page(
-			__( 'WP Help Manager Settings', 'wp-help-manager' ),
-			__( 'WP Help Manager Settings', 'wp-help-manager' ),
-			'manage_options',
-			'wp-help-manager-settings',
-			array( $this, 'display_settings_page' )
-		);
+			// Top level menu item
+			add_menu_page(
+				__( 'Publishing Help', 'wp-help-manager' ),
+				__( 'Publishing Help', 'wp-help-manager' ),
+				'read',
+				'wp-help-manager-documents',
+				array( $this, 'display_documents_page' ),
+				'dashicons-editor-help',
+				2
+			);
+
+			// Submenu item - Settings
+			add_menu_page(
+				__( 'WP Help Manager Settings', 'wp-help-manager' ),
+				__( 'WP Help Manager Settings', 'wp-help-manager' ),
+				'read',
+				'wp-help-manager-settings',
+				array( $this, 'display_settings_page' )
+			);
+
+		}
 
 	}
 
@@ -245,7 +251,7 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Validate data on Settings page.
+	 * Validate data on Settings page - Admin tab.
 	 *
 	 * @since    1.0.0
 	 * @access   public
@@ -269,6 +275,13 @@ class Wp_Help_Manager_Admin {
 		return $valid;
 
 	}
+
+	/**
+	 * Validate data on Settings page - Admin tab.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
 	public function validate_document( $input ) {
 
 		$valid = array();
@@ -282,16 +295,23 @@ class Wp_Help_Manager_Admin {
 		return $valid;
 
 	}
+
+	/**
+	 * Validate data on Settings page - Permissions tab.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
 	public function validate_permissions( $input ) {
 
 		$valid = array();
 
 		$valid['admin'] = array();
-		foreach( $input['admin'] as $admin_id ) {
-			$user = get_userdata( $admin_id );
+		foreach( $input['admin'] as $user_id ) {
+			$user = get_userdata( $user_id );
 			if( $user && $user->roles ) {
 				if( in_array( 'administrator', (array) $user->roles ) ) {
-					array_push( $valid['admin'], intval( $admin_id ) );
+					array_push( $valid['admin'], intval( $user_id ) );
 				}
 			}
 		}
@@ -313,6 +333,13 @@ class Wp_Help_Manager_Admin {
 		return $valid;
 
 	}
+
+	/**
+	 * Validate data on Settings page - Custom CSS tab.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
 	public function validate_custom_css( $input ) {
 
 		$valid = array();
@@ -320,6 +347,61 @@ class Wp_Help_Manager_Admin {
 		$valid['custom-css'] = $input['custom-css'];
 
 		return $valid;
+
+	}
+
+	/**
+	 * Assign capabilities to default user roles.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function assign_capabilities() {
+		
+		$permissions = get_option( 'wp-help-manager-permissions' );
+
+		// @todo check if admin has administrator role, if not, remove caps
+		// maybe easier will be to add custom role for plugin super user and then be checking it
+		// rewrite permissions for pages/functions
+
+		// Admin capabilities
+		if( $permissions['admin'] ) {
+			foreach( $permissions['admin'] as $user_id ) {
+				$user = new WP_User( $user_id );
+				if ( in_array( 'administrator', (array) $user->roles ) ) {
+					$user->add_cap( 'read_document' );
+					$user->add_cap( 'read_private_documents' );
+					$user->add_cap( 'edit_document' );
+					$user->add_cap( 'edit_documents' );
+					$user->add_cap( 'edit_others_documents' );
+					$user->add_cap( 'publish_documents' );
+					$user->add_cap( 'delete_document' );
+					$user->add_cap( 'access_help_documents_settings' );
+				}
+			}
+		}
+
+		// Editor capabilities
+		if( $permissions['editor'] ) {
+			foreach( $permissions['editor'] as $editor_role ) {
+				$role = get_role( $editor_role );
+				$role->add_cap( 'read_document' );
+				$role->add_cap( 'read_private_documents' );
+				$role->add_cap( 'edit_document' );
+				$role->add_cap( 'edit_documents' );
+				$role->add_cap( 'edit_others_documents' );
+				$role->add_cap( 'publish_documents' );
+				$role->add_cap( 'delete_document' );
+			}
+		}
+
+		// Reader capabilities
+		if( $permissions['reader'] ) {
+			foreach( $permissions['reader'] as $reader_role ) {
+				$role = get_role( $reader_role );
+				$role->add_cap( 'read_document' );
+			}
+		}
 
 	}
 
@@ -414,11 +496,6 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function display_documents_page() {
-
-		// Check user capabilities
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
 
 		// Get current of default document ID
 		if ( isset( $_GET['document'] ) ) {
@@ -536,6 +613,67 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
+	 * Check for admin permissions.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function current_user_is_admin() {
+		$user_id = get_current_user_id();
+		$permissions = get_option( 'wp-help-manager-permissions' );
+		$is_admin = false;
+		if( in_array( $user_id, $permissions['admin'] ) )
+			$is_admin = true;
+		return $is_admin;
+	}
+
+	/**
+	 * Check for editor permissions.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function current_user_is_editor() {
+		$user = wp_get_current_user();
+		$permissions = get_option( 'wp-help-manager-permissions' );
+		$is_editor = false;
+		foreach( $user->roles as $role ) {
+			if( in_array( $role, $permissions['editor'] ) )
+				$is_editor = true;
+		}
+		return $is_editor;
+	}
+
+	/**
+	 * Check for reader permissions.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function current_user_is_reader() {
+		$user = wp_get_current_user();
+		$permissions = get_option( 'wp-help-manager-permissions' );
+		$is_reader = false;
+		foreach( $user->roles as $role ) {
+			if( in_array( $role, $permissions['reader'] ) )
+				$is_reader = true;
+		}
+		return $is_reader;
+	}
+
+	/**
+	 * Get allowed user roles.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function get_allowed_user_roles() {
+		$permissions = get_option( 'wp-help-manager-permissions' );
+		$allowed_rules = array_unique( array_merge( $permissions['admin'], $permissions['editor'], $permissions['reader'] ) );
+		return $allowed_rules;
+	}
+
+	/**
 	 * Trash document.
 	 *
 	 * @since    1.0.0
@@ -598,12 +736,6 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function display_settings_page() {
-
-		// Check user capabilities
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
 		include_once( 'partials/settings.php' );
 	}
 
@@ -614,12 +746,6 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function display_tools_page() {
-
-		// Check user capabilities
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
 		include_once( 'partials/tools.php' );
 	}
 
@@ -718,7 +844,9 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function dashboard_setup() {
-		wp_add_dashboard_widget( 'wphm-dashboard-docs', 'Publishing Help', array( $this, 'dashboard_widget' ) );
+		if( current_user_can( 'read_document' ) ) {
+			wp_add_dashboard_widget( 'wphm-dashboard-docs', 'Publishing Help', array( $this, 'dashboard_widget' ) );
+		}
 	}
 	public function dashboard_widget() {
 		$docs = wp_list_pages( array(

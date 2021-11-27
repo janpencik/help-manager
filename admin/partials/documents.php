@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $this->current_user_is_reader() ) {
+	wp_die( 'Sorry, you are not allowed to access this page.', 'wp-help-manager' );
+}
+
 ?>
 
 <!-- Main wrapper -->
@@ -142,6 +146,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <span class="dashicons dashicons-printer"></span>
                                 <span><?php esc_html_e( 'Print', 'wp-help-manager' );?></span>
                             </span>
+                            <?php if( $this->current_user_is_editor() || $this->current_user_is_admin() ) { ?>
                             <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="wphm-action-button wphm-action-button-right">
                                 <span class="dashicons dashicons-edit"></span>
                                 <span><?php esc_html_e( 'Edit', 'wp-help-manager' );?></span>
@@ -150,6 +155,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <span class="dashicons dashicons-trash"></span>
                                 <span><?php esc_html_e( 'Trash', 'wp-help-manager' );?></span>
                             </span>
+                            <?php } ?>
                         </div>
 
                         <h1 class="wp-heading-inline"><?php the_title(); ?></h1>

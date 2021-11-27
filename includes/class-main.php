@@ -162,6 +162,9 @@ class Wp_Help_Manager {
 		$post_type = new Wp_Help_Manager_Post_Type();
 		$this->loader->add_action( 'init', $post_type, 'register_post_type' );
 		// $this->loader->add_action( 'init', $post_type, 'register_wp_help_manager_taxonomy' );
+
+		// Assign capabilities to user roles
+		$this->loader->add_action( 'init', $plugin_admin, 'assign_capabilities' );
 		
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
