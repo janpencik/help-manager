@@ -1,0 +1,99 @@
+/**
+ * Gutenberg styles
+ */
+.editor-post-title .editor-post-title__input {
+    font-weight: 600;
+}
+.editor-styles-wrapper {
+    p, ul, ol, li {
+        line-height: 1.65;
+    }
+    h1,h2,h3,h4,h5,h6 {
+        line-height: 1.4;
+        font-weight: 600;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: .25em;
+    }
+    h3 {
+        font-size: 1.25em;
+        margin-bottom: .25em;
+    }
+    h4 {
+        font-size: 1.125em;
+        line-height: 1.5;
+        margin-bottom: .25em;
+    }
+    p, blockquote, ul, ol, pre {
+        margin-top: 1.35em;
+        margin-bottom: 1.25em;
+    }
+    ul {
+        padding-left: 40px;
+        list-style: disc;
+        li > ul {
+            list-style: disc;
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
+    }
+    ol {
+        margin-left: 0;
+        padding-left: 40px;
+        li > ol {
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
+    }
+    hr {
+        margin: 2em 0;
+        border-top-color: #ccc;
+        border-bottom: 0;
+    }
+    code, kbd {
+        padding: 3px 5px 2px 5px;
+        margin: 0 1px;
+        background-color: #f0f0f1;
+        font-size: 15px;
+    }
+    pre {
+        line-height: 1.45;
+    }
+    img, .wp-caption {
+        max-width: 100%;
+    }
+    .alignleft {
+        margin-right: 1.5em;
+    }
+    .alignright {
+        margin-left: 1.5em;
+    }
+    .wp-caption-text {
+        margin-top: 0;
+        margin-bottom: 1em;
+        font-size: 14px;
+        font-style: italic;
+    }
+    figure {
+        margin-left: 0;
+        margin-right: 0;
+        a {
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+        img {
+            display: block;
+        }
+        figcaption {
+            color: #191e23;
+            font-size: 14px;
+            text-align: center;
+            padding: .5em 1em 0;
+        }
+    }
+}

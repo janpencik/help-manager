@@ -4,7 +4,8 @@
  */
 
 // Development modules
-var gulp            = require("gulp"),
+var dotenv          = require('dotenv').config(),
+    gulp            = require("gulp"),
     sass            = require('gulp-sass')(require('sass')),
     del             = require('del'),
     postcss         = require("gulp-postcss"),
@@ -114,13 +115,13 @@ gulp.task("mainScripts", function() {
 // Watch files 
 gulp.task("default", function watchFiles(done) {    
     browserSync.init({
-        proxy: "https://help.test/",
+        proxy: "https://" + process.env.URL + "/",
         host: 'help.test',
         open: false,
         port: 8080,
         https: {
-            key: "/Users/konta/.config/valet/Certificates/help.test.key",
-            cert: "/Users/konta/.config/valet/Certificates/help.test.crt"
+            key: process.env.SSL_KEY,
+            cert: process.env.SSL_CERT
         },
     });
     gulp.watch(["./admin/src/scss/**/*.scss"], gulp.series(

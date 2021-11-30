@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! $this->current_user_is_admin() ) {
-	wp_die( 'Sorry, you are not allowed to access this page.', 'wp-help-manager' );
-}
+// if( ! $this->current_user_is_admin() ) {
+// 	wp_die( 'Sorry, you are not allowed to access this page.', 'wp-help-manager' );
+// }
 
 ?>
 
@@ -68,7 +68,7 @@ if( ! $this->current_user_is_admin() ) {
 					: _x( 'Publishing Help', 'default plugin headline', 'wp-help-manager' );
                 $menu_icon = isset( $options['menu_icon'] ) && $options['menu_icon'] !== '' 
 					? sanitize_key( $options['menu_icon'] ) 
-					: 'dashicons-help';
+					: 'dashicons-editor-help';
                 $menu_position = isset( $options['menu_position'] )
 					? intval( $options['menu_position'] )
 					: 2;
@@ -80,7 +80,7 @@ if( ! $this->current_user_is_admin() ) {
 					: true;
             } else {
                 $headline = _x( 'Publishing Help', 'default plugin headline', 'wp-help-manager' );
-                $menu_icon = 'dashicons-help';
+                $menu_icon = 'dashicons-editor-help';
                 $menu_position = 2;
                 $dashboard_widget = true;
                 $admin_bar = true;
@@ -175,7 +175,7 @@ if( ! $this->current_user_is_admin() ) {
 				</div>
 
 				<!-- Admin bar -->
-				<div class="wphm-settings-box wphm-settings-box-menu">
+				<!-- <div class="wphm-settings-box wphm-settings-box-menu">
 
 					<div class="wphm-settings-box-header">
 						<h2><?php esc_html_e( 'Admin Bar', 'wp-help-manager' ); ?></h2>
@@ -198,7 +198,7 @@ if( ! $this->current_user_is_admin() ) {
 
 					</div>
 
-				</div>
+				</div> -->
 
 			</div>
 			
@@ -392,7 +392,7 @@ if( ! $this->current_user_is_admin() ) {
 							</div>
 
 							<div>
-								<label><?php esc_html_e( 'Can add, edit and delete documents', 'wp-help-manager' ); ?></label>
+								<label><?php esc_html_e( 'Can add, edit and delete help documents', 'wp-help-manager' ); ?></label>
 								<?php 
 								$roles = $this->get_all_user_roles();
 								if( $roles ) {
@@ -409,7 +409,7 @@ if( ! $this->current_user_is_admin() ) {
 							</div>
 
 							<div>
-								<label><?php esc_html_e( 'Can view documents', 'wp-help-manager' ); ?></label>
+								<label><?php esc_html_e( 'Can view help documents', 'wp-help-manager' ); ?></label>
 								<?php 
 								$roles = $this->get_all_user_roles();
 								if( $roles ) {

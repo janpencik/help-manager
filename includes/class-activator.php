@@ -35,6 +35,7 @@ class Wp_Help_Manager_Activator {
 			return;
 		}
 
+		// Set permissions
 		$permissions = get_option( 'wp-help-manager-permissions' );
 		
 		// If we have no options, create some with default values
@@ -42,21 +43,23 @@ class Wp_Help_Manager_Activator {
 
 			$default_permissions = array();
 
-			$admins = get_users( array( 
-				'role' => 'administrator',
-				'fields' => array( 'ID' )
-			) );
+			// Make current user super admin
 			$default_permissions['admin'] = array();
-			foreach( $admins as $admin ) {
-				array_push( $default_permissions['admin'], $admin->ID );
-			}
+			array_push( $default_permissions['admin'], get_current_user_id() );
 
+			// Asign capabilities to common roles
 			$default_permissions['editor'] = array( 'administrator', 'editor' );
 			$default_permissions['reader'] = array( 'administrator', 'editor', 'author', 'contributor' );
 			
-			update_option( 'wp-help-manager-permissions', $default_permissions );
+			if( update_option( 'wp-help-manager-permissions', $default_permissions ) ) {
+				$permissions = $default_permissions;
+			};
 
 		}
+		
+		// Assign capabilities
+		Wp_Help_Manager_Admin::revoke_capabilities( $permissions );
+		Wp_Help_Manager_Admin::assign_capabilities( $permissions );
 
 	}
 

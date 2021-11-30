@@ -14,17 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $this->current_user_is_reader() ) {
-	wp_die( 'Sorry, you are not allowed to access this page.', 'wp-help-manager' );
-}
+// Get admin settings
+$admin_settings = get_option( $this->plugin_name . '-admin' );
+$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+
+// Get document settings
+$document_settings = get_option( $this->plugin_name . '-document' );
 
 ?>
 
 <!-- Main wrapper -->
 <div class="wrap wphm-wrap">
 
-    <h1 class="wphm-page-title"><?php esc_html_e( 'Publishing Help', 'wp-help-manager' ); ?></h1>
-    <!-- <a href="https://help.test/wp-admin/post-new.php?post_type=wp-help-docs" class="page-title-action">Add New</a> -->
+    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( $headline ); ?></h1>
+    <?php if( $this->current_user_is_editor() ) { ?>
+        <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'wp-help-manager' ) ?></a>
+    <?php } ?>
 
     <!-- Row -->
     <div class="wphm-docs-row">
@@ -32,25 +37,12 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
         <!-- Sidebar -->
         <div class="wphm-sidebar">
             
-            <!-- Search -->
-            <div class="wphm-sidebar-search-box inner">
-
-                <form action="">
-                    <div class="search-box">
-                        <input type="hidden" name="page" value="wp-help-manager-documents"> 
-                        <input type="search" id="post-search-input" name="s" value="<?php echo $search_string; ?>" placeholder="<?php esc_attr_e( 'Search in documents', 'wp-help-manager' );?>">
-                        <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search', 'wp-help-manager' ); ?>">
-                    </div>
-                </form>
-
-            </div>
-            
             <!-- Navigation -->
             <div class="wphm-sidebar-topics-box inner">
 
                 <!-- Topics -->
                 <div class="wphm-sidebar-topics">
-                    <!-- <h3><a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>"><?php esc_html_e( 'Topics', 'wp-help-manager' ); ?></a></h3> -->
+                    <h3><a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>"><?php esc_html_e( 'Topics', 'wp-help-manager' ); ?></a></h3>
                     <?php
                     $docs = wp_list_pages( array(
                         'post_type'         => 'wp-help-docs',
@@ -61,7 +53,7 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
                     ) );
                     $docs_handles = trim( $this->list_pages_add_handle( $docs ) );
                     ?>
-                    <ul class="can-sort" data-nonce="<?php echo wp_create_nonce( 'wphm-docs-reorder' ); ?>">
+                    <ul <?php if( $this->current_user_is_editor() ) { ?>class="can-sort"<?php } ?> data-nonce="<?php echo wp_create_nonce( 'wphm-docs-reorder' ); ?>">
                         <?php echo $docs_handles; ?>
                     </ul>
                 </div>
@@ -118,7 +110,6 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
             <!-- Document content -->
             <div class="wphm-content" id="wphm-content-main">
 
-
                 <?php if( $document_id && ! $search_string ) { ?>
                     <style id="wphm-menu-highlight">
                         .wphm-sidebar .page-item-<?php echo $document_id; ?> > span a {
@@ -146,7 +137,7 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
                                 <span class="dashicons dashicons-printer"></span>
                                 <span><?php esc_html_e( 'Print', 'wp-help-manager' );?></span>
                             </span>
-                            <?php if( $this->current_user_is_editor() || $this->current_user_is_admin() ) { ?>
+                            <?php if( $this->current_user_is_editor() ) { ?>
                             <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="wphm-action-button wphm-action-button-right">
                                 <span class="dashicons dashicons-edit"></span>
                                 <span><?php esc_html_e( 'Edit', 'wp-help-manager' );?></span>
@@ -162,16 +153,18 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
                         <!-- <?php edit_post_link( esc_html__( 'Edit', 'wp-help-manager' ), '', '', null, 'page-title-action' ); ?> -->
 
                         <?php
-                        $children = $this->get_document_children( $id );
-                        if( $children ) {
-                        ?>
-                        <div class="wphm-children">
-                            <div class="inner">
-                                <ul>
-                                    <?php echo $children; ?>
-                                </ul>
+                        if( $document_settings['child_navigation'] ) {
+                            $children = $this->get_document_children( $id );
+                            if( $children ) {
+                            ?>
+                            <div class="wphm-children">
+                                <div class="inner">
+                                    <ul>
+                                        <?php echo $children; ?>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                            <?php } ?>
                         <?php } ?>
 
                         <div class="wphm-docs-content">
@@ -181,26 +174,28 @@ if( ! $this->current_user_is_admin() && ! $this->current_user_is_editor() && ! $
                         <?php 
 
                         // Get post navigation links
-                        $document_navigation = $this->get_post_navigation_links( $id );
-                        if( $document_navigation->prev_post || $document_navigation->next_post ) {
-                        ?>
+                        if( $document_settings['post_navigation'] ) {
+                            $document_navigation = $this->get_post_navigation_links( $id );
+                            if( $document_navigation->prev_post || $document_navigation->next_post ) {
+                            ?>
 
-                        <!-- Post navigation -->
-                        <nav class="navigation post-navigation" role="navigation">
-                            <div class="nav-links">
-                                <?php if( $document_navigation->prev_post ) { ?>
-                                <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
-                                    <span>&xlarr;</span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
-                                </a>
-                                <?php } ?>
-                                <?php if( $document_navigation->next_post ) { ?>
-                                <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
-                                    <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span>&xrarr;</span>
-                                </a>
-                                <?php } ?>
-                            </div>
-                        </nav>
+                            <!-- Post navigation -->
+                            <nav class="navigation post-navigation" role="navigation">
+                                <div class="nav-links">
+                                    <?php if( $document_navigation->prev_post ) { ?>
+                                    <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
+                                        <span>&xlarr;</span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
+                                    </a>
+                                    <?php } ?>
+                                    <?php if( $document_navigation->next_post ) { ?>
+                                    <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
+                                        <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span>&xrarr;</span>
+                                    </a>
+                                    <?php } ?>
+                                </div>
+                            </nav>
 
+                            <?php } ?>
                         <?php } ?>
 
                     <?php } else { ?>

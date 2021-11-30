@@ -6,38 +6,41 @@ html {
     scroll-behavior: smooth;
 }
 
-body.toplevel_page_wp-help-manager-settings,
-body.toplevel_page_wp-help-manager-tools,
-body.post-type-wp-help-docs {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+// body.publishing-help_page_wp-help-manager-settings,
+// body.post-type-wp-help-docs {
+//     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     
-    // Highlight menu item
-    #toplevel_page_wp-help-manager-documents .menu-top {
-        background: #2271b1;
-        color: #fff;
-        &:after {
-            right: 0;
-            border: solid 8px transparent;
-            content: " ";
-            height: 0;
-            width: 0;
-            position: absolute;
-            pointer-events: none;
-            border-right-color: #f0f0f1;
-            top: 50%;
-            margin-top: -8px;
-        }
-        .wp-menu-image:before {
-            color: rgba(240,246,252,1);
-        }
-    }
+//     // Highlight menu item
+//     #toplevel_page_wp-help-manager-documents .menu-top {
+//         background: #2271b1;
+//         color: #fff;
+//         &:after {
+//             right: 0;
+//             border: solid 8px transparent;
+//             content: " ";
+//             height: 0;
+//             width: 0;
+//             position: absolute;
+//             pointer-events: none;
+//             border-right-color: #f0f0f1;
+//             top: 50%;
+//             margin-top: -8px;
+//         }
+//         .wp-menu-image:before {
+//             color: rgba(240,246,252,1);
+//         }
+//     }
 
+// }
+
+// Hide submenu items
+#toplevel_page_wp-help-manager-documents .wp-submenu {
+    display: none;
 }
 
 // Fix position of toolbar under admin bar
 body.toplevel_page_wp-help-manager-documents,
-body.toplevel_page_wp-help-manager-settings,
-body.toplevel_page_wp-help-manager-tools,
+body.publishing-help_page_wp-help-manager-settings,
 body.post-type-wp-help-docs {
     
     #wpbody {
@@ -55,7 +58,8 @@ body.post-type-wp-help-docs {
 
 // Toolbar
 .wphm-toolbar {
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
     box-sizing: border-box;
     margin: 0 -20px;
@@ -91,6 +95,9 @@ body.post-type-wp-help-docs {
                 }
             }
         }
+    }
+    .wphm-search {
+        margin-left: auto;
     }
 }
 .wphm-brand {

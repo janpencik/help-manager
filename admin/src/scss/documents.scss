@@ -100,6 +100,11 @@ body.toplevel_page_wp-help-manager-documents {
                 top: 3px;
                 padding-right: 5px;
             }
+            .wphm-document-icon {
+                position: relative;
+                top: 2px;
+                padding-right: 8px;
+            }
         }
         h3 {
             margin-bottom: 12px;
@@ -149,10 +154,10 @@ body.toplevel_page_wp-help-manager-documents {
 // Content
 .wphm-content {
     box-sizing: border-box;
-    width: calc( 100% - 300px );
+    width: calc( 100% - 290px );
     position: relative;
     @media (max-width: 1100px) {
-        width: calc( 100% - 250px );
+        width: calc( 100% - 240px );
     }
     @media (max-width: 782px) {
         width: 100%;
@@ -225,7 +230,7 @@ body.toplevel_page_wp-help-manager-documents {
             margin-bottom: 1.25em;
         }
         ul {
-            padding-left: 25px;
+            padding-left: 40px;
             list-style: disc;
             li > ul {
                 list-style: disc;
@@ -235,11 +240,15 @@ body.toplevel_page_wp-help-manager-documents {
         }
         ol {
             margin-left: 0;
-            padding-left: 25px;
+            padding-left: 40px;
             li > ol {
                 margin-top: 6px;
                 margin-bottom: 0;
             }
+        }
+        .wphm-docs-content > ul, 
+        .wphm-docs-content > ol {
+            margin-left: -21px;
         }
         p {
             margin: 1.25em 0;
@@ -306,8 +315,7 @@ body.toplevel_page_wp-help-manager-documents {
             figcaption {
                 font-size: 14px;
                 text-align: center;
-                padding: .5em 1em;
-                background-color: #f9f9f9;
+                padding: .5em 1em 0;
             }
         }
         .table-wrapper {
@@ -331,6 +339,11 @@ body.toplevel_page_wp-help-manager-documents {
                 border-color: darken( #2271b1, 10 );
             }
         }
+        audio, video {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
 
         // Docs children navigation
         .wphm-children {
@@ -342,7 +355,7 @@ body.toplevel_page_wp-help-manager-documents {
                 max-width: 100%;
                 // background-color: #f9f9f9;
                 // border: 1px solid #d5d9dd;
-                border: #ebebeb solid 1px;
+                border: 1px solid #ebebeb;
                 background: #fafafa;
                 border-radius: 3px;
                 // border-style: dashed;

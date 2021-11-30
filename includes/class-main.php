@@ -153,21 +153,22 @@ class Wp_Help_Manager {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Wp_Help_Manager_Admin( $this->get_plugin_name(), $this->get_version() );
+		$post_type = new Wp_Help_Manager_Post_Type();
 
 		// Enqueue plugin scripts and styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'current_screen', $plugin_admin, 'remove_classic_editor_styles' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_block_editor_assets', 20 );
 		
 		// Register custom post type
-		$post_type = new Wp_Help_Manager_Post_Type();
 		$this->loader->add_action( 'init', $post_type, 'register_post_type' );
-		// $this->loader->add_action( 'init', $post_type, 'register_wp_help_manager_taxonomy' );
 
-		// Assign capabilities to user roles
-		$this->loader->add_action( 'init', $plugin_admin, 'assign_capabilities' );
-		
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
+		
+		// Revoke past user capabilities
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_current_admin_capabilities' );
 
 		// Save/update plugin settings
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
@@ -175,8 +176,8 @@ class Wp_Help_Manager {
 		// Add menu items
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
 
-		// Remove menu items
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'remove_plugin_admin_menu', 999 );
+		// Modify plugin menu
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'modify_plugin_menu' );
 
 		// Add toolbar to the admin pages
 		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'add_toolbar_menu' );
@@ -190,11 +191,8 @@ class Wp_Help_Manager {
 		// Add dashboard widget
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'dashboard_setup' );
 
-		// Add option to set default document to publish meta box (classic editor)
-		$this->loader->add_action( 'post_submitbox_misc_actions', $plugin_admin, 'add_option_default_document' );
-
-		// Set/unset default document on post save
-		$this->loader->add_action( 'save_post', $plugin_admin, 'save_document' );
+		// Add custom CSS to document page
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
 
 		// Ajax reoder documents
 		$this->loader->add_action( 'wp_ajax_wphm_docs_reorder', $plugin_admin, 'ajax_reorder' );

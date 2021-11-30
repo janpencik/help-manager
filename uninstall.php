@@ -32,8 +32,15 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// Remove plugin capabilities
+$default_permissions = array();
+$default_permissions['admin'] = array();
+$default_permissions['editor'] = array();
+$default_permissions['reader'] = array();
+Wp_Help_Manager_Admin::revoke_capabilities( $permissions );
+
 // Delete plugin options
-// delete_option( 'wp-help-manager-admin' );
-// delete_option( 'wp-help-manager-document' );
-// delete_option( 'wp-help-manager-permissions' );
-// delete_option( 'wp-help-manager-custom-css' );
+delete_option( 'wp-help-manager-admin' );
+delete_option( 'wp-help-manager-document' );
+delete_option( 'wp-help-manager-permissions' );
+delete_option( 'wp-help-manager-custom-css' );

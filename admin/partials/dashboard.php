@@ -31,16 +31,20 @@ if ( ! defined( 'ABSPATH' ) ) {
         <?php echo $docs; ?>
     </ul>
 </div>
+<?php if( $this->current_user_is_editor() ) { ?>
 <p class="community-events-footer wphm-dashboard-docs-actions">
-    <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>">
-        <?php esc_html_e( 'Manage', 'wp-help-manager' ); ?>
-    </a>
-    |
     <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>">
         <?php esc_html_e( 'Add new', 'wp-help-manager' ); ?>
     </a>
     |
+    <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>">
+        <?php esc_html_e( 'Manage', 'wp-help-manager' ); ?>
+    </a>
+    <?php if( $this->current_user_is_admin() ) { ?>
+    |
     <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-settings' ) ) ); ?>">
         <?php esc_html_e( 'Settings', 'wp-help-manager' ); ?>
     </a>
+    <?php } ?>
 </p>
+<?php } ?>

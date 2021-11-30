@@ -19,11 +19,12 @@
     "browser-sync": "*",
     "cssnano": "*",
     "del": "*",
+    "dotenv": "^10.0.0",
     "gulp": "*",
+    "gulp-concat": "*",
     "gulp-postcss": "*",
     "gulp-sass": "*",
     "gulp-uglify": "*",
-    "gulp-concat": "*",
     "postcss": "*",
     "sass": "*"
   },

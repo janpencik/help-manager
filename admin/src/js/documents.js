@@ -14,37 +14,41 @@
 
 		// Responsive iframes
 		function reframeIframes() {
-			reframe('.wphm-docs-content iframe');
+			if( wphm_vars.format_iframes === 'true' ) {
+				reframe('.wphm-docs-content iframe');
+			}
 		}
 		reframeIframes();
 
 		// Find all images wrapped in a link and activate gallery popup
 		function initPopupGallery() {
-			$('.wphm-docs-content a img').parent().magnificPopup({
-				gallery: {
-					enabled: true
-				},
-				type: 'image',
-				image: {
-					titleSrc: function(item) {
-						
-						// Try to find title
-						var caption = item.el.parent().find('figcaption');
-						if( caption.length > 0 ) {
-							return caption.text();
-						} 
-						var title = item.el.find('img').attr('title');
-						if( title ) {
-							return title;
-						}
-						var alt = item.el.find('img').attr('alt');
-						if( alt ) {
-							return alt;
-						}
+			if( wphm_vars.image_popup === 'true' ) {
+				$('.wphm-docs-content a img').parent().magnificPopup({
+					gallery: {
+						enabled: true
+					},
+					type: 'image',
+					image: {
+						titleSrc: function(item) {
+							
+							// Try to find title
+							var caption = item.el.parent().find('figcaption');
+							if( caption.length > 0 ) {
+								return caption.text();
+							} 
+							var title = item.el.find('img').attr('title');
+							if( title ) {
+								return title;
+							}
+							var alt = item.el.find('img').attr('alt');
+							if( alt ) {
+								return alt;
+							}
 
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 		initPopupGallery();
 

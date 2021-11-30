@@ -87,9 +87,27 @@ class Wp_Help_Manager_Post_Type {
             'menu_position'      => 2,
             'menu_icon'          => 'dashicons-editor-help',
             'supports'           => array( 'title', 'editor', 'revisions', 'page-attributes' ),
-            'capability_type'    => 'document'
+            'capability_type'    => 'document',
+            'capabilities'       => array(
+                'edit_post'                 => 'edit_document',
+                'read_post'                 => 'read_document',
+                'delete_post'               => 'delete_document',
+                'edit_posts'                => 'edit_documents',
+                'edit_others_posts'         => 'edit_others_documents',
+                'delete_posts'              => 'delete_documents',
+                'publish_posts'             => 'publish_documents',
+                'read_private_posts'        => 'read_private_documents',
+                'read'                      => 'read_documents',
+                'delete_private_posts'      => 'delete_private_documents',
+                'delete_others_posts'       => 'delete_others_documents',
+                'delete_published_posts'    => 'delete_published_documents',
+                'edit_private_posts'        => 'edit_private_documents',
+                'edit_published_posts'      => 'edit_published_documents',
+                'create_posts'              => 'create_documents',
+            ), 
+            'map_meta_cap'       => true
         );
-     
+      
         register_post_type( $this->post_type_slug, $args );
         
     }
@@ -122,53 +140,5 @@ class Wp_Help_Manager_Post_Type {
         }
 
 	}
-
-    /**
-	 * Register custom taxonomy.
-	 *
-	 * @since    1.0.0
-     * @access   public
-	 */
-    // function register_wp_help_manager_taxonomy() {
-
-    //     $labels = array(
-    //         'name'              => _x( 'Categories', 'taxonomy general name', 'wp-help-manager' ),
-    //         'singular_name'     => _x( 'Category', 'taxonomy singular name', 'wp-help-manager' ),
-    //         'search_items'      => __( 'Search Categories', 'wp-help-manager' ),
-    //         'all_items'         => __( 'All Categories', 'wp-help-manager' ),
-    //         'parent_item'       => __( 'Parent Category', 'wp-help-manager' ),
-    //         'parent_item_colon' => __( 'Parent Category:', 'wp-help-manager' ),
-    //         'edit_item'         => __( 'Edit Category', 'wp-help-manager' ),
-    //         'update_item'       => __( 'Update Category', 'wp-help-manager' ),
-    //         'add_new_item'      => __( 'Add New Category', 'wp-help-manager' ),
-    //         'new_item_name'     => __( 'New Category Name', 'wp-help-manager' ),
-    //         'menu_name'         => __( 'Category', 'wp-help-manager' ),
-    //     );
-
-    //     $args   = array(
-    //         'hierarchical'      => true,
-    //         'labels'            => $labels,
-    //         'show_ui'           => true,
-    //         'show_admin_column' => true,
-    //         'show_in_rest'      => true,
-    //         'query_var'         => true,
-    //         'rewrite'           => false,
-    //     );
-
-    //     register_taxonomy( $this->taxonomy_slug, [ $this->post_type_slug ], $args );
-
-    // }
-
-    /**
-	 * Unregister custom taxonomy.
-	 *
-	 * @since    1.0.0
-     * @access   public
-	 */
-    // public function unregister_wp_help_manager_taxonomy() {
-        
-    //     unregister_post_type( $this->taxonomy_slug );
-
-    // }
 
 }
