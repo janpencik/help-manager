@@ -153,7 +153,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                         <!-- <?php edit_post_link( esc_html__( 'Edit', 'wp-help-manager' ), '', '', null, 'page-title-action' ); ?> -->
 
                         <?php
-                        if( $document_settings['child_navigation'] ) {
+                        if( isset( $document_settings ) && isset( $document_settings['child_navigation'] ) && $document_settings['child_navigation'] || ! $document_settings ) {
                             $children = $this->get_document_children( $id );
                             if( $children ) {
                             ?>
@@ -174,7 +174,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                         <?php 
 
                         // Get post navigation links
-                        if( $document_settings['post_navigation'] ) {
+                        if( ( isset( $document_settings ) && isset( $document_settings['post_navigation'] ) && $document_settings['post_navigation'] ) || ! $document_settings ) {
                             $document_navigation = $this->get_post_navigation_links( $id );
                             if( $document_navigation->prev_post || $document_navigation->next_post ) {
                             ?>

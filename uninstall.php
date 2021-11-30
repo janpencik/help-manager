@@ -39,24 +39,22 @@ $admin_users = get_users( array(
 ) );
 foreach( $admin_users as $admin_user ) {
 	$user = new WP_User( $admin_user );
-	if ( ! in_array( 'administrator', (array) $user->roles ) ) {
-		$user->remove_cap( 'edit_document' );
-		$user->remove_cap( 'read_document' );
-		$user->remove_cap( 'delete_document' );
-		$user->remove_cap( 'edit_documents' );
-		$user->remove_cap( 'edit_others_documents' );
-		$user->remove_cap( 'delete_documents' );
-		$user->remove_cap( 'publish_documents' );
-		$user->remove_cap( 'read_private_documents' );
-		$user->remove_cap( 'read_documents' );
-		$user->remove_cap( 'delete_private_documents' );
-		$user->remove_cap( 'delete_others_documents' );
-		$user->remove_cap( 'delete_published_documents' );
-		$user->remove_cap( 'edit_private_documents' );
-		$user->remove_cap( 'edit_published_documents' );
-		$user->remove_cap( 'create_documents' );
-		$user->remove_cap( 'access_wphm_settings' );
-	}
+	$user->remove_cap( 'edit_document' );
+	$user->remove_cap( 'read_document' );
+	$user->remove_cap( 'delete_document' );
+	$user->remove_cap( 'edit_documents' );
+	$user->remove_cap( 'edit_others_documents' );
+	$user->remove_cap( 'delete_documents' );
+	$user->remove_cap( 'publish_documents' );
+	$user->remove_cap( 'read_private_documents' );
+	$user->remove_cap( 'read_documents' );
+	$user->remove_cap( 'delete_private_documents' );
+	$user->remove_cap( 'delete_others_documents' );
+	$user->remove_cap( 'delete_published_documents' );
+	$user->remove_cap( 'edit_private_documents' );
+	$user->remove_cap( 'edit_published_documents' );
+	$user->remove_cap( 'create_documents' );
+	$user->remove_cap( 'access_wphm_settings' );
 }
 
 // Remove editor and reader capabilities from user roles

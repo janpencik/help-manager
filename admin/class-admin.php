@@ -138,7 +138,7 @@ class Wp_Help_Manager_Admin {
 	public function custom_admin_css() {
 		if( $this->is_plugin_documents_page() === true ) {
 			$custom_css = get_option( $this->plugin_name . '-custom-css' );
-			if( $custom_css['custom-css'] ) {
+			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
 				echo '<style id="wphm-custom-css">' . $custom_css['custom-css'] . '</style>';
 			}
 		}
@@ -162,8 +162,8 @@ class Wp_Help_Manager_Admin {
 			// Documents main JS
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/js/documents.js', array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-nestedsortable', $this->plugin_name . '-documents-libs' ), $this->version, false );
 			$document_settings = get_option( $this->plugin_name . '-document' );
-			$format_iframes = ( isset( $document_settings['format_iframes'] ) ) ? json_encode( $document_settings['format_iframes'] ) : true;
-			$image_popup = ( isset( $document_settings['image_popup'] ) ) ? json_encode( $document_settings['image_popup'] ) : true;
+			$format_iframes = ( isset( $document_settings ) && isset( $document_settings['format_iframes'] ) ) ? json_encode( $document_settings['format_iframes'] ) : json_encode( true );
+			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? json_encode( $document_settings['image_popup'] ) : json_encode( true );
 			wp_localize_script( $this->plugin_name, 'wphm_vars', array( 
 				'format_iframes' => $format_iframes,
 				'image_popup' => $image_popup
@@ -1032,7 +1032,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	function responsive_tables( $content ) {
 		$document_settings = get_option( $this->plugin_name . '-document' );
-		if( isset( $document_settings['format_tables'] ) && $document_settings['format_tables'] ) {
+		if( ( isset( $document_settings ) && isset( $document_settings['format_tables'] ) && $document_settings['format_tables'] ) || ! $document_settings ) {
 			$content = preg_replace( "/<table/Si", '<div class="table-wrapper"><table', $content );
 			$content = preg_replace( "/<\/table>/Si", '</table></div>', $content );
 		}
