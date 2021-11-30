@@ -26,18 +26,61 @@
  */
 
 namespace Wp_Help_Manager;
+use WP_User;
 
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// Remove plugin capabilities
-$default_permissions = array();
-$default_permissions['admin'] = array();
-$default_permissions['editor'] = array();
-$default_permissions['reader'] = array();
-Wp_Help_Manager_Admin::revoke_capabilities( $permissions );
+// Remove admin capabilities from admin users
+$admin_users = get_users( array(
+	'role__in' 	=> 'access_wphm_settings'
+) );
+foreach( $admin_users as $admin_user ) {
+	$user = new WP_User( $admin_user );
+	if ( ! in_array( 'administrator', (array) $user->roles ) ) {
+		$user->remove_cap( 'edit_document' );
+		$user->remove_cap( 'read_document' );
+		$user->remove_cap( 'delete_document' );
+		$user->remove_cap( 'edit_documents' );
+		$user->remove_cap( 'edit_others_documents' );
+		$user->remove_cap( 'delete_documents' );
+		$user->remove_cap( 'publish_documents' );
+		$user->remove_cap( 'read_private_documents' );
+		$user->remove_cap( 'read_documents' );
+		$user->remove_cap( 'delete_private_documents' );
+		$user->remove_cap( 'delete_others_documents' );
+		$user->remove_cap( 'delete_published_documents' );
+		$user->remove_cap( 'edit_private_documents' );
+		$user->remove_cap( 'edit_published_documents' );
+		$user->remove_cap( 'create_documents' );
+		$user->remove_cap( 'access_wphm_settings' );
+	}
+}
+
+// Remove editor and reader capabilities from user roles
+global $wp_roles;
+$roles = $wp_roles->roles;
+foreach( $roles as $role_slug => $role ) {
+	$role = get_role( $role_slug );
+	$role->remove_cap( 'edit_document' );
+	$role->remove_cap( 'read_document' );
+	$role->remove_cap( 'delete_document' );
+	$role->remove_cap( 'edit_documents' );
+	$role->remove_cap( 'edit_others_documents' );
+	$role->remove_cap( 'delete_documents' );
+	$role->remove_cap( 'publish_documents' );
+	$role->remove_cap( 'read_private_documents' );
+	$role->remove_cap( 'read_documents' );
+	$role->remove_cap( 'delete_private_documents' );
+	$role->remove_cap( 'delete_others_documents' );
+	$role->remove_cap( 'delete_published_documents' );
+	$role->remove_cap( 'edit_private_documents' );
+	$role->remove_cap( 'edit_published_documents' );
+	$role->remove_cap( 'create_documents' );
+	$role->remove_cap( 'access_wphm_settings' );
+}
 
 // Delete plugin options
 delete_option( 'wp-help-manager-admin' );

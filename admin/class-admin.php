@@ -700,7 +700,7 @@ class Wp_Help_Manager_Admin {
 			$permissions = get_option( 'wp-help-manager-permissions' );
 		}
 
-		// Remove admin capabilities to unchecked/past admin users
+		// Remove admin capabilities from unchecked/past admin users
 		$admin_users = get_users( array(
 			'role__in' 	=> 'access_wphm_settings'
 		) );
