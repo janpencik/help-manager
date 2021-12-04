@@ -26,7 +26,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 <!-- Main wrapper -->
 <div class="wrap wphm-wrap">
 
-    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( $headline ); ?></h1>
+    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Documents', 'wp-help-manager' ); ?></h1>
     <?php if( $this->current_user_is_editor() ) { ?>
         <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'wp-help-manager' ) ?></a>
     <?php } ?>
@@ -34,11 +34,27 @@ $document_settings = get_option( $this->plugin_name . '-document' );
     <!-- Row -->
     <div class="wphm-docs-row">
 
+        <!-- Mobile search -->
+        <div class="wphm-search wphm-search-mobile inner">
+            <form action="">
+                <div class="search-box">
+                    <input type="hidden" name="page" value="wp-help-manager-documents"> 
+                    <input type="search" id="post-search-input" name="s" value="<?php echo $search_string; ?>">
+                    <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search Help Documents', 'wp-help-manager' ); ?>">
+                </div>
+            </form>
+        </div>
+
         <!-- Sidebar -->
         <div class="wphm-sidebar">
             
             <!-- Navigation -->
             <div class="wphm-sidebar-topics-box inner">
+
+                <!-- Toggle -->
+                <button class="wphm-sidebar-hide">
+                    <span class="dashicons"></span>
+                </button>
 
                 <!-- Topics -->
                 <div class="wphm-sidebar-topics">
@@ -129,6 +145,10 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                         <!-- Action buttons -->
                         <div class="wphm-content-actions">
+                            <span class="wphm-action-button wphm-action-expand">
+                                <span class="dashicons dashicons-arrow-right-alt2"></span>
+                                <span><?php esc_html_e( 'Show navigation', 'wp-help-manager' );?></span>
+                            </span>
                             <span class="wphm-action-button wphm-action-clipboard" data-clipboard-text="<?php echo esc_attr( esc_url( get_permalink( $document_id ) ) ); ?>">
                                 <span class="dashicons dashicons-admin-links"></span>
                                 <span><?php esc_html_e( 'Copy link', 'wp-help-manager' );?></span>
@@ -149,8 +169,14 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                             <?php } ?>
                         </div>
 
+                        <!-- Title -->
                         <h1 class="wp-heading-inline"><?php the_title(); ?></h1>
-                        <!-- <?php edit_post_link( esc_html__( 'Edit', 'wp-help-manager' ), '', '', null, 'page-title-action' ); ?> -->
+                        <?php
+                        if( ! in_array( get_post_status(), array( 'publish', 'private' ) ) ) {
+                        $post_status_obj = get_post_status_object( get_post_status() );
+                        ?>
+                        <span class="wphm-document-status"><?php echo $post_status_obj->label; ?></span>
+                        <?php } ?>
 
                         <?php
                         if( isset( $document_settings ) && isset( $document_settings['child_navigation'] ) && $document_settings['child_navigation'] || ! $document_settings ) {
@@ -208,11 +234,19 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                     <?php wp_reset_query(); ?>
 
                 </div>
+
+                <!-- Back to top link -->
+                <div class="wphm-document-footer">
+                    <span class="wphm-back-to-top">
+                        <span class="dashicons dashicons-arrow-up-alt2"></span>
+                        <span><?php esc_html_e( 'Scroll to top', 'wp-help-manager' ); ?></span>
+                    </span>
+                </div>
+
             </div>
 
         <?php } ?>
 
     </div>
-
 
 </div>

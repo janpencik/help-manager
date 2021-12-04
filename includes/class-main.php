@@ -167,11 +167,19 @@ class Wp_Help_Manager {
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
 		
+		// Allow preview of any post status on single document page
+		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'allow_documents_preview' );
+
 		// Revoke past user capabilities
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_current_admin_capabilities' );
 
 		// Save/update plugin settings
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
+
+		// Handle import/export of help documents
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'plugin_tools' );
+		$this->loader->add_filter( 'export_wp_filename', $plugin_admin, 'export_change_filename', 10, 3 );
+		$this->loader->add_action( 'export_wp', $plugin_admin, 'modify_export_query' );
 
 		// Add menu items
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
@@ -184,6 +192,7 @@ class Wp_Help_Manager {
 
 		// Change admin footer text
 		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'change_left_admin_footer_text' );
+		$this->loader->add_filter( 'update_footer', $plugin_admin, 'change_right_admin_footer_text', 11 );
 
 		// Ad admin notices
 		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'add_admin_notices' );

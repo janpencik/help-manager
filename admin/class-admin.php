@@ -55,6 +55,7 @@ class Wp_Help_Manager_Admin {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_wp-help-manager-documents'
 			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_wp-help-manager-settings'
+			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_wp-help-manager-tools'
 			|| isset( $screen->id ) && $screen->id === 'edit-wp-help-docs'
 			|| ( isset( $screen->id ) && $screen->id === 'wp-help-docs' && $screen->is_block_editor == false ) 
 		) {
@@ -87,7 +88,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function is_plugin_settings_page() {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && $screen->id === 'publishing-help_page_wp-help-manager-settings' ) {
+		if ( isset( $screen->id ) && ( $screen->id === 'publishing-help_page_wp-help-manager-settings' || $screen->id === 'publishing-help_page_wp-help-manager-tools' ) ) {
 			return true;
 		}
 		return false;
@@ -226,7 +227,7 @@ class Wp_Help_Manager_Admin {
 		// Get admin settings
 		$admin_settings = get_option( $this->plugin_name . '-admin' );
 		$menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] ) && $admin_settings['menu_icon'] ) ? esc_html( $admin_settings['menu_icon'] ) : 'dashicons-editor-help';
-		$menu_position = ( isset( $admin_settings ) && isset( $admin_settings['menu_position'] ) && abs( intval( $admin_settings['menu_position'] ) ) !== 0 ) ? abs( intval( $admin_settings['menu_position'] ) ) : 2;
+		$menu_position = ( isset( $admin_settings ) && isset( $admin_settings['menu_position'] ) && absint( $admin_settings['menu_position'] ) !== 0 ) ? absint( $admin_settings['menu_position'] ) : 2;
 
 		// Top level menu item
 		add_menu_page(
@@ -267,6 +268,16 @@ class Wp_Help_Manager_Admin {
 			'access_wphm_settings',
 			'wp-help-manager-settings',
 			array( $this, 'display_settings_page' )
+		);
+
+		// Submenu item - Tools
+		add_submenu_page(
+			'wp-help-manager-documents',
+			__( 'Tools', 'wp-help-manager' ),
+			__( 'Tools', 'wp-help-manager' ),
+			'access_wphm_settings',
+			'wp-help-manager-tools',
+			array( $this, 'display_tools_page' )
 		);
 
 	}
@@ -347,9 +358,9 @@ class Wp_Help_Manager_Admin {
 		$valid['menu_icon'] = ( in_array( $input['menu_icon'], $dashicons ) ) 
 			? sanitize_key( $input['menu_icon'] ) 
 			: 'dashicons-editor-help';
-		$valid['menu_position'] = abs( intval( $input['menu_position'] ) ) !== 0 
-			? abs( intval( $input['menu_position'] ) ) 
-			: 1;
+		$valid['menu_position'] = absint( $input['menu_position'] ) !== 0 
+			? absint( $input['menu_position'] )
+			: 2;
 		$valid['dashboard_widget'] = boolval( $input['dashboard_widget'] );
 		$valid['admin_bar'] = boolval( $input['admin_bar'] );
 
@@ -432,9 +443,23 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
+	 * Allow preview of any post status on single document page.
+	 *
+	 * @since 	 1.0.0
+	 * @access   public
+	 */
+	public function allow_documents_preview( $query_obj ) {
+		if( ! is_admin() ) return;
+		if( ! current_user_can( 'edit_documents' ) ) return;
+		if( ! isset( $query_obj->query_vars['post_type'] ) || 'wp-help-docs' != $query_obj->query_vars['post_type'] ) return;
+		if( ! $query_obj->is_single ) return;
+		$query_obj->query_vars['post_status'] = 'any';
+	}
+
+	/**
 	 * Get post ID of a default document.
 	 *
-	 * @since 1.0.0
+	 * @since 	 1.0.0
 	 * @access   public
 	 */
 	public function get_default_document() {
@@ -446,7 +471,11 @@ class Wp_Help_Manager_Admin {
 			'order'            	=> 'ASC',
 			'fields' 			=> 'ids'
 		) );
-		return $oldest_docs[0];
+		if( $oldest_docs ) {
+			return $oldest_docs[0];
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -502,6 +531,15 @@ class Wp_Help_Manager_Admin {
 				<?php
 			}
 
+			// No documents selected for export
+			if ( $_GET['wphm-notice'] === 'empty-export' ) {
+				?>
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+					<p><?php esc_html_e( 'No documents selected.', 'wp-help-manager' ); ?></p>
+				</div>
+				<?php
+			}
+
 		}
 	}
 
@@ -540,7 +578,7 @@ class Wp_Help_Manager_Admin {
 				);
 			}
 			
-			$val = -100000;
+			$val = -20;
 			foreach ( $order as $o ) {
 				$val += 10;
 
@@ -823,9 +861,9 @@ class Wp_Help_Manager_Admin {
 		if( check_ajax_referer( 'trash-document', 'security' ) ) {
 			$document_id = intval( $_POST['id'] );
 			if( get_post_type( $document_id ) === 'wp-help-docs' ) {
+				$post_status = get_post_status( $document_id );
 				if( wp_trash_post( $document_id ) ) {
-					wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'trashed', 'wphm-id' => $document_id 
-					), get_permalink( $this->get_default_document() ) ) );
+					wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'trashed', 'wphm-id' => $document_id ), get_permalink( $this->get_default_document() ) ) );
 				}
 			}
 		}
@@ -842,8 +880,11 @@ class Wp_Help_Manager_Admin {
 		if( check_ajax_referer( 'untrash-document', 'security' ) ) {
 			$document_id = intval( $_POST['id'] );
 			if( get_post_type( $document_id ) === 'wp-help-docs' ) {
-				if( wp_untrash_post( $document_id ) && wp_update_post( array( 'ID' => $document_id, 'post_status' => 'publish') ) ) {
-					wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'untrashed', 'wphm-id' => $document_id ), get_permalink( $document_id ) ) );
+				$previous_post_status = get_post_meta( $document_id, '_wp_trash_meta_status' );
+				if( $previous_post_status ) {
+					if( wp_untrash_post( $document_id ) && wp_update_post( array( 'ID' => $document_id, 'post_status' => $previous_post_status ) ) ) {
+						wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'untrashed', 'wphm-id' => $document_id ), get_permalink( $document_id ) ) );
+					}
 				}
 			}
 		}
@@ -920,11 +961,24 @@ class Wp_Help_Manager_Admin {
 	public function change_left_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
 			$plugin_footer_text = sprintf(
-				'%s <a href="https://wordpress.org/" target="_blank">WordPress</a> and <a href="https://www.wphelpmanager.com" target="_blank">WP Help Manager</a>.',
-				esc_html__( 'Thank you for creating with', 'wp-help-manager' ),
-				esc_html__( 'and', 'wp-help-manager' )
+				'%s <a href="https://www.wphelpmanager.com" target="_blank">WP Help Manager</a>.',
+				esc_html__( 'Thank you for creating with', 'wp-help-manager' )
 			);
 			return $plugin_footer_text;
+		} else {
+			return $footer_text;
+		}
+	}
+
+	/**
+	 * Remove right side of footer text on plugin admin pages.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function change_right_admin_footer_text( $footer_text ) {
+		if( $this->is_plugin_page() === true ) {
+			return __( 'Version', 'wp-help-manager' ) . ' ' . $this->version;
 		} else {
 			return $footer_text;
 		}
@@ -994,8 +1048,9 @@ class Wp_Help_Manager_Admin {
 	public function dashboard_setup() {
 		$admin_settings = get_option( $this->plugin_name . '-admin' );
 		if( ( isset( $admin_settings ) && isset( $admin_settings['dashboard_widget'] ) && $admin_settings['dashboard_widget'] ) || ( ! $admin_settings ) ) {
+			$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
 			if( get_posts( array( 'post_type' => 'wp-help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids' ) ) && $this->current_user_is_reader() )
-				wp_add_dashboard_widget( 'wphm-dashboard-docs', 'Publishing Help', array( $this, 'dashboard_widget' ) );
+				wp_add_dashboard_widget( 'wphm-dashboard-docs', esc_html( $headline ), array( $this, 'dashboard_widget' ) );
 		}
 	}
 	public function dashboard_widget() {
@@ -1112,6 +1167,229 @@ class Wp_Help_Manager_Admin {
 		global $wp_roles;
 		$roles = $wp_roles->roles;
 		return $roles;
+	}
+
+	/**
+	 * Handle import/export of help documents.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function plugin_tools() {
+
+		// Import documents
+		if( isset( $_POST['action'] ) && $_POST['action'] === 'import_help_documents' ) {
+			if( check_admin_referer( 'wphm_import_form', 'wphm_import_nonce' ) ) {
+				$this->import_help_documents();
+			}
+		}
+
+		// Export documents
+		if( isset( $_POST['action'] ) && $_POST['action'] === 'export_help_documents' ) {
+			if( isset( $_POST['wphm_docs'] ) ) {
+				if( check_admin_referer( 'wphm_export_form', 'wphm_export_nonce' ) ) {
+					$this->export_help_documents();
+				}
+			} else {
+				wp_redirect( admin_url( '/admin.php?page=wp-help-manager-tools&wphm-notice=empty-export' ) );
+				exit;
+			}
+		}
+
+	}
+
+	/**
+	 * Import help documents.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function import_help_documents() {
+		die( 'import' );
+	}
+
+	/**
+	 * Get active WordPress Importer plugin URL
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @return   mixed    False if not installed, string if installed/activated.
+	 */
+	public function get_importer_status() {
+		$importer_status = false;
+		$installed_plugins = get_plugins();
+		if( $installed_plugins ) {
+			foreach( $installed_plugins as $plugin_filename => $plugin ) {
+				if( $plugin['TextDomain'] == 'wordpress-importer' ) {
+					$importer_status = 'installed';
+					if( is_plugin_active( $plugin_filename ) ) {
+						$importer_status = 'active';
+						break;
+					}
+				}
+			}
+		}
+		return $importer_status;
+	}
+
+	/**
+	 * Get filename of first installed WordPress Importer 
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @return   mixed    False if not installed, string if found.
+	 */
+	public function get_installed_importer_filename() {
+		$importer_filename = false;
+		$installed_plugins = get_plugins();
+		if( $installed_plugins ) {
+			foreach( $installed_plugins as $plugin_filename => $plugin ) {
+				if( $plugin['TextDomain'] == 'wordpress-importer' ) {
+					$importer_filename = $plugin_filename;
+					break;
+				}
+			}
+		}
+		return $importer_filename;
+	}
+
+	/**
+	 * Get URL for installing the WordPress Importer plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function get_importer_install_url() {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return false;
+		}
+		$install_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => 'install-plugin',
+					'plugin' => 'wordpress-importer',
+					'from'   => 'import',
+				),
+				self_admin_url( 'update.php' )
+			),
+			'install-plugin_wordpress-importer'
+		);
+		return $install_url;
+	}
+
+	/**
+	 * Get URL for activating the WordPress Importer plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function get_importer_activate_url( $filename ) {
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return false;
+		}
+		$activate_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => 'activate',
+					'plugin' => $filename,
+					'from'   => 'import',
+				),
+				self_admin_url( 'plugins.php' )
+			),
+			'activate-plugin_' . $filename
+		);
+		return $activate_url;
+	}
+	
+	/**
+	 * Export help documents.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function export_help_documents() {
+		require_once ABSPATH . 'wp-admin/includes/export.php';
+
+		// Increase menu order for all items before the export is executed (so on website where documents are imported documents show on the end of list and don't mess the existing order)
+		$documents = get_posts( array(
+			'post_type' 	=> 'wp-help-docs',
+			'fields' 		=> 'ids',
+			'numberposts' 	=> -1
+		) );
+		foreach( $documents as $document ) {
+			$document_obj = get_post( $document );
+			if( $document_obj ) {
+				$new_menu_order = $document_obj->menu_order + 10000; 
+				wp_update_post( array( 
+					'ID' => $document_obj->ID,
+					'menu_order' => $new_menu_order
+				), true );
+			}
+		}
+
+		// Execute export
+		export_wp( array( 'content' => 'wp-help-docs' ) );
+
+		// Change menu order back to original values
+		foreach( $documents as $document ) {
+			$document_obj = get_post( $document );
+			if( $document_obj ) {
+				$original_menu_order = $document_obj->menu_order - 10000; 
+				wp_update_post( array( 
+					'ID' => $document_obj->ID,
+					'menu_order' => $original_menu_order
+				), true );
+			}
+		}
+
+		die();
+	}
+
+	/**
+	 * Change export filename.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function export_change_filename( $wp_filename, $sitename, $date ) {
+		$wp_filename = 'wp-help-export-' . $date . '.xml';
+		return $wp_filename;
+	}
+
+	/**
+	 * Modify the export query.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function modify_export_query( $args ) {
+		if( isset( $_POST['action'] ) && $_POST['action'] === 'export_help_documents' && isset( $_POST['wphm_docs'] ) ) {
+			add_filter( 'query', array( $this, 'filter_exported_docs' ) );
+		}
+		return $args;
+	}
+
+	/**
+	 * Inject sub-query to export documents with specific IDs
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function filter_exported_docs( $query ) {
+		global $wpdb;
+		$exported_docs = implode( ',', $_POST['wphm_docs'] );
+
+		// Make sure that we target only the query for our post type
+		if( false === strpos( $query, "{$wpdb->posts}.post_type = 'wp-help-docs'" ) ) 
+			return $query;
+
+		// Remove filter callback
+    	remove_filter( current_filter(), __FUNCTION__ );
+
+		// Inject sub-query to export only selected documents
+		$sql = " {$wpdb->posts}.ID IN ($exported_docs) AND ";
+
+		return str_replace( ' WHERE ', ' WHERE ' . $sql, $query );
 	}
 
 }

@@ -23,7 +23,17 @@
 		// Find all images wrapped in a link and activate gallery popup
 		function initPopupGallery() {
 			if( wphm_vars.image_popup === 'true' ) {
-				$('.wphm-docs-content a img').parent().magnificPopup({
+				if( $('.wphm-docs-content a img').length > 0 ) {
+					var imagesWithLinks = $('.wphm-docs-content a img');
+					imagesWithLinks.each(function() {
+						var linkFilename = $(this).parent().attr('href').replace(/\.[^/.]+$/, "");
+						var imgFilename = $(this).attr('src').replace(/\.[^/.]+$/, "");
+						if ( imgFilename.indexOf( linkFilename ) >= 0 ) {
+							$(this).parent().addClass('wphm-gallery');
+						}
+					});
+				}
+				$('.wphm-gallery').magnificPopup({
 					gallery: {
 						enabled: true
 					},
@@ -51,6 +61,27 @@
 			}
 		}
 		initPopupGallery();
+
+		// Fix captions in wp-block-image
+		function fixFigcaption(el) {
+			var imageWidth = el.parent().find('img').attr('width');
+			el.css({
+				'width': imageWidth + 'px',
+			});
+		}
+		function fixDocumentFigcaptions() {
+			if( $('.wphm-docs-content .wp-block-image figure.alignleft figcaption').length > 0 ) {
+				$('.wphm-docs-content .wp-block-image figure.alignleft figcaption').each(function() {
+					fixFigcaption( $(this) );
+				});
+			}
+			if( $('.wphm-docs-content .wp-block-image figure.alignright figcaption').length > 0 ) {
+				$('.wphm-docs-content .wp-block-image figure.alignright figcaption').each(function() {
+					fixFigcaption( $(this) );
+				});
+			}
+		}
+		fixDocumentFigcaptions();
 
 		// Make documents in the sidebar navigation sortable (nested)
 		$('.can-sort').nestedSortable({
@@ -86,7 +117,18 @@
 			}
 			reframeIframes();
 			initPopupGallery();
+			fixDocumentFigcaptions();
 		});
+
+		// Scroll to top
+		if( $('.wphm-back-to-top').length > 0 ) {
+			$('.wphm-back-to-top').on('click', function(e) {
+				$(window).scrollTop({
+					top: 0,
+    				behavior: "smooth"
+				});
+			});
+		}
 
 		// Clipboard.js
        	var copyLink = new ClipboardJS('.wphm-action-clipboard');
@@ -104,6 +146,13 @@
 			}, 2000);
 
 		});
+
+		// Collapse/expand sidebar
+		if( $('.wphm-sidebar-hide, .wphm-action-expand').length > 0 ) {
+			$('.wphm-sidebar-hide, .wphm-action-expand').on( 'click', function() {
+				$('body').toggleClass('wphm-sidebar-collapsed');
+			})
+		}
 
 		// Trash document
 		$('.wphm-action-trash').on('click', function(e) {
@@ -133,7 +182,7 @@
 			});
 		});
 
-		// Allow to dismiss the admin notice after document is trashed
+		// Remove query args after dismissing the admin notice
 		$(document).on('click', '.wphm-notice .notice-dismiss', function(e) {
 			e.preventDefault();
 			var close_url = $(this).parent().data('close');

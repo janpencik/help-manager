@@ -6,33 +6,6 @@ html {
     scroll-behavior: smooth;
 }
 
-// body.publishing-help_page_wp-help-manager-settings,
-// body.post-type-wp-help-docs {
-//     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    
-//     // Highlight menu item
-//     #toplevel_page_wp-help-manager-documents .menu-top {
-//         background: #2271b1;
-//         color: #fff;
-//         &:after {
-//             right: 0;
-//             border: solid 8px transparent;
-//             content: " ";
-//             height: 0;
-//             width: 0;
-//             position: absolute;
-//             pointer-events: none;
-//             border-right-color: #f0f0f1;
-//             top: 50%;
-//             margin-top: -8px;
-//         }
-//         .wp-menu-image:before {
-//             color: rgba(240,246,252,1);
-//         }
-//     }
-
-// }
-
 // Hide submenu items
 #toplevel_page_wp-help-manager-documents .wp-submenu {
     display: none;
@@ -41,25 +14,25 @@ html {
 // Fix position of toolbar under admin bar
 body.toplevel_page_wp-help-manager-documents,
 body.publishing-help_page_wp-help-manager-settings,
+body.publishing-help_page_wp-help-manager-tools,
 body.post-type-wp-help-docs {
     
-    #wpbody {
-        @media (max-width: 600px) {
-            padding-top: 0;
-        }
-    }
-
     .contextual-help-sidebar {
         p span {
             margin-right: 3px;
         }
     }
+
+    #wpbody-content {
+        padding-bottom: 65px;
+    }
 }
 
 // Toolbar
 .wphm-toolbar {
+    min-height: 55.19px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     position: relative;
     box-sizing: border-box;
     margin: 0 -20px;
@@ -71,21 +44,45 @@ body.post-type-wp-help-docs {
     background: #fff;
     color: #50575e;
     font-size: 13px;
+    @media (max-width: 782px) {
+        font-size: 16px;
+    }
     @media (max-width: 600px) {
-        padding-top: 46px;
+        display: none;
     }
     a {
         text-decoration: none;
     }
     .filter-links {
+        display: flex;
         .current {
-            border-bottom: 4px solid #0071a4;
+            position: relative;
+            border-bottom: none;
+            &::after {
+                position: absolute;
+                content: "";
+                display: block;
+                width: calc( 100% - 25px );
+                bottom: -4px;
+                height: 4px;
+                background-color: #0071a4;
+            }
+        }
+        .wphm-mobile-only {
+            display: none;
+            @media (max-width: 600px) {
+                display: inline-block;
+            }
         }
         li {
             a {
                 color: #1d2327;
-                padding: 18px 0 15px;
+                padding: 18px 12.5px 15px;
+                margin: 0;
                 font-size: 14px;
+                @media (max-width: 782px) {
+                    font-size: 16px;
+                }
                 &:hover {
                     color: #2271b1;
                 }
@@ -97,16 +94,21 @@ body.post-type-wp-help-docs {
         }
     }
     .wphm-search {
+        align-self: center;
+        margin-right: 10px;
         margin-left: auto;
+        @media (max-width: 782px) {
+            display: none;
+        }
     }
 }
 .wphm-brand {
+    display: flex;
+    align-items: center;
     color: #1d2327;
     font-weight: 700;
-    padding: 18px 0 14px;
-    margin: 0 10px;
-    display: inline-block;
-    border-bottom: 3px solid #fff;
+    padding: 0 10px;
+    margin: 0 0 2px;
     @media (max-width: 600px) {
         display: none;
     }
@@ -118,10 +120,18 @@ body.post-type-wp-help-docs {
         box-shadow: none;
     }
     .dashicons {
+        margin-right: 7px;
         position: relative;
         line-height: 1;
-        top: -1px;
         color: #babbbc;
+        @media (max-width: 782px) {
+            width: 24px;
+            height: 24px;
+            font-size: 24px;
+        }
+    }
+    .text {
+        line-height: 1;
     }
 }
 
