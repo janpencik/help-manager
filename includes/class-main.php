@@ -167,6 +167,9 @@ class Wp_Help_Manager {
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
 
+		// Set order on document save
+		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_default_document_order', 10, 2 );
+
 		// Revoke past user capabilities
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_current_admin_capabilities' );
 

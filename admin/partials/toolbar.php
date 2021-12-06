@@ -37,7 +37,8 @@ $menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] )
 
     <!-- Navigation -->
     <ul class="filter-links">
-        <li class="wphm-mobile-only">
+        <!-- <li class="wphm-mobile-only"> -->
+        <li>
             <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>" <?php if( $screen_id === 'toplevel_page_wp-help-manager-documents' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Documents', 'wp-help-manager' ); ?>
             </a>

@@ -309,6 +309,28 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
+	 * Set default order when creating a new document.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function set_default_document_order( $data, $postarr ) {
+		if( $data['post_type'] === 'wp-help-docs' ) {
+			$last_post = get_posts( array(
+				'post_type' 		=> 'wp-help-docs',
+				'posts_per_page' 	=> 1,
+				'post_status'		=> array( 'publish', 'private' ),
+				'orderby'          	=> 'menu_order',
+				'order'            	=> 'DESC',
+			) );
+			if( $last_post ) {
+				$data['menu_order'] = $last_post[0]->menu_order + 10;
+			}
+		}
+		return $data;
+	}
+	
+	/**
 	 * Register plugin settings using the Settings API.
 	 *
 	 * @since    1.0.0
@@ -316,30 +338,35 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function options_update() {
 
+		// Admin
 		register_setting(
 			$this->plugin_name . '-admin',
 			$this->plugin_name . '-admin',
 			array( $this, 'validate_admin' )
 		);
 
+		// Document
 		register_setting(
 			$this->plugin_name . '-document',
 			$this->plugin_name . '-document',
 			array( $this, 'validate_document' )
 		);
 
+		// Permissions
 		register_setting(
 			$this->plugin_name . '-permissions',
 			$this->plugin_name . '-permissions',
 			array( $this, 'validate_permissions' )
 		);
 
+		// Custom CSS
 		register_setting(
 			$this->plugin_name . '-custom-css',
 			$this->plugin_name . '-custom-css',
 			array( $this, 'validate_custom_css' )
 		);
 
+		// Advanced
 		register_setting(
 			$this->plugin_name . '-advanced',
 			$this->plugin_name . '-advanced',
