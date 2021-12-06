@@ -19,13 +19,6 @@
             );
         }
 
-        // Import
-        if( $('#wphm-install-importer').length > 0 ) {
-
-            
-
-        } 
-
         // Export
         if( $('#wphm_docs_all').length > 0 ) {
 

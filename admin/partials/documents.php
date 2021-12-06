@@ -60,11 +60,6 @@ if( $search_string ) {
             <!-- Navigation -->
             <div class="wphm-sidebar-topics-box inner">
 
-                <!-- Toggle -->
-                <button class="wphm-sidebar-hide">
-                    <span class="dashicons"></span>
-                </button>
-
                 <!-- Topics -->
                 <div class="wphm-sidebar-topics">
                     <h3><a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>"><?php esc_html_e( 'Topics', 'wp-help-manager' ); ?></a></h3>
@@ -149,40 +144,22 @@ if( $search_string ) {
                 <!-- Box -->
                 <div class="inner">
 
-                    <!-- Action buttons -->
-                    <div class="wphm-content-actions">
-                        <span class="wphm-action-button wphm-action-expand">
-                            <span class="dashicons dashicons-arrow-right-alt2"></span>
-                            <span><?php esc_html_e( 'Show navigation', 'wp-help-manager' );?></span>
-                        </span>
-                        <span class="wphm-action-button wphm-action-clipboard" data-clipboard-text="<?php echo esc_attr( esc_url( get_permalink( $document_id ) ) ); ?>">
-                            <span class="dashicons dashicons-admin-links"></span>
-                            <span><?php esc_html_e( 'Copy link', 'wp-help-manager' );?></span>
-                        </span>
-                        <span onclick="window.print();return false;" class="wphm-action-button">
-                            <span class="dashicons dashicons-printer"></span>
-                            <span><?php esc_html_e( 'Print', 'wp-help-manager' );?></span>
-                        </span>
-                        <?php if( $this->current_user_is_editor() ) { ?>
-                        <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="wphm-action-button wphm-action-button-right">
-                            <span class="dashicons dashicons-edit"></span>
-                            <span><?php esc_html_e( 'Edit', 'wp-help-manager' );?></span>
-                        </a>
-                        <span class="wphm-action-button wphm-action-trash" data-id="<?php echo esc_attr( $document_id ); ?>" data-nonce="<?php echo wp_create_nonce( 'trash-document' ); ?>">
-                            <span class="dashicons dashicons-trash"></span>
-                            <span><?php esc_html_e( 'Trash', 'wp-help-manager' );?></span>
-                        </span>
-                        <?php } ?>
-                    </div>
+                    <!-- Print button -->
+                    <span title="<?php esc_attr_e( 'Print this document', 'wp-help-manager' ); ?>" onclick="window.print();return false;" class="wphm-print-button">
+                        <span class="dashicons dashicons-printer"></span>
+                    </span>
 
-                    <!-- Title -->
-                    <h1 class="wp-heading-inline"><?php the_title(); ?></h1>
-                    <?php
-                    if( ! in_array( get_post_status(), array( 'publish', 'private' ) ) ) {
-                    $post_status_obj = get_post_status_object( get_post_status() );
-                    ?>
-                    <span class="wphm-document-status"><?php echo $post_status_obj->label; ?></span>
-                    <?php } ?>
+                    <div class="wphm-document-title">
+                        
+                        <!-- Title -->
+                        <h1 class="wp-heading-inline"><?php the_title(); ?></h1>
+
+                        <!-- Edit link -->
+                        <?php if( $this->current_user_is_editor() ) { ?>
+                        <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="page-title-action"><?php esc_html_e( 'Edit', 'wp-help-manager' );?></a>
+                        <?php } ?>
+
+                    </div>
 
                     <?php
                     if( isset( $document_settings ) && isset( $document_settings['child_navigation'] ) && $document_settings['child_navigation'] || ! $document_settings ) {

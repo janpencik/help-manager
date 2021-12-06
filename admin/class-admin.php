@@ -59,10 +59,6 @@ class Wp_Help_Manager_Admin {
 			|| isset( $screen->id ) && $screen->id === 'edit-wp-help-docs'
 			|| ( isset( $screen->id ) && $screen->id === 'wp-help-docs' && $screen->is_block_editor == false ) 
 		) {
-
-			// Add help tab
-			$this->setup_help_tab();
-
 			return true;
 		}
 		return false;
@@ -76,6 +72,19 @@ class Wp_Help_Manager_Admin {
 	public function is_plugin_documents_page() {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_wp-help-manager-documents' ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Determine if the current page is document editing page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function is_plugin_document_edit_page() {
+		$screen = get_current_screen();
+		if( isset( $screen->base ) && isset( $screen->id ) && isset( $_GET['action'] ) && $screen->base === 'post' && $screen->id === 'wp-help-docs' && $_GET['action'] === 'edit' ) {
 			return true;
 		}
 		return false;
@@ -121,28 +130,11 @@ class Wp_Help_Manager_Admin {
 			// CodeMirror editor CSS
 			wp_enqueue_style( 'wp-codemirror' );
 
-			// Settings CSS libraries
-			// wp_register_style( $this->plugin_name . '-settings-libs', plugin_dir_url( __FILE__ ) . 'assets/css/settings-libs.css', array(), $this->version, 'all' );
-
 			// Settings main CSS
 			wp_enqueue_style( $this->plugin_name . '-settings', plugin_dir_url( __FILE__ ) . 'assets/css/settings.css', array(), $this->version, 'all' );
 
 		}
 
-	}
-
-	/**
-	 * Add custom CSS to document page
-	 *
-	 * @since    1.0.0
-	 */
-	public function custom_admin_css() {
-		if( $this->is_plugin_documents_page() === true ) {
-			$custom_css = get_option( $this->plugin_name . '-custom-css' );
-			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
-				echo '<style id="wphm-custom-css">' . $custom_css['custom-css'] . '</style>';
-			}
-		}
 	}
 
 	/**
@@ -177,14 +169,25 @@ class Wp_Help_Manager_Admin {
 			wp_localize_script( 'jquery', 'cm_settings', $cm_settings );
 			wp_enqueue_script( 'wp-theme-plugin-editor' );
 
-			// Settings JS libraries
-			// wp_register_script( $this->plugin_name . '-settings-libs', plugin_dir_url( __FILE__ ) . 'assets/js/settings-libs.js', array(), $this->version, $this->version, false );
-			
 			// Settings main JS
 			wp_enqueue_script( $this->plugin_name . '-settings', plugin_dir_url( __FILE__ ) . 'assets/js/settings.js', array(), $this->version, $this->version, false );
 
 		}
 
+	}
+	
+	/**
+	 * Add custom CSS to document page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function custom_admin_css() {
+		if( $this->is_plugin_documents_page() === true ) {
+			$custom_css = get_option( $this->plugin_name . '-custom-css' );
+			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
+				echo '<style id="wphm-custom-css">' . $custom_css['custom-css'] . '</style>';
+			}
+		}
 	}
 
 	/**
@@ -292,10 +295,9 @@ class Wp_Help_Manager_Admin {
 		global $menu;
 		global $submenu;
 
-		// Get admin settings
 		$admin_settings = get_option( $this->plugin_name . '-admin' );
 
-		// Top level item -> user defined headline
+		// Change plugin's menu item name according to user settings
 		foreach( $menu as $key => $m ) {
 			if( $m[2] === 'wp-help-manager-documents' ) {
 				$menu_item_key = $key;
@@ -303,9 +305,27 @@ class Wp_Help_Manager_Admin {
 		}
 		$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
 
-		// Submenu item
-		if( isset( $submenu['wp-help-manager-documents'] ) )
+		// Change post type menu item name
+		if( isset( $submenu['wp-help-manager-documents'] ) ) {
 			$submenu['wp-help-manager-documents'][0][0] = __( 'Documents', 'wp-help-manager' );
+		}
+
+	}
+
+	/**
+	 * Highlight menu item on document edit page.
+	 *
+	 * @since 1.0.0
+	 * @access   public
+	 */
+	public function highlight_menu_on_document_edit_page( $parent_file ) {
+		global $plugin_page;
+
+        if( $this->is_plugin_document_edit_page() === true ) {
+			$plugin_page = 'wp-help-manager-documents';
+		}
+
+        return $parent_file;
 	}
 
 	/**
@@ -550,26 +570,6 @@ class Wp_Help_Manager_Admin {
 	 */
 	function add_admin_notices() {
 		if ( isset( $_GET['wphm-notice'] ) ) {
-
-			// Trashed document
-			if ( $_GET['wphm-notice'] === 'trashed' && isset( $_GET['wphm-id'] ) ) {
-				$trashed_id = intval( $_GET['wphm-id'] );
-				?>
-				<div class="notice notice-success my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( array( 'wphm-notice', 'wphm-id' ) ); ?>">
-					<p><?php esc_html_e( 'Document moved to the Trash.', 'wp-help-manager' ); ?> <span class="wphm-action-text wphm-action-untrash" data-id="<?php echo esc_attr( $trashed_id ); ?>" data-nonce="<?php echo wp_create_nonce( 'untrash-document' ); ?>"><?php esc_html_e( 'Undo', 'wp-help-manager' ); ?></span></p>
-				</div>
-				<?php
-			}
-
-			// Untrashed document
-			if ( $_GET['wphm-notice'] === 'untrashed' && isset( $_GET['wphm-id'] ) ) {
-				$untrashed_id = intval( $_GET['wphm-id'] );
-				?>
-				<div class="notice notice-success my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( array( 'wphm-notice', 'wphm-id' ) ); ?>">
-					<p><?php esc_html_e( 'Document restored from the Trash.', 'wp-help-manager' ); ?></p>
-				</div>
-				<?php
-			}
 
 			// No documents selected for export
 			if ( $_GET['wphm-notice'] === 'empty-export' ) {
@@ -892,46 +892,6 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Trash document.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public function ajax_trash_document() {
-		if( check_ajax_referer( 'trash-document', 'security' ) ) {
-			$document_id = intval( $_POST['id'] );
-			if( get_post_type( $document_id ) === 'wp-help-docs' ) {
-				$post_status = get_post_status( $document_id );
-				if( wp_trash_post( $document_id ) ) {
-					wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'trashed', 'wphm-id' => $document_id ), get_permalink( $this->get_default_document() ) ) );
-				}
-			}
-		}
-		wp_send_json_error();
-	}
-
-	/**
-	 * Untrash document.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public function ajax_untrash_document() {
-		if( check_ajax_referer( 'untrash-document', 'security' ) ) {
-			$document_id = intval( $_POST['id'] );
-			if( get_post_type( $document_id ) === 'wp-help-docs' ) {
-				$previous_post_status = get_post_meta( $document_id, '_wp_trash_meta_status' );
-				if( $previous_post_status ) {
-					if( wp_untrash_post( $document_id ) && wp_update_post( array( 'ID' => $document_id, 'post_status' => $previous_post_status ) ) ) {
-						wp_send_json_success( add_query_arg( array( 'wphm-notice' => 'untrashed', 'wphm-id' => $document_id ), get_permalink( $document_id ) ) );
-					}
-				}
-			}
-		}
-		wp_send_json_error();
-	}
-
-	/**
 	 * Get list of child documents.
 	 *
 	 * @since    1.0.0
@@ -978,8 +938,6 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function add_toolbar_menu() {
 
-		$screen = get_current_screen();
-
 		// Get search parameter
 		$search_string = '';
 		if( isset( $_GET['s'] ) ) {
@@ -1025,59 +983,71 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
+	 * Add help tab to all plugin pages.
+	 *
+	 * @since    1.0.0
+	 */
+	// public function add_help_tab() {
+	// 	if ( is_plugin_page() === true ) {
+	// 		$this->setup_help_tab();
+	// 	}
+	// 	return false;
+	// }
+
+	/**
 	 * Sets up the admin help tab.
 	 *
 	 * @since    1.0.0
 	 * @access   public
 	 */
-	public function setup_help_tab() {
-		$screen = get_current_screen();
+	// public function setup_help_tab() {
+	// 	$screen = get_current_screen();
 
-		// Overview tab.
-		$screen->add_help_tab(
-			array(
-				'id'      => 'overview',
-				'title'   => __( 'Overview', 'wp-help-manager' ),
-				'content' =>
-					'<p><strong>' . __( 'Overview', 'wp-help-manager' ) . '</strong></p>' .
-					'<p>' . __( 'Lorem ipsum dolor sit amet.' ) . '</p>'
-			)
-		);
+	// 	// Overview tab.
+	// 	$screen->add_help_tab(
+	// 		array(
+	// 			'id'      => 'overview',
+	// 			'title'   => __( 'Overview', 'wp-help-manager' ),
+	// 			'content' =>
+	// 				'<p><strong>' . __( 'Overview', 'wp-help-manager' ) . '</strong></p>' .
+	// 				'<p>' . __( 'Lorem ipsum dolor sit amet.' ) . '</p>'
+	// 		)
+	// 	);
 
-		// Help tab.
-		// $screen->add_help_tab(
-		// 	array(
-		// 		'id'      => 'help',
-		// 		'title'   => __( 'Help & Support', 'wp-help-manager' ),
-		// 		'content' =>
-		// 			'<p><strong>' . __( 'Help & Support', 'wp-help-manager' ) . '</strong></p>' .
-		// 			'<p>' . __( 'We are fanatical about support, and want you to get the best out of your website with ACF. If you run into any difficulties, there are several places you can find help:', 'wp-help-manager' ) . '</p>' .
-		// 			'<ul>' .
-		// 				'<li>' . sprintf(
-		// 					__( '<a href="%s" target="_blank">Documentation</a>. Our extensive documentation contains references and guides for most situations you may encounter.', 'wp-help-manager' ),
-		// 					'https://www.advancedcustomfields.com/resources/'
-		// 				) . '</li>' .
-		// 				'<li>' . sprintf(
-		// 					__( '<a href="%s" target="_blank">Discussions</a>. We have an active and friendly community on our Community Forums who may be able to help you figure out the 'how-tos' of the ACF world.', 'wp-help-manager' ),
-		// 					'https://support.advancedcustomfields.com/'
-		// 				) . '</li>' .
-		// 				'<li>' . sprintf(
-		// 					__( '<a href="%s" target="_blank">Help Desk</a>. The support professionals on our Help Desk will assist with your more in depth, technical challenges.', 'wp-help-manager' ),
-		// 					'https://www.advancedcustomfields.com/support/'
-		// 				) . '</li>' .
-		// 			'</ul>',
-		// 	)
-		// );
+	// 	// Help tab.
+	// 	// $screen->add_help_tab(
+	// 	// 	array(
+	// 	// 		'id'      => 'help',
+	// 	// 		'title'   => __( 'Help & Support', 'wp-help-manager' ),
+	// 	// 		'content' =>
+	// 	// 			'<p><strong>' . __( 'Help & Support', 'wp-help-manager' ) . '</strong></p>' .
+	// 	// 			'<p>' . __( 'We are fanatical about support, and want you to get the best out of your website with ACF. If you run into any difficulties, there are several places you can find help:', 'wp-help-manager' ) . '</p>' .
+	// 	// 			'<ul>' .
+	// 	// 				'<li>' . sprintf(
+	// 	// 					__( '<a href="%s" target="_blank">Documentation</a>. Our extensive documentation contains references and guides for most situations you may encounter.', 'wp-help-manager' ),
+	// 	// 					'https://www.advancedcustomfields.com/resources/'
+	// 	// 				) . '</li>' .
+	// 	// 				'<li>' . sprintf(
+	// 	// 					__( '<a href="%s" target="_blank">Discussions</a>. We have an active and friendly community on our Community Forums who may be able to help you figure out the 'how-tos' of the ACF world.', 'wp-help-manager' ),
+	// 	// 					'https://support.advancedcustomfields.com/'
+	// 	// 				) . '</li>' .
+	// 	// 				'<li>' . sprintf(
+	// 	// 					__( '<a href="%s" target="_blank">Help Desk</a>. The support professionals on our Help Desk will assist with your more in depth, technical challenges.', 'wp-help-manager' ),
+	// 	// 					'https://www.advancedcustomfields.com/support/'
+	// 	// 				) . '</li>' .
+	// 	// 			'</ul>',
+	// 	// 	)
+	// 	// );
 
-		// Sidebar.
-		$screen->set_help_sidebar(
-			'<p><strong>' . __( 'WP Help Manager', 'wp-help-manager' ) . '</strong></p>' .
-			'<p><span class="dashicons dashicons-admin-plugins"></span> ' . sprintf( __( 'Version %s', 'wp-help-manager' ), $this->version ) . '</p>' .
-			'<p><span class="dashicons dashicons-wordpress"></span> <a href="https://wordpress.org/plugins/wp-help-manager/" target="_blank">' . __( 'View details', 'wp-help-manager' ) . '</a></p>' .
-			'<p><span class="dashicons dashicons-admin-home"></span> <a href="https://www.wphelpmanager.com/" target="_blank">' . __( 'Visit website', 'wp-help-manager' ) . '</a></p>' .
-			''
-		);
-	}
+	// 	// Sidebar.
+	// 	$screen->set_help_sidebar(
+	// 		'<p><strong>' . __( 'WP Help Manager', 'wp-help-manager' ) . '</strong></p>' .
+	// 		'<p><span class="dashicons dashicons-admin-plugins"></span> ' . sprintf( __( 'Version %s', 'wp-help-manager' ), $this->version ) . '</p>' .
+	// 		'<p><span class="dashicons dashicons-wordpress"></span> <a href="https://wordpress.org/plugins/wp-help-manager/" target="_blank">' . __( 'View details', 'wp-help-manager' ) . '</a></p>' .
+	// 		'<p><span class="dashicons dashicons-admin-home"></span> <a href="https://www.wphelpmanager.com/" target="_blank">' . __( 'Visit website', 'wp-help-manager' ) . '</a></p>' .
+	// 		''
+	// 	);
+	// }
 
 	/**
 	 * Add dashboard widget.

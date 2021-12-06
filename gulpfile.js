@@ -27,8 +27,6 @@ gulp.task("externalDocumentsStyles", function() {
     return (
         gulp
             .src([
-                // Select2
-                "./node_modules/select2/dist/css/select2.min.css",
                 // Magnific popup
                 "./node_modules/magnific-popup/dist/magnific-popup.css",
             ])
@@ -38,21 +36,6 @@ gulp.task("externalDocumentsStyles", function() {
             .pipe(browserSync.stream())
     );
 })
-
-// External Settings CSS
-// gulp.task("externalSettingsStyles", function() {
-//     return (
-//         gulp
-//             .src([
-//                 // Select2
-//                 "./node_modules/select2/dist/css/select2.min.css",
-//             ])
-//             .pipe(postcss([cssnano()]))
-//             .pipe(concat('settings-libs.css'))
-//             .pipe(gulp.dest("./admin/assets/css"))
-//             .pipe(browserSync.stream())
-//     );
-// })
 
 // Main CSS
 gulp.task("mainStyles", function() {
@@ -76,8 +59,6 @@ gulp.task("externalDocumentsScripts", function() {
                 "./node_modules/reframe.js/dist/reframe.min.js",
                 // Magnific popup
                 "./node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
-                // Clipboard
-                "./node_modules/clipboard/dist/clipboard.min.js",
             ])
             .pipe(concat('documents-libs.js'))
             .pipe(uglify())
@@ -85,21 +66,6 @@ gulp.task("externalDocumentsScripts", function() {
             .pipe(browserSync.stream())
     );
 })
-
-// External Settings JS
-// gulp.task("externalSettingsScripts", function() {
-//     return (
-//         gulp
-//             .src([
-//                 // Clipboard
-//                 "./node_modules/clipboard/dist/clipboard.min.js",
-//             ])
-//             .pipe(concat('settings-libs.js'))
-//             .pipe(uglify())
-//             .pipe(gulp.dest("./admin/assets/js"))
-//             .pipe(browserSync.stream())
-//     );
-// })
 
 // Main JS
 gulp.task("mainScripts", function() {
@@ -126,7 +92,6 @@ gulp.task("default", function watchFiles(done) {
     });
     gulp.watch(["./admin/src/scss/**/*.scss"], gulp.series(
         "externalDocumentsStyles",
-        // "externalSettingsStyles",
         "mainStyles", 
         function cssBrowserReload(done) {
             browserSync.reload();
@@ -135,7 +100,6 @@ gulp.task("default", function watchFiles(done) {
     ));
     gulp.watch("./admin/src/js/**/*.js", gulp.series(
         "externalDocumentsScripts",
-        // "externalSettingsScripts",
         "mainScripts", 
         function jsBrowserReload(done) {
             browserSync.reload();
@@ -152,9 +116,7 @@ gulp.task("default", function watchFiles(done) {
 // Build assets
 gulp.task( "build", gulp.series( "clean", gulp.parallel( 
     "externalDocumentsStyles", 
-    // "externalSettingsStyles",
     "mainStyles", 
     "externalDocumentsScripts", 
-    // "externalSettingsScripts",
     "mainScripts"
 ), "default" ) )

@@ -14,7 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$screen_id = $screen->id;
+// Screen vars
+$screen = get_current_screen();
+$screen_id = isset( $screen->id ) ? $screen->id : false;
+$screen_base = isset( $screen->base ) ? $screen->base : false;
+$screen_action = isset( $_GET['action'] ) ? $_GET['action'] : false;
+
+// Highlight current page in toolbar
+$current_screen = false;
+if( $screen_id === 'toplevel_page_wp-help-manager-documents' ) {
+    $current_screen = 'view_documents';
+} elseif( $screen_id === 'edit-wp-help-docs' || $screen_id === 'wp-help-docs' || ( $screen->base === 'post' && $screen->id === 'wp-help-docs' && $screen_action === 'edit' ) ) {
+    $current_screen = 'manage_documents';
+} elseif( $screen_id === 'publishing-help_page_wp-help-manager-settings' ) {
+    $current_screen = 'settings';
+} elseif( $screen_id === 'publishing-help_page_wp-help-manager-tools' ) {
+    $current_screen = 'tools';
+}
 
 // Get admin settings
 $admin_settings = get_option( $this->plugin_name . '-admin' );
@@ -39,30 +55,25 @@ $menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] )
     <ul class="filter-links">
         <!-- <li class="wphm-mobile-only"> -->
         <li>
-            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>" <?php if( $screen_id === 'toplevel_page_wp-help-manager-documents' ) { echo 'class="current" aria-current="page"'; } ?>>
+            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>" <?php if( $current_screen === 'view_documents' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Documents', 'wp-help-manager' ); ?>
             </a>
         </li>
         <?php if( $this->current_user_is_editor() ) { ?>
         <li>
-            <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>" <?php if( $screen_id === 'edit-wp-help-docs' ) { echo 'class="current" aria-current="page"'; } ?>>
+            <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>" <?php if( $current_screen === 'manage_documents' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Manage', 'wp-help-manager' ); ?>
             </a>
         </li>
-        <!-- <li>
-            <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>" <?php if( $screen_id === 'wp-help-docs' ) { echo 'class="current" aria-current="page"'; } ?>>
-                <?php esc_html_e( 'Add new', 'wp-help-manager' ); ?>
-            </a>
-        </li> -->
         <?php } ?>
         <?php if( $this->current_user_is_admin() ) { ?>
         <li>
-            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-settings' ) ) ); ?>" <?php if( $screen_id === 'publishing-help_page_wp-help-manager-settings' ) { echo 'class="current" aria-current="page"'; } ?>>
+            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-settings' ) ) ); ?>" <?php if( $current_screen === 'settings' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Settings', 'wp-help-manager' ); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-tools' ) ) ); ?>" <?php if( $screen_id === 'publishing-help_page_wp-help-manager-tools' ) { echo 'class="current" aria-current="page"'; } ?>>
+            <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-tools' ) ) ); ?>" <?php if( $current_screen === 'tools' ) { echo 'class="current" aria-current="page"'; } ?>>
                 <?php esc_html_e( 'Tools', 'wp-help-manager' ); ?>
             </a>
         </li>

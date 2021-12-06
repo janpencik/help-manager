@@ -8,11 +8,8 @@
   "author": "Bohemia Plugins",
   "license": "MIT",
   "dependencies": {
-    "clipboard": "^2.0.8",
     "magnific-popup": "^1.1.0",
-    "reframe.js": "^3.0.3",
-    "select2": "^4.1.0-rc.0",
-    "sortablejs": "^1.14.0"
+    "reframe.js": "^3.0.3"
   },
   "devDependencies": {
     "autoprefixer": "*",

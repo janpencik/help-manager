@@ -187,6 +187,9 @@ class Wp_Help_Manager {
 		// Modify plugin menu
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'modify_plugin_menu' );
 
+		// Highlight menu item on document edit page
+		$this->loader->add_filter( 'parent_file', $plugin_admin, 'highlight_menu_on_document_edit_page' );
+
 		// Add toolbar to the admin pages
 		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'add_toolbar_menu' );
 
@@ -205,10 +208,6 @@ class Wp_Help_Manager {
 
 		// Ajax reoder documents
 		$this->loader->add_action( 'wp_ajax_wphm_docs_reorder', $plugin_admin, 'ajax_reorder' );
-
-		// Ajax trash/untrash document
-		$this->loader->add_action( 'wp_ajax_wphm_trash_document', $plugin_admin, 'ajax_trash_document' );
-		$this->loader->add_action( 'wp_ajax_wphm_untrash_document', $plugin_admin, 'ajax_untrash_document' );
 
 		// Responsive tables
 		$this->loader->add_filter( 'the_content', $plugin_admin, 'responsive_tables' );

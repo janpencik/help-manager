@@ -130,58 +130,6 @@
 			});
 		}
 
-		// Clipboard.js
-       	var copyLink = new ClipboardJS('.wphm-action-clipboard');
-		copyLink.on('success', function(e) {
-
-			e.trigger.querySelector('span:first-child').classList.remove('dashicons-admin-links');
-			e.trigger.querySelector('span:first-child').classList.add('dashicons-clipboard');
-			e.trigger.querySelector('span:last-child').innerHTML = 'Copied!';
-			e.clearSelection();
-
-			setTimeout( function() {
-				e.trigger.querySelector('span:first-child').classList.remove('dashicons-clipboard');
-				e.trigger.querySelector('span:first-child').classList.add('dashicons-admin-links');
-				e.trigger.querySelector('span:last-child').innerHTML = 'Copy link';
-			}, 2000);
-
-		});
-
-		// Collapse/expand sidebar
-		if( $('.wphm-sidebar-hide, .wphm-action-expand').length > 0 ) {
-			$('.wphm-sidebar-hide, .wphm-action-expand').on( 'click', function() {
-				$('body').toggleClass('wphm-sidebar-collapsed');
-			})
-		}
-
-		// Trash document
-		$('.wphm-action-trash').on('click', function(e) {
-			if ( confirm('Are you sure you want to move this document to trash?') ) {
-				const request = $.post( ajaxurl, {
-					action: 'wphm_trash_document',
-					security: $(this).data('nonce'),
-					id: $(this).data('id')
-				}, function(response) {
-					if( response.success == true ) {
-						window.location.href = response.data
-					}
-				});
-			}
-		});
-
-		// Untrash document
-		$('.wphm-action-untrash').on('click', function(e) {
-			const request = $.post( ajaxurl, {
-				action: 'wphm_untrash_document',
-				security: $(this).data('nonce'),
-				id: $(this).data('id')
-			}, function(response) {
-				if( response.success == true ) {
-					window.location.href = response.data
-				}
-			});
-		});
-
 		// Remove query args after dismissing the admin notice
 		$(document).on('click', '.wphm-notice .notice-dismiss', function(e) {
 			e.preventDefault();

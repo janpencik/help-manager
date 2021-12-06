@@ -48,8 +48,6 @@ body.toplevel_page_wp-help-manager-documents {
     width: 300px;
     flex-shrink: 0;
     position: relative;
-    left: 0;
-    transition: left .15s;
     @media (max-width: 1100px) {
         width: 250px;
     }
@@ -61,7 +59,7 @@ body.toplevel_page_wp-help-manager-documents {
         box-sizing: border-box;
         padding: 15px 15px 5px;
         border: 1px solid #ccc;
-        border-radius: 3px;
+        // border-radius: 3px;
         background: #fff;
         box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
     }
@@ -140,98 +138,6 @@ body.toplevel_page_wp-help-manager-documents {
         margin-top: 3px;
     }
 }
-.wphm-sidebar-hide {
-    display: block;
-    padding: 5px;
-    border-radius: 0 3px 0 3px;
-    appearance: none;
-    box-shadow: none;
-    background: #fff;
-    border: 1px solid #ccc;
-    position: absolute;
-    right: -1px;
-    top: -1px;
-    cursor: pointer;
-    @media (max-width: 782px) {
-        display: none;
-    }
-    .dashicons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 20px;
-        height: 20px;
-        font-size: 15px;
-        color: #646970;
-        &::before {
-            content: "\f341";
-        }
-        &:hover {
-            color: #2c3338;
-        }
-    }
-}
-
-// Hide sidebar animation
-body.wphm-sidebar-collapsed {
-    .wphm-sidebar {
-        position: relative;
-        left: -500px;
-        @media (max-width: 782px) {
-            left: auto;
-        }
-        .inner {
-            // opacity: 0;
-            // visibility: hidden;
-            @media (max-width: 782px) {
-                left: auto;
-                opacity: 1;
-                visibility: visible;
-            }
-        }
-    }
-    .wphm-content {
-        left: -300px;
-        @media (max-width: 1100px) {
-            left: -250px;
-        }
-        @media (max-width: 782px) {
-            left: auto;
-        }
-    }
-    .wphm-action-expand {
-        display: flex;
-        @media (max-width: 782px) {
-            display: none;
-        }
-    }
-    // .wphm-sidebar-topics-box {
-    //     padding: 0;
-    //     min-height: unset;
-    //     background: none;
-    //     border: none;
-    // }
-    // .wphm-sidebar-topics {
-    //     display: none;
-    // }
-    // .wphm-sidebar-hide {
-    //     border-radius: 3px;
-    //     position: static;
-    //     top: auto;
-    //     right: auto;
-    //     .dashicons::before {
-    //         content: "\f345";
-    //     }
-    // }
-    .wphm-content {
-        // margin: 41px 0 10px;
-        width: 100%;
-        .inner {
-            width: 1052px;
-        }
-    }
-}
-
 
 // Mobile search
 .wphm-search-mobile {
@@ -278,9 +184,8 @@ body.wphm-sidebar-collapsed {
     box-sizing: border-box;
     width: calc( 100% - 300px );
     position: relative;
-    margin: 41px 0 10px;
-    left: 0;
-    transition: left .15s;
+    // margin: 41px 0 10px;
+    margin: 10px 0;
     @media (max-width: 1100px) {
         width: calc( 100% - 250px );
     }
@@ -304,17 +209,22 @@ body.wphm-sidebar-collapsed {
         line-height: 1.65;
         color: #191e23;
         clear: none;
-        border-radius: 0 0 3px 3px;
-        transition: width .15s;
+        // border-radius: 0 0 3px 3px;
+        // border-radius: 3px;
+        // transition: width .15s;
         @media (max-width: 782px) {
             width: 100%;
             padding: 20px;
-            margin: 10px 0 10px;
+            margin: 10px 0;
         }
-        @media (max-width: 600px) {
-            border-radius: 3px;
+        // @media (max-width: 600px) {
+        //     border-radius: 3px;
+        // }
+        .wphm-document-title {
+            padding-right: 40px;
         }
         .wp-heading-inline {
+            display: inline;
             padding: 5px 0 0;
             @media (max-width: 782px) {
                 margin-bottom: 0;
@@ -590,80 +500,17 @@ body.wphm-sidebar-collapsed {
     }
 }
 
-// Action buttons
-.wphm-content-actions {
-    z-index: 1;
+// Print button
+.wphm-print-button {
+    cursor: pointer;
     position: absolute;
-    bottom: 100%;
-    left: -1px;
-    display: flex;
-    // justify-content: flex-end;
-    right: -1px;
-    @media (max-width: 600px) {
-        display: none;
+    top: 25px;
+    right: 25px;
+    color: #C6C6C6;
+    &:hover {
+        color: #2271b1;
     }
 }
-.wphm-action-button {
-    cursor: pointer;
-    user-select: none;
-    margin-right: 3px;
-    border: 1px solid #c3c4c7;
-    height: auto;
-    margin-bottom: 0;
-    padding: 0 12px;
-    background: #fff;
-    border-radius: 4px 4px 0 0;
-    color: #646970;
-    background: #fff;
-    line-height: 1.7;
-    box-shadow: 0 0 0 transparent;
-    transition: box-shadow .1s linear;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    font-size: 13px;
-    min-height: 30px;
-    @media (max-width: 782px) {
-        font-size: 14px;
-        vertical-align: middle;
-        min-height: 40px;
-    }
-    .dashicons {
-        font-size: 15px;
-        width: 15px;
-        height: 15px;
-        margin-right: 5px;
-    }
-    &:hover,
-    &:focus {
-        color: #2c3338;
-    }
-    &:last-child {
-        margin-right: 0;
-    }
-}
-.wphm-action-button-right {
-    margin-left: auto;
-}
-.wphm-action-text {
-    cursor: pointer;
-    text-decoration: underline;
-    outline: 0;
-    color: #2271b1;
-    transition-property: border,background,color;
-    transition-duration: .05s;
-    transition-timing-function: ease-in-out;
-}
-.wphm-action-expand {
-    display: none;
-}
-// .wphm-action-red {
-//     color: #b32d2e;
-//     &:hover {
-//         color: #b32d2e;
-//     }
-// }
 
 // Document footer
 .wphm-document-footer {
@@ -719,6 +566,7 @@ body.wphm-sidebar-collapsed {
 
 // Printing styling
 @media print {
+    .wphm-print-button,
     .wphm-toolbar,
     #wpadminbar,
     #adminmenumain,
