@@ -529,7 +529,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 						<div class="wphm-settings-box-inside">
 								
-							<p><?php esc_html_e( 'Choose what data you wish to delete/preserve after the plugin uninstallation. Please note that after deleting, data will not be recoverable.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Select which data you want to delete when uninstalling the plugin. Please note that it will not be possible to recover data after deletion.', 'wp-help-manager' ); ?></p>
 
 							<div class="form-field form-field-radio">
 								
