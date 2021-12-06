@@ -443,20 +443,6 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Allow preview of any post status on single document page.
-	 *
-	 * @since 	 1.0.0
-	 * @access   public
-	 */
-	public function allow_documents_preview( $query_obj ) {
-		if( ! is_admin() ) return;
-		if( ! current_user_can( 'edit_documents' ) ) return;
-		if( ! isset( $query_obj->query_vars['post_type'] ) || 'wp-help-docs' != $query_obj->query_vars['post_type'] ) return;
-		if( ! $query_obj->is_single ) return;
-		$query_obj->query_vars['post_status'] = 'any';
-	}
-
-	/**
 	 * Get post ID of a default document.
 	 *
 	 * @since 	 1.0.0

@@ -21,10 +21,19 @@ $headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) &
 // Get document settings
 $document_settings = get_option( $this->plugin_name . '-document' );
 
+// Page type
+if( $search_string ) {
+    $page_type = 'search';
+} else if( $document_id ) {
+    $page_type = 'document';
+} else {
+    $page_type = 'empty';
+}
+
 ?>
 
 <!-- Main wrapper -->
-<div class="wrap wphm-wrap">
+<div class="wrap wphm-wrap wphm-<?php echo $page_type; ?>">
 
     <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Documents', 'wp-help-manager' ); ?></h1>
     <?php if( $this->current_user_is_editor() ) { ?>
@@ -79,11 +88,11 @@ $document_settings = get_option( $this->plugin_name . '-document' );
         </div>
 
         <?php 
-        if( $search_string ) {
+        if( $page_type === 'search' ) {
         ?>
 
             <!-- Search results -->
-            <div class="wphm-content wphm-search-results">
+            <div class="wphm-content wphm-search-results" id="wphm-content-main">
 
                 <!-- Box -->
                 <div class="inner">
@@ -115,12 +124,15 @@ $document_settings = get_option( $this->plugin_name . '-document' );
             </div>
 
         <?php
-        } else if( isset( $document_id ) ) {
+        } else if( $page_type === 'document' ) {
             $document = new WP_Query( array( 
                 'post_type'     => 'wp-help-docs', 
-                'p'             => $document_id, 
-                'post_status'   => array( 'publish', 'private' )
+                'p'             => $document_id,
             ) );
+
+            if( $document->have_posts() ) {
+            $document->the_post(); 
+            global $id;
             ?>
 
             <!-- Document content -->
@@ -137,102 +149,86 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 <!-- Box -->
                 <div class="inner">
 
-                    <?php 
-                    if( $document->have_posts() ) {
-                        $document->the_post(); 
-                        global $id;
-                        ?>
-
-                        <!-- Action buttons -->
-                        <div class="wphm-content-actions">
-                            <span class="wphm-action-button wphm-action-expand">
-                                <span class="dashicons dashicons-arrow-right-alt2"></span>
-                                <span><?php esc_html_e( 'Show navigation', 'wp-help-manager' );?></span>
-                            </span>
-                            <span class="wphm-action-button wphm-action-clipboard" data-clipboard-text="<?php echo esc_attr( esc_url( get_permalink( $document_id ) ) ); ?>">
-                                <span class="dashicons dashicons-admin-links"></span>
-                                <span><?php esc_html_e( 'Copy link', 'wp-help-manager' );?></span>
-                            </span>
-                            <span onclick="window.print();return false;" class="wphm-action-button">
-                                <span class="dashicons dashicons-printer"></span>
-                                <span><?php esc_html_e( 'Print', 'wp-help-manager' );?></span>
-                            </span>
-                            <?php if( $this->current_user_is_editor() ) { ?>
-                            <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="wphm-action-button wphm-action-button-right">
-                                <span class="dashicons dashicons-edit"></span>
-                                <span><?php esc_html_e( 'Edit', 'wp-help-manager' );?></span>
-                            </a>
-                            <span class="wphm-action-button wphm-action-trash" data-id="<?php echo esc_attr( $document_id ); ?>" data-nonce="<?php echo wp_create_nonce( 'trash-document' ); ?>">
-                                <span class="dashicons dashicons-trash"></span>
-                                <span><?php esc_html_e( 'Trash', 'wp-help-manager' );?></span>
-                            </span>
-                            <?php } ?>
-                        </div>
-
-                        <!-- Title -->
-                        <h1 class="wp-heading-inline"><?php the_title(); ?></h1>
-                        <?php
-                        if( ! in_array( get_post_status(), array( 'publish', 'private' ) ) ) {
-                        $post_status_obj = get_post_status_object( get_post_status() );
-                        ?>
-                        <span class="wphm-document-status"><?php echo $post_status_obj->label; ?></span>
+                    <!-- Action buttons -->
+                    <div class="wphm-content-actions">
+                        <span class="wphm-action-button wphm-action-expand">
+                            <span class="dashicons dashicons-arrow-right-alt2"></span>
+                            <span><?php esc_html_e( 'Show navigation', 'wp-help-manager' );?></span>
+                        </span>
+                        <span class="wphm-action-button wphm-action-clipboard" data-clipboard-text="<?php echo esc_attr( esc_url( get_permalink( $document_id ) ) ); ?>">
+                            <span class="dashicons dashicons-admin-links"></span>
+                            <span><?php esc_html_e( 'Copy link', 'wp-help-manager' );?></span>
+                        </span>
+                        <span onclick="window.print();return false;" class="wphm-action-button">
+                            <span class="dashicons dashicons-printer"></span>
+                            <span><?php esc_html_e( 'Print', 'wp-help-manager' );?></span>
+                        </span>
+                        <?php if( $this->current_user_is_editor() ) { ?>
+                        <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="wphm-action-button wphm-action-button-right">
+                            <span class="dashicons dashicons-edit"></span>
+                            <span><?php esc_html_e( 'Edit', 'wp-help-manager' );?></span>
+                        </a>
+                        <span class="wphm-action-button wphm-action-trash" data-id="<?php echo esc_attr( $document_id ); ?>" data-nonce="<?php echo wp_create_nonce( 'trash-document' ); ?>">
+                            <span class="dashicons dashicons-trash"></span>
+                            <span><?php esc_html_e( 'Trash', 'wp-help-manager' );?></span>
+                        </span>
                         <?php } ?>
+                    </div>
 
-                        <?php
-                        if( isset( $document_settings ) && isset( $document_settings['child_navigation'] ) && $document_settings['child_navigation'] || ! $document_settings ) {
-                            $children = $this->get_document_children( $id );
-                            if( $children ) {
-                            ?>
-                            <div class="wphm-children">
-                                <div class="inner">
-                                    <ul>
-                                        <?php echo $children; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                            <?php } ?>
-                        <?php } ?>
-
-                        <div class="wphm-docs-content">
-                            <?php the_content(); ?>
-                        </div>
-
-                        <?php 
-
-                        // Get post navigation links
-                        if( ( isset( $document_settings ) && isset( $document_settings['post_navigation'] ) && $document_settings['post_navigation'] ) || ! $document_settings ) {
-                            $document_navigation = $this->get_post_navigation_links( $id );
-                            if( $document_navigation->prev_post || $document_navigation->next_post ) {
-                            ?>
-
-                            <!-- Post navigation -->
-                            <nav class="navigation post-navigation" role="navigation">
-                                <div class="nav-links">
-                                    <?php if( $document_navigation->prev_post ) { ?>
-                                    <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
-                                        <span>&xlarr;</span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
-                                    </a>
-                                    <?php } ?>
-                                    <?php if( $document_navigation->next_post ) { ?>
-                                    <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
-                                        <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span>&xrarr;</span>
-                                    </a>
-                                    <?php } ?>
-                                </div>
-                            </nav>
-
-                            <?php } ?>
-                        <?php } ?>
-
-                    <?php } else { ?>
-
-                        <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'wp-help-manager' ); ?></h1>
-                        <p><?php esc_html_e( 'The requested help document could not be found.', 'wp-help-manager' ); ?></p>
-
+                    <!-- Title -->
+                    <h1 class="wp-heading-inline"><?php the_title(); ?></h1>
+                    <?php
+                    if( ! in_array( get_post_status(), array( 'publish', 'private' ) ) ) {
+                    $post_status_obj = get_post_status_object( get_post_status() );
+                    ?>
+                    <span class="wphm-document-status"><?php echo $post_status_obj->label; ?></span>
                     <?php } ?>
 
-                    <?php wp_reset_query(); ?>
+                    <?php
+                    if( isset( $document_settings ) && isset( $document_settings['child_navigation'] ) && $document_settings['child_navigation'] || ! $document_settings ) {
+                        $children = $this->get_document_children( $id );
+                        if( $children ) {
+                        ?>
+                        <div class="wphm-children">
+                            <div class="inner">
+                                <ul>
+                                    <?php echo $children; ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    <?php } ?>
 
+                    <div class="wphm-docs-content">
+                        <?php the_content(); ?>
+                    </div>
+
+                    <?php 
+
+                    // Get post navigation links
+                    if( ( isset( $document_settings ) && isset( $document_settings['post_navigation'] ) && $document_settings['post_navigation'] ) || ! $document_settings ) {
+                        $document_navigation = $this->get_post_navigation_links( $id );
+                        if( $document_navigation->prev_post || $document_navigation->next_post ) {
+                        ?>
+
+                        <!-- Post navigation -->
+                        <nav class="navigation post-navigation" role="navigation">
+                            <div class="nav-links">
+                                <?php if( $document_navigation->prev_post ) { ?>
+                                <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
+                                    <span>&xlarr;</span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
+                                </a>
+                                <?php } ?>
+                                <?php if( $document_navigation->next_post ) { ?>
+                                <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
+                                    <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span>&xrarr;</span>
+                                </a>
+                                <?php } ?>
+                            </div>
+                        </nav>
+
+                        <?php } ?>
+                    <?php } ?>
                 </div>
 
                 <!-- Back to top link -->
@@ -244,6 +240,41 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 </div>
 
             </div>
+
+            <?php } elseif( $page_type === 'empty' ) { ?>
+
+            <!-- Document content -->
+            <div class="wphm-content wphm-content-not-found" id="wphm-content-main">
+
+                <!-- Box -->
+                <div class="inner">
+
+                    <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'wp-help-manager' ); ?></h1>
+                    <p><?php esc_html_e( 'The requested document could not be found.', 'wp-help-manager' ); ?></p>
+
+                </div>
+            
+            </div>
+
+            <?php } ?>
+
+            <?php wp_reset_query(); ?>
+
+        <?php } else { ?>
+
+        <!-- Document content -->
+        <div class="wphm-content wphm-content-not-found" id="wphm-content-main">
+
+            <!-- Box -->
+            <div class="inner">
+
+                <h1 class="wp-heading-inline"><?php esc_html_e( 'No documents', 'wp-help-manager' ); ?></h1>
+                <p><?php esc_html_e( 'There are no published documents.', 'wp-help-manager' ); ?></p>
+                <p><a href="<?php echo esc_attr( admin_url( 'post-new.php?post_type=wp-help-docs' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Add help document', 'wp-help-manager' ); ?></a></p>
+
+            </div>
+        
+        </div>
 
         <?php } ?>
 

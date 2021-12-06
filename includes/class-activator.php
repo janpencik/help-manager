@@ -35,10 +35,9 @@ class Wp_Help_Manager_Activator {
 			return;
 		}
 
-		// Set permissions
 		$permissions = get_option( 'wp-help-manager-permissions' );
 		
-		// If we have no options, create some with default values
+		// If no options, create some with default values
 		if( ! $permissions || ! isset( $permissions['admin'] ) || empty( $permissions['admin'] ) ) {
 
 			$default_permissions = array();
@@ -68,6 +67,7 @@ class Wp_Help_Manager_Activator {
 		) );
 		if( ! $documents ) {
 			$my_post = array(
+				'post_type' 	=> 'wp-help-docs',
 				'post_title'    => wp_strip_all_tags( __( 'Example Help Document', 'wp-help-manager' ) ),
 				'post_content'  => '<p>Test</p>',
 				'post_status'   => 'publish',

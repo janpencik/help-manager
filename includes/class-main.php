@@ -166,9 +166,6 @@ class Wp_Help_Manager {
 
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
-		
-		// Allow preview of any post status on single document page
-		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'allow_documents_preview' );
 
 		// Revoke past user capabilities
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_current_admin_capabilities' );

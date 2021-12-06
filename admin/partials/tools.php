@@ -83,49 +83,59 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="wphm-settings-box-inside">
                 <form id="wphm-export-form" method="post">
                     
+                    <?php 
+                    $docs = get_posts( array( 
+                        'post_type'     => 'wp-help-docs',
+                        'fields'        => 'ids',
+                        'numberposts'   => -1
+                    ) );
+                    if( $docs ) {
+                    ?>
+
                     <?php wp_nonce_field( 'wphm_export_form', 'wphm_export_nonce' );?>
                     <input type="hidden" name="action" value="export_help_documents">
-
+                    
                     <p><?php esc_html_e( 'Select help documents you would like to export and then select your export method. Use the download button to export to a XML file which you can then import to another WP Help Manager installation.', 'wp-help-manager' ); ?></p>
+
+                    <?php } else { ?>
+
+                    <p><?php esc_html_e( 'There are no documents to export.', 'wp-help-manager' ); ?></p>
+
+                    <?php } ?>
 
                     <div class="form-field form-field-flex form-field-radio form-field-highlight">
 
+                        <?php if( $docs ) { ?>
                         <div class="full">
                             <label><?php esc_html_e( 'Select documents' ); ?></label>
-                            <?php 
-                            $docs = get_posts( array( 
-                                'post_type'     => 'wp-help-docs',
-                                'fields'        => 'ids',
-                                'numberposts'   => -1
-                            ) );
-                            if( $docs ) {
-                                ?>
+                            <div>
+                                <input type="checkbox" name="wphm_docs_all" id="wphm_docs_all">
+                                <label for="wphm_docs_all">
+                                    <?php esc_html_e( 'Toggle All', 'wp-help-manager' ); ?>
+                                </label>
+                            </div>
+                            <?php
+                            foreach( $docs as $document ) {
+                            ?>
                                 <div>
-                                    <input type="checkbox" name="wphm_docs_all" id="wphm_docs_all">
-                                    <label for="wphm_docs_all">
-                                        <?php esc_html_e( 'Toggle All', 'wp-help-manager' ); ?>
+                                    <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo $document; ?>" value="<?php echo $document; ?>">
+                                    <label for="wphm_docs-<?php echo $document; ?>">
+                                        <?php echo get_the_title( $document ); ?>
                                     </label>
                                 </div>
-                                <?php
-                                foreach( $docs as $document ) {
-                                ?>
-                                    <div>
-                                        <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo $document; ?>" value="<?php echo $document; ?>">
-                                        <label for="wphm_docs-<?php echo $document; ?>">
-                                            <?php echo get_the_title( $document ); ?>
-                                        </label>
-                                    </div>
-                                <?php } ?>
                             <?php } ?>
                         </div>
+                        <?php } ?>
 
                     </div>
 
+                    <?php if( $docs ) { ?>
                     <div class="form-field form-field-submit">
                         <div>
                             <input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Export File', 'wp-help-manager' ); ?>">
                         </div>
                     </div>
+                    <?php } ?>
 
                 </form>
             </div>
