@@ -60,7 +60,7 @@ class Wp_Help_Manager_Activator {
 		Wp_Help_Manager_Admin::revoke_capabilities( $permissions );
 		Wp_Help_Manager_Admin::assign_capabilities( $permissions );
 
-		// Create an example document if there are none
+		// Create an example document if there are no documents published
 		$documents = get_posts( array(
 			'post_type' 		=> 'wp-help-docs',
 			'posts_per_page' 	=> 1

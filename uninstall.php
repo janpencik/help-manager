@@ -80,8 +80,29 @@ foreach( $roles as $role_slug => $role ) {
 	$role->remove_cap( 'access_wphm_settings' );
 }
 
+// Get advanced settings to see if we should delete or preserve data
+$options = get_option( 'wp-help-manager-advanced' );
+if( $options !== false ) {
+	$delete_options = isset( $options['delete_options'] ) ? boolval( $options['delete_options'] ) : true;
+	$delete_documents = isset( $options['delete_documents'] ) ? boolval( $options['delete_documents'] ) : false;
+} else {
+	$delete_options = true;
+	$delete_documents = false;
+}
+
 // Delete plugin options
-delete_option( 'wp-help-manager-admin' );
-delete_option( 'wp-help-manager-document' );
-delete_option( 'wp-help-manager-permissions' );
-delete_option( 'wp-help-manager-custom-css' );
+if( $delete_options === true ) {
+	delete_option( 'wp-help-manager-admin' );
+	delete_option( 'wp-help-manager-document' );
+	delete_option( 'wp-help-manager-permissions' );
+	delete_option( 'wp-help-manager-custom-css' );
+	delete_option( 'wp-help-manager-advanced' );
+}
+
+// Delete help documents
+if( $delete_options === true ) {
+	$documents = get_posts( 'numberposts=-1&post_type=wp-help-docs&post_status=any&fields=ids' );
+	foreach( $documents as $document ) {
+		wp_delete_post( $document->ID, true );
+	}
+}

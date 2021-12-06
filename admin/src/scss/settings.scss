@@ -194,9 +194,17 @@
 #wphm-run-importer {
     margin-bottom: 5px;
 }
+
+// Notices
 .publishing-help_page_wp-help-manager-tools {
     .notice {
         margin: 5px 0;
         width: 680px;
+    }
+}
+.publishing-help_page_wp-help-manager-settings {
+    .notice {
+        margin: 5px 0;
+        width: 929px;
     }
 }

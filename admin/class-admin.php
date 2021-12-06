@@ -340,6 +340,12 @@ class Wp_Help_Manager_Admin {
 			array( $this, 'validate_custom_css' )
 		);
 
+		register_setting(
+			$this->plugin_name . '-advanced',
+			$this->plugin_name . '-advanced',
+			array( $this, 'validate_advanced' )
+		);
+
 	}
 
 	/**
@@ -437,9 +443,30 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function validate_custom_css( $input ) {
+
 		$valid = array();
+
 		$valid['custom-css'] = $input['custom-css']; // No validation, because CodeMirror is doing it for us
+
 		return $valid;
+
+	}
+
+	/**
+	 * Validate data on Settings page - Advanced tab.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function validate_advanced( $input ) {
+
+		$valid = array();
+
+		$valid['delete_options'] = boolval( $input['delete_options'] );
+		$valid['delete_documents'] = boolval( $input['delete_documents'] );
+
+		return $valid;
+		
 	}
 
 	/**

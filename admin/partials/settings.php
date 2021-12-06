@@ -32,16 +32,19 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 		<div class="wphm-settings-tabs">
 			<div class="inner">
 				<a <?php if( $tab === null ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings">
-					<?php esc_html_e( 'Admin Settings', 'wp-help-manager' ); ?>
+					<?php esc_html_e( 'Admin', 'wp-help-manager' ); ?>
 				</a>
 				<a <?php if( $tab === 'document' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=document">
-					<?php esc_html_e( 'Document Settings', 'wp-help-manager') ?>
+					<?php esc_html_e( 'Document', 'wp-help-manager') ?>
 				</a>
 				<a <?php if( $tab === 'permissions' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=permissions">
-					<?php esc_html_e( 'User Permissions', 'wp-help-manager' ); ?>
+					<?php esc_html_e( 'Permissions', 'wp-help-manager' ); ?>
 				</a>
 				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=custom-css">
 					<?php esc_html_e( 'Custom CSS', 'wp-help-manager') ?>
+				</a>
+				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=advanced">
+					<?php esc_html_e( 'Advanced', 'wp-help-manager') ?>
 				</a>
 			</div>
 		</div>
@@ -327,7 +330,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				</div>
 
 			<!------------------------------------
-			---- User Permissions
+			---- Permissions
 			------------------------------------>	
 			<?php
 			} elseif( $tab === 'permissions' ) {
@@ -358,7 +361,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-permissions">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'User Permissions', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Permissions', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -476,6 +479,78 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 								<div>
 									<textarea name="<?php echo $settings_name; ?>[custom-css]" id="<?php echo $settings_name; ?>-custom-css" cols="30" rows="10"><?php echo $custom_css; ?></textarea>
 								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Submit button -->
+				<div>
+					<?php 
+					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
+					?>
+				</div>
+			
+			<!------------------------------------
+			---- Advanced settings
+			------------------------------------>	
+			<?php
+			} elseif( $tab === 'advanced' ) {
+				
+				$options = get_option( $this->plugin_name . '-advanced' );
+
+				if( $options !== false ) {
+					$delete_options = isset( $options['delete_options'] ) ? boolval( $options['delete_options'] ) : true;
+					$delete_documents = isset( $options['delete_documents'] ) ? boolval( $options['delete_documents'] ) : false;
+				} else {
+					$delete_options = true;
+					$delete_documents = false;
+				}
+
+				$settings_name = $this->plugin_name . '-advanced';
+				settings_fields( $settings_name );
+				do_settings_sections( $settings_name );
+
+				?>
+
+				<!-- Row -->
+				<div class="wphm-docs-row wphm-settings-row">
+
+					<!-- User interface -->
+					<div class="wphm-settings-box wphm-settings-box-import">
+
+						<div class="wphm-settings-box-header">	
+							<h2><?php esc_html_e( 'Uninstall', 'wp-help-manager' ); ?></h2>
+						</div>
+
+						<div class="wphm-settings-box-inside">
+								
+							<p><?php esc_html_e( 'Choose what data you wish to delete/preserve after the plugin uninstallation. Please note that after deleting, data will not be recoverable.', 'wp-help-manager' ); ?></p>
+
+							<div class="form-field form-field-radio">
+								
+								<div>
+									<!-- <label>
+										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
+									</label> -->
+									<div>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_options" name="<?php echo $settings_name; ?>[delete_options]" <?php checked( $delete_options, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-delete_options">
+											<?php echo esc_html__( 'Delete plugin options', 'wp-help-manager' ); ?>
+										</label>
+									</div>
+									<div>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_documents" name="<?php echo $settings_name; ?>[delete_documents]" <?php checked( $delete_documents, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-delete_documents">
+											<?php echo esc_html__( 'Delete help documents', 'wp-help-manager' ); ?>
+										</label>
+									</div>
+								</div>
+
 							</div>
 
 						</div>
