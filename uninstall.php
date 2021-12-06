@@ -100,7 +100,7 @@ if( $delete_options === true ) {
 }
 
 // Delete help documents
-if( $delete_options === true ) {
+if( $delete_documents === true ) {
 	$documents = get_posts( 'numberposts=-1&post_type=wp-help-docs&post_status=any&fields=ids' );
 	foreach( $documents as $document ) {
 		wp_delete_post( $document->ID, true );
