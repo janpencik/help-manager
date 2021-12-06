@@ -85,9 +85,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                     
                     <?php 
                     $docs = get_posts( array( 
-                        'post_type'     => 'wp-help-docs',
-                        'fields'        => 'ids',
-                        'numberposts'   => -1
+                        'post_type'         => 'wp-help-docs',
+                        'fields'            => 'ids',
+                        'numberposts'       => -1,
+                        'suppress_filters'	=> false
                     ) );
                     if( $docs ) {
                     ?>

@@ -34,9 +34,15 @@ if( $screen_id === 'toplevel_page_wp-help-manager-documents' ) {
 
 // Get admin settings
 $admin_settings = get_option( $this->plugin_name . '-admin' );
-$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] ) 
-    ? esc_html( $admin_settings['headline'] )
-    : __( 'Publishing Help', 'wp-help-manager' );
+
+// Make headline WPML translatable
+if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+    $current_language = sanitize_key( ICL_LANGUAGE_CODE );
+    $headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+} else {
+    $headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+}
+
 $menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] ) && $admin_settings['menu_icon'] ) 
     ? esc_html( $admin_settings['menu_icon'] ) 
     : 'dashicons-editor-help';

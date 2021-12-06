@@ -61,9 +61,15 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				$options = get_option( $this->plugin_name . '-admin' );
 
 				if( $options !== false ) {
-					$headline = isset( $options['headline'] ) && $options['headline'] !== '' 
-						? sanitize_text_field( $options['headline'] )
-						: _x( 'Publishing Help', 'default plugin headline', 'wp-help-manager' );
+					
+					// Make headline WPML translatable
+					if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+						$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+						$headline = ( isset( $options ) && isset( $options['headline_' . $current_language] ) && $options['headline_' . $current_language] !== '' ) ? esc_html( $options['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+					} else {
+						$headline = ( isset( $options ) && isset( $options['headline'] ) && $options['headline'] !== '' ) ? esc_html( $options['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+					}
+
 					$menu_icon = isset( $options['menu_icon'] ) && $options['menu_icon'] !== '' 
 						? sanitize_key( $options['menu_icon'] ) 
 						: 'dashicons-editor-help';
@@ -109,7 +115,27 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 									<label for="<?php echo $settings_name; ?>-headline">
 										<?php esc_html_e( 'Headline', 'wp-help-manager' ); ?>
 									</label>
-									<input type="text" id="<?php echo $settings_name; ?>-headline" name="<?php echo $settings_name; ?>[headline]" value="<?php esc_attr_e( $headline ); ?>">
+									<?php if( class_exists( 'SitePress' ) ) { ?>
+										<div class="headline-wpml">
+											<?php 
+											$languages = icl_get_languages('skip_missing=0&orderby=code');
+											if( ! empty( $languages ) ) {
+												if( defined( 'ICL_LANGUAGE_CODE' ) ) {
+													$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+													foreach( $languages as $language ) {
+														if( $language['language_code'] == $current_language ) {
+															$flag_url = $language['country_flag_url'];
+															echo '<div><img src="' . $flag_url . '"></img></div>';
+														}
+													}
+												}
+											}
+											?>
+											<input type="text" id="<?php echo $settings_name; ?>-headline_<?php echo esc_attr( $current_language ); ?>" name="<?php echo $settings_name; ?>[headline_<?php echo ICL_LANGUAGE_CODE; ?>]" value="<?php esc_attr_e( $headline ); ?>">
+										</div>
+									<?php } else { ?>
+										<input type="text" id="<?php echo $settings_name; ?>-headline" name="<?php echo $settings_name; ?>[headline]" value="<?php esc_attr_e( $headline ); ?>">
+									<?php } ?>
 									<p class="description"><?php esc_html_e( 'Headline is displayed in the admin menu, in the dashboard widget and on the document listing page.', 'wp-help-manager' ); ?>
 									</p>
 								</div>

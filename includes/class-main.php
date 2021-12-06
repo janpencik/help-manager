@@ -178,7 +178,6 @@ class Wp_Help_Manager {
 
 		// Handle import/export of help documents
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'plugin_tools' );
-		$this->loader->add_filter( 'export_wp_filename', $plugin_admin, 'export_change_filename', 10, 3 );
 		$this->loader->add_action( 'export_wp', $plugin_admin, 'modify_export_query' );
 
 		// Add menu items
@@ -211,6 +210,9 @@ class Wp_Help_Manager {
 
 		// Responsive tables
 		$this->loader->add_filter( 'the_content', $plugin_admin, 'responsive_tables' );
+
+		// Redirect in case of wrong document ID
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'redirect_to_default_document' );
 
 	}
 

@@ -27,7 +27,8 @@ body.toplevel_page_wp-help-manager-documents {
 // Notices
 .wphm-wrap {
     .notice {
-        margin-bottom: 35px;
+        margin: 5px 0 0;
+        width: 997px;
     }
 }
 
@@ -502,13 +503,24 @@ body.toplevel_page_wp-help-manager-documents {
 
 // Print button
 .wphm-print-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     position: absolute;
-    top: 25px;
-    right: 25px;
-    color: #C6C6C6;
+    top: 21px;
+    right: 21px;
+    color: #babbbc;
+    // border-radius: 2px;
+    // transition: all .15s;
+    .dashicons {
+        transition: all .05s;    }
     &:hover {
+        // background-color: #f6f7f7;
         color: #2271b1;
+        // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
 }
 

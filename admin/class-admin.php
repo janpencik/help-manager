@@ -303,7 +303,15 @@ class Wp_Help_Manager_Admin {
 				$menu_item_key = $key;
 			}
 		}
-		$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+
+		// Make headline WPML translatable
+		if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+			$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+		} else {
+			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+
+		}
 
 		// Change post type menu item name
 		if( isset( $submenu['wp-help-manager-documents'] ) ) {
@@ -408,6 +416,22 @@ class Wp_Help_Manager_Admin {
 		$dashicons = array( 'dashicons-menu', 'dashicons-dashboard', 'dashicons-admin-site', 'dashicons-admin-media', 'dashicons-admin-page', 'dashicons-admin-comments', 'dashicons-admin-appearance', 'dashicons-admin-plugins', 'dashicons-admin-users', 'dashicons-admin-tools', 'dashicons-admin-settings', 'dashicons-admin-network', 'dashicons-admin-generic', 'dashicons-admin-home', 'dashicons-admin-collapse', 'dashicons-admin-links', 'dashicons-admin-post', 'dashicons-format-standard', 'dashicons-format-image', 'dashicons-format-gallery', 'dashicons-format-audio', 'dashicons-format-video', 'dashicons-format-links', 'dashicons-format-chat', 'dashicons-format-status', 'dashicons-format-aside', 'dashicons-format-quote', 'dashicons-welcome-write-blog', 'dashicons-welcome-edit-page', 'dashicons-welcome-add-page', 'dashicons-welcome-view-site', 'dashicons-welcome-widgets-menus', 'dashicons-welcome-comments', 'dashicons-welcome-learn-more', 'dashicons-image-crop', 'dashicons-image-rotate-left', 'dashicons-image-rotate-right', 'dashicons-image-flip-vertical', 'dashicons-image-flip-horizontal', 'dashicons-undo', 'dashicons-redo', 'dashicons-editor-bold', 'dashicons-editor-italic', 'dashicons-editor-ul', 'dashicons-editor-ol', 'dashicons-editor-quote', 'dashicons-editor-alignleft', 'dashicons-editor-aligncenter', 'dashicons-editor-alignright', 'dashicons-editor-insertmore', 'dashicons-editor-spellcheck', 'dashicons-editor-distractionfree', 'dashicons-editor-expand', 'dashicons-editor-contract', 'dashicons-editor-kitchensink', 'dashicons-editor-underline', 'dashicons-editor-justify', 'dashicons-editor-textcolor', 'dashicons-editor-paste-word', 'dashicons-editor-paste-text', 'dashicons-editor-removeformatting', 'dashicons-editor-video', 'dashicons-editor-customchar', 'dashicons-editor-outdent', 'dashicons-editor-indent', 'dashicons-editor-help', 'dashicons-editor-strikethrough', 'dashicons-editor-unlink', 'dashicons-editor-rtl', 'dashicons-editor-break', 'dashicons-editor-code', 'dashicons-editor-paragraph', 'dashicons-align-left', 'dashicons-align-right', 'dashicons-align-center', 'dashicons-align-none', 'dashicons-lock', 'dashicons-calendar', 'dashicons-visibility', 'dashicons-post-status', 'dashicons-edit', 'dashicons-post-trash', 'dashicons-trash', 'dashicons-external', 'dashicons-arrow-up', 'dashicons-arrow-down', 'dashicons-arrow-left', 'dashicons-arrow-right', 'dashicons-arrow-up-alt', 'dashicons-arrow-down-alt', 'dashicons-arrow-left-alt', 'dashicons-arrow-right-alt', 'dashicons-arrow-up-alt2', 'dashicons-arrow-down-alt2', 'dashicons-arrow-left-alt2', 'dashicons-arrow-right-alt2', 'dashicons-leftright', 'dashicons-sort', 'dashicons-randomize', 'dashicons-list-view', 'dashicons-exerpt-view', 'dashicons-hammer', 'dashicons-art', 'dashicons-migrate', 'dashicons-performance', 'dashicons-universal-access', 'dashicons-universal-access-alt', 'dashicons-tickets', 'dashicons-nametag', 'dashicons-clipboard', 'dashicons-heart', 'dashicons-megaphone', 'dashicons-schedule', 'dashicons-wordpress', 'dashicons-wordpress-alt', 'dashicons-pressthis,', 'dashicons-update,', 'dashicons-screenoptions', 'dashicons-info', 'dashicons-cart', 'dashicons-feedback', 'dashicons-cloud', 'dashicons-translation', 'dashicons-tag', 'dashicons-category', 'dashicons-archive', 'dashicons-tagcloud', 'dashicons-text', 'dashicons-media-archive', 'dashicons-media-audio', 'dashicons-media-code', 'dashicons-media-default', 'dashicons-media-document', 'dashicons-media-interactive', 'dashicons-media-spreadsheet', 'dashicons-media-text', 'dashicons-media-video', 'dashicons-playlist-audio', 'dashicons-playlist-video', 'dashicons-yes', 'dashicons-no', 'dashicons-no-alt', 'dashicons-plus', 'dashicons-plus-alt', 'dashicons-minus', 'dashicons-dismiss', 'dashicons-marker', 'dashicons-star-filled', 'dashicons-star-half', 'dashicons-star-empty', 'dashicons-flag', 'dashicons-share', 'dashicons-share1', 'dashicons-share-alt', 'dashicons-share-alt2', 'dashicons-twitter', 'dashicons-rss', 'dashicons-email', 'dashicons-email-alt', 'dashicons-facebook', 'dashicons-facebook-alt', 'dashicons-networking', 'dashicons-googleplus', 'dashicons-location', 'dashicons-location-alt', 'dashicons-camera', 'dashicons-images-alt', 'dashicons-images-alt2', 'dashicons-video-alt', 'dashicons-video-alt2', 'dashicons-video-alt3', 'dashicons-vault', 'dashicons-shield', 'dashicons-shield-alt', 'dashicons-sos', 'dashicons-search', 'dashicons-slides', 'dashicons-analytics', 'dashicons-chart-pie', 'dashicons-chart-bar', 'dashicons-chart-line', 'dashicons-chart-area', 'dashicons-groups', 'dashicons-businessman', 'dashicons-id', 'dashicons-id-alt', 'dashicons-products', 'dashicons-awards', 'dashicons-forms', 'dashicons-testimonial', 'dashicons-portfolio', 'dashicons-book', 'dashicons-book-alt', 'dashicons-download', 'dashicons-upload', 'dashicons-backup', 'dashicons-clock', 'dashicons-lightbulb', 'dashicons-microphone', 'dashicons-desktop', 'dashicons-tablet', 'dashicons-smartphone', 'dashicons-smiley' );
 
 		$valid['headline'] = sanitize_text_field( $input['headline'] );
+		
+		// Make headline WPML translatable
+		if( class_exists( 'SitePress' ) ) {
+			$languages = icl_get_languages('skip_missing=0&orderby=code');
+			if( ! empty( $languages ) ) {
+				if( defined( 'ICL_LANGUAGE_CODE' ) ) {
+					$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+					foreach( $languages as $language ) {
+						if( $language['language_code'] == $current_language ) {
+							$valid['headline_' . $current_language] = sanitize_text_field( $input['headline_' . $current_language] );
+						}
+					}
+				}
+			}
+		}
+
 		$valid['menu_icon'] = ( in_array( $input['menu_icon'], $dashicons ) ) 
 			? sanitize_key( $input['menu_icon'] ) 
 			: 'dashicons-editor-help';
@@ -529,13 +553,62 @@ class Wp_Help_Manager_Admin {
 			'post_status'		=> array( 'publish', 'private' ),
 			'orderby'          	=> 'menu_order',
 			'order'            	=> 'ASC',
-			'fields' 			=> 'ids'
+			'fields' 			=> 'ids',
+			'suppress_filters'	=> false
 		) );
 		if( $oldest_docs ) {
 			return $oldest_docs[0];
 		} else {
-			return false;
+			return null;
 		}
+	}
+
+	/**
+	 * Redirect to default document in case of wrong document ID.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function redirect_to_default_document() {
+
+
+		// Get current or default document ID
+		if ( isset( $_GET['document'] ) ) {
+
+			$requested_id = absint( $_GET['document'] );
+
+			// WPML compatibility
+			if( class_exists( 'SitePress' ) ) {
+				
+				global $sitepress;
+				$wpml_post_id = $sitepress->get_element_trid( $requested_id, 'post_wp-help-docs' );
+				$translations = $sitepress->get_element_translations( $wpml_post_id, 'post_wp-help-docs', false, true );
+
+				// Document doesn't exist
+				if( ! $wpml_post_id ) {
+					$default_document_id = $this->get_default_document();
+					wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+					exit;
+				}
+
+				// Document is not available for current language
+				if( defined( 'ICL_LANGUAGE_CODE' ) && ! isset( $translations[ICL_LANGUAGE_CODE] ) ) {
+					$default_document_id = $this->get_default_document();
+					wp_redirect( add_query_arg( 'wphm-notice', 'translation-not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+					exit;
+				}
+
+			}
+
+			// Document doesn't exist
+			if( get_post_status( $requested_id ) === false ) {
+				$default_document_id = $this->get_default_document();
+				wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+				exit;
+			}
+
+		}
+
 	}
 
 	/**
@@ -546,9 +619,23 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function display_documents_page() {
 
-		// Get current of default document ID
+		// Get current or default document ID
 		if ( isset( $_GET['document'] ) ) {
-			$document_id = absint( $_GET['document'] );
+
+			$requested_id = absint( $_GET['document'] );
+			
+			// WPML compatibility
+			if( class_exists( 'SitePress' ) ) {
+				$requested_id = icl_object_id( $requested_id, 'wp-help-docs', false, ICL_LANGUAGE_CODE );
+			}
+
+			// Check if document exists
+			if( get_post_status( $requested_id ) !== false ) {
+				$document_id = $requested_id;
+			} else {
+				$document_id = false;
+			}
+
 		} else {
 			$document_id = $this->get_default_document();
 		}
@@ -576,6 +663,22 @@ class Wp_Help_Manager_Admin {
 				?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
 					<p><?php esc_html_e( 'No documents selected.', 'wp-help-manager' ); ?></p>
+				</div>
+				<?php
+			
+			// Document not found
+			} elseif( $_GET['wphm-notice'] === 'not-found' ) {
+				?>
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+					<p><?php esc_html_e( 'We are sorry. The requested document was not found. We automatically redirected you to the default document.', 'wp-help-manager' ); ?></p>
+				</div>
+				<?php
+
+			// Translation not found
+			} elseif( $_GET['wphm-notice'] === 'translation-not-found' ) {
+				?>
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+					<p><?php esc_html_e( 'We are sorry. No translation is available for this document. We\'ve automatically redirected you to this language\'s default document.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
 			}
@@ -1058,7 +1161,15 @@ class Wp_Help_Manager_Admin {
 	public function dashboard_setup() {
 		$admin_settings = get_option( $this->plugin_name . '-admin' );
 		if( ( isset( $admin_settings ) && isset( $admin_settings['dashboard_widget'] ) && $admin_settings['dashboard_widget'] ) || ( ! $admin_settings ) ) {
-			$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+
+			// Make headline WPML translatable
+			if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+				$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+			} else {
+				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+			}
+
 			if( get_posts( array( 'post_type' => 'wp-help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids' ) ) && $this->current_user_is_reader() )
 				wp_add_dashboard_widget( 'wphm-dashboard-docs', esc_html( $headline ), array( $this, 'dashboard_widget' ) );
 		}
@@ -1319,6 +1430,9 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function export_help_documents() {
 		require_once ABSPATH . 'wp-admin/includes/export.php';
+		
+		// Change export filename
+		add_filter( 'export_wp_filename', array( $this, 'export_change_filename' ), 10, 3 );
 
 		// Increase menu order for all items before the export is executed (so on website where documents are imported documents show on the end of list and don't mess the existing order)
 		$documents = get_posts( array(
