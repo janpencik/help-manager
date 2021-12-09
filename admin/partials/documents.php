@@ -108,7 +108,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                 <?php
                 // Document
-                } else if( $document_id ) {
+                } elseif( $document_id ) {
 
                     $document = new WP_Query( array( 
                         'post_type'     => 'wp-help-docs', 
@@ -177,14 +177,18 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                                     $prev_arrow = is_rtl() ? '&xrarr;' : '&xlarr;';
                                     ?>
                                     <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
-                                        <span><?php echo $prev_arrow; ?></span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
+                                        <span class="icon"><?php echo $prev_arrow; ?></span>
+                                        <span class="text"><?php echo esc_html( $document_navigation->prev_post->post_title ); ?></span>
+                                        <div class="text-mobile"><?php esc_attr_e( 'Previous', 'wp-help-manager' ); ?></div>
                                     </a>
                                     <?php } ?>
                                     <?php if( $document_navigation->next_post ) {
                                     $next_arrow = is_rtl() ? '&xlarr;' : '&xrarr;';
                                     ?>
                                     <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
-                                        <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span><?php echo $next_arrow; ?></span>
+                                        <span class="text"><?php echo esc_html( $document_navigation->next_post->post_title ); ?></span>
+                                        <div class="text-mobile"><?php esc_attr_e( 'Next', 'wp-help-manager' ); ?></div>
+                                        <span class="icon"><?php echo $next_arrow; ?></span>
                                     </a>
                                     <?php } ?>
                                 </div>
@@ -217,12 +221,23 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
             </div>
             
-            <!-- Back to top link -->
+            <!-- Document footer -->
             <div class="wphm-document-footer">
+                
+                <!-- Back to top -->
                 <span class="wphm-back-to-top">
                     <span class="dashicons dashicons-arrow-up-alt2"></span>
                     <span><?php esc_html_e( 'Scroll to top', 'wp-help-manager' ); ?></span>
                 </span>
+
+                <?php if( ! $search_string && $document_id && $this->current_user_is_editor() ) { ?>
+                <!-- Edit document -->
+                <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>">
+                    <span class="dashicons dashicons-edit"></span>
+                    <span><?php esc_html_e( 'Edit document', 'wp-help-manager' ); ?></span>
+                </a>
+                <?php } ?>
+
             </div>
 
         </div>

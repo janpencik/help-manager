@@ -126,7 +126,7 @@ body.rtl {
             }
             .wphm-document-icon {
                 position: relative;
-                top: 2px;
+                top: 4px;
                 padding-right: 8px;
             }
             a {
@@ -262,12 +262,13 @@ body.rtl .wphm-sidebar {
         //     border-radius: 3px;
         // }
         .wphm-document-title {
-            padding-right: 40px;
+            padding-right: 25px;
             margin-bottom: 1.5em;
         }
         .wp-heading-inline {
             display: inline;
             padding: 5px 0 0;
+            margin-right: 8px;
             @media (max-width: 782px) {
                 margin-bottom: 0;
             }
@@ -290,7 +291,7 @@ body.rtl .wphm-sidebar {
         .page-title-action {
             position: relative;
             top: -4px;
-            margin: 0 0 0 3px;
+            margin: 10px 0 0 0;
             display: inline-block;
         }
         a {
@@ -513,14 +514,36 @@ body.rtl .wphm-sidebar {
         .nav-links {
             display: flex;
             .nav-prev {
-                span {
+                .icon {
                     margin-right: 3px;
+                }
+                .text {
+                    @media (max-width: 600px) {
+                        display: none;
+                    }
+                }
+                .text-mobile {
+                    display: none;
+                    @media (max-width: 600px) {
+                        display: inline;
+                    }
                 }
             }
             .nav-next {
                 margin-left: auto;
-                span {
+                .icon {
                     margin-left: 3px;
+                }
+                .text {
+                    @media (max-width: 600px) {
+                        display: none;
+                    }
+                }
+                .text-mobile {
+                    display: none;
+                    @media (max-width: 600px) {
+                        display: inline;
+                    }
                 }
             }
         }
@@ -617,6 +640,10 @@ body.rtl .wphm-content {
     color: #babbbc;
     // border-radius: 2px;
     // transition: all .15s;
+    @media (max-width: 782px) {
+        top: 15px;
+        right: 15px;
+    }
     .dashicons {
         transition: all .05s;    }
     &:hover {
@@ -632,12 +659,17 @@ body.rtl .wphm-print-button {
 
 // Document footer
 .wphm-document-footer {
-    // width: 752px;
+    display: flex;
+    width: 752px;
     max-width: 100%;
     margin-top: 15px;
     // padding-left: 30px;
     // display: flex;
     // justify-content: center;
+    a {
+        margin-left: auto;
+        text-decoration: none;
+    }
 }
 .wphm-back-to-top {
     color: #2271b1;

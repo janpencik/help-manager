@@ -417,14 +417,29 @@ class Wp_Help_Manager_Admin {
 
 			// Edit document button
 			if( $this->is_plugin_documents_page() && current_user_can( 'edit_documents' ) ) {
+				
+				// Get search parameter
+				$search_string = '';
+				if( isset( $_GET['s'] ) ) {
+					$search_string = esc_attr( $_GET['s'] );
+				}
 
+				// Get document parameter
 				if( isset( $_GET['document'] ) ) {
-					$document_id = intval( $_GET['document'] );
+					$requested_id = intval( $_GET['document'] );
+							
+					// Check if document exists
+					if( get_post_status( $requested_id ) !== false ) {
+						$document_id = $requested_id;
+					} else {
+						$document_id = false;
+					}
+					
 				} else {
 					$document_id = $this->get_default_document();
 				}
 
-				if( $document_id ) {
+				if( ! $search_string && $document_id ) {
 					$admin_bar->add_node( array(
 						'id' 		=> 'wphm-admin-bar-edit',
 						'title' 	=> '<span class="ab-icon"></span><span class="ab-label">' . __( 'Edit document', 'wp-help-manager' ) . '</span>',
@@ -436,7 +451,7 @@ class Wp_Help_Manager_Admin {
 			}
 
 			// Help documents menu
-			if( $admin_settings['admin_bar'] === true ) {
+			if( ( isset( $admin_settings ) && isset( $admin_settings['admin_bar'] ) && $admin_settings['admin_bar'] ) || ( ! $admin_settings ) ) {
 
 				// Make headline WPML translatable
 				if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
@@ -720,7 +735,6 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function redirect_to_default_document() {
-
 
 		// Get current or default document ID
 		if ( isset( $_GET['document'] ) ) {

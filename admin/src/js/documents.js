@@ -52,7 +52,7 @@
 							
 							// Try to find title
 							var caption = item.el.parent().find('figcaption');
-							if( caption.length > 0 ) {
+							if( caption ) {
 								return caption.text();
 							} 
 							var title = item.el.find('img').attr('title');
@@ -63,10 +63,15 @@
 							if( alt ) {
 								return alt;
 							}
+							
+							// Empty
+							if( caption.length == 0 || title.length == 0 || alt.length == 0 ) {
+								return '';
+							}
 
 						}
 					},
-					overflowY: 'hidden'
+					// overflowY: 'hidden'
 				});
 			}
 		}
