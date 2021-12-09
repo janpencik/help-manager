@@ -60,3 +60,24 @@
         }
     }
 }
+body.rtl {
+    #wphm-dashboard-docs {
+        ul {
+            margin: 0 21px 0 5px;
+        }
+        li > a {
+            img {
+                transform: scaleX(-1);
+            }
+        }
+        .wphm-dashboard-docs-list {
+            padding: 2px 12px 10px;
+            & > ul {
+                margin: 0 0 0 5px;
+            }
+            &:last-child {
+                padding: 2px 12px 15px;
+            }
+        }
+    }
+}

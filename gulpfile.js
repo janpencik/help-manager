@@ -22,20 +22,38 @@ gulp.task("clean", function() {
     return del(["./admin/assets"]);
 })
 
-// External Documents CSS
-gulp.task("externalDocumentsStyles", function() {
+// Copy Magnific Popup from node_modules to libs
+// gulp.task("copyMagnificPopup", function() {
+//     return (
+//         gulp
+//             .src(['./node_modules/magnific-popup/**/*'])
+//             .pipe(gulp.dest("./admin/libs/magnific-popup"))
+//     );
+// })
+
+// Copy Reframe.js from node_modules to libs
+gulp.task("copyReframe", function() {
     return (
         gulp
-            .src([
-                // Magnific popup
-                "./node_modules/magnific-popup/dist/magnific-popup.css",
-            ])
-            .pipe(postcss([cssnano()]))
-            .pipe(concat('documents-libs.css'))
-            .pipe(gulp.dest("./admin/assets/css"))
-            .pipe(browserSync.stream())
+            .src(['./node_modules/reframe.js/**/*'])
+            .pipe(gulp.dest("./admin/libs/reframe.js"))
     );
 })
+
+// External Documents CSS
+// gulp.task("externalDocumentsStyles", function() {
+//     return (
+//         gulp
+//             .src([
+//                 // Magnific popup
+//                 "./node_modules/magnific-popup/dist/magnific-popup.css",
+//             ])
+//             .pipe(postcss([cssnano()]))
+//             .pipe(concat('documents-libs.css'))
+//             .pipe(gulp.dest("./admin/assets/css"))
+//             .pipe(browserSync.stream())
+//     );
+// })
 
 // Main CSS
 gulp.task("mainStyles", function() {
@@ -51,21 +69,21 @@ gulp.task("mainStyles", function() {
 })
 
 // External Documents JS
-gulp.task("externalDocumentsScripts", function() {
-    return (
-        gulp
-            .src([
-                // Reframe.js
-                "./node_modules/reframe.js/dist/reframe.min.js",
-                // Magnific popup
-                "./node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
-            ])
-            .pipe(concat('documents-libs.js'))
-            .pipe(uglify())
-            .pipe(gulp.dest("./admin/assets/js"))
-            .pipe(browserSync.stream())
-    );
-})
+// gulp.task("externalDocumentsScripts", function() {
+//     return (
+//         gulp
+//             .src([
+//                 // Reframe.js
+//                 "./node_modules/reframe.js/dist/reframe.min.js",
+//                 // Magnific popup
+//                 "./node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
+//             ])
+//             .pipe(concat('documents-libs.js'))
+//             .pipe(uglify())
+//             .pipe(gulp.dest("./admin/assets/js"))
+//             .pipe(browserSync.stream())
+//     );
+// })
 
 // Main JS
 gulp.task("mainScripts", function() {
@@ -91,7 +109,7 @@ gulp.task("default", function watchFiles(done) {
         },
     });
     gulp.watch(["./admin/src/scss/**/*.scss"], gulp.series(
-        "externalDocumentsStyles",
+        // "externalDocumentsStyles",
         "mainStyles", 
         function cssBrowserReload(done) {
             browserSync.reload();
@@ -99,7 +117,7 @@ gulp.task("default", function watchFiles(done) {
         }
     ));
     gulp.watch("./admin/src/js/**/*.js", gulp.series(
-        "externalDocumentsScripts",
+        // "externalDocumentsScripts",
         "mainScripts", 
         function jsBrowserReload(done) {
             browserSync.reload();
@@ -115,8 +133,10 @@ gulp.task("default", function watchFiles(done) {
 
 // Build assets
 gulp.task( "build", gulp.series( "clean", gulp.parallel( 
-    "externalDocumentsStyles", 
+    // "copyMagnificPopup",
+    "copyReframe",
+    // "externalDocumentsStyles", 
     "mainStyles", 
-    "externalDocumentsScripts", 
+    // "externalDocumentsScripts", 
     "mainScripts"
 ), "default" ) )

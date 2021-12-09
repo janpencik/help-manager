@@ -168,7 +168,7 @@ class Wp_Help_Manager {
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
 
 		// Set order on document save
-		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_default_document_order', 10, 2 );
+		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_menu_order_for_new_document', 10, 2 );
 
 		// Revoke past user capabilities
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'check_current_admin_capabilities' );
@@ -189,6 +189,9 @@ class Wp_Help_Manager {
 		// Highlight menu item on document edit page
 		$this->loader->add_filter( 'parent_file', $plugin_admin, 'highlight_menu_on_document_edit_page' );
 
+		// Add admin bar menu
+		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_menu', 100 );
+
 		// Add toolbar to the admin pages
 		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'add_toolbar_menu' );
 
@@ -202,8 +205,12 @@ class Wp_Help_Manager {
 		// Add dashboard widget
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'dashboard_setup' );
 
-		// Add custom CSS to document page
+		// Add admin bar CSS to both front-end and back-end
+		// $this->loader->add_action( 'wp_head', $plugin_admin, 'custom_admin_css' );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
+		
+		// Add custom CSS to document page
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_document_css' );
 
 		// Ajax reoder documents
 		$this->loader->add_action( 'wp_ajax_wphm_docs_reorder', $plugin_admin, 'ajax_reorder' );

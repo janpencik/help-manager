@@ -26,16 +26,25 @@
 				if( $('.wphm-docs-content a img').length > 0 ) {
 					var imagesWithLinks = $('.wphm-docs-content a img');
 					imagesWithLinks.each(function() {
-						var linkFilename = $(this).parent().attr('href').replace(/\.[^/.]+$/, "");
+						var linkFilename = $(this).parent().attr('href').replace("-scaled", "").replace(/\.[^/.]+$/, "");
 						var imgFilename = $(this).attr('src').replace(/\.[^/.]+$/, "");
-						if ( imgFilename.indexOf( linkFilename ) >= 0 ) {
+						if ( imgFilename.includes( linkFilename ) ) {
 							$(this).parent().addClass('wphm-gallery');
 						}
 					});
 				}
+
+				// RTL
+				var langDir = 'ltr';
+				if( $('body.rtl').length > 0 ) {
+					langDir = 'rtl';
+				} 
+
 				$('.wphm-gallery').magnificPopup({
 					gallery: {
-						enabled: true
+						enabled: true,
+						tCounter: '%curr%/%total%',
+						langDir: langDir
 					},
 					type: 'image',
 					image: {
@@ -56,7 +65,8 @@
 							}
 
 						}
-					}
+					},
+					overflowY: 'hidden'
 				});
 			}
 		}
@@ -83,6 +93,12 @@
 		}
 		fixDocumentFigcaptions();
 
+		// RTL
+		var rtl = false;
+		if( $('body.rtl').length > 0 ) {
+			rtl = true;
+		} 
+
 		// Make documents in the sidebar navigation sortable (nested)
 		$('.can-sort').nestedSortable({
 			opacity: 0.8,
@@ -93,6 +109,7 @@
 			listType: 'ul',
 			toleranceElement: '> span',
 			maxLevels: 5,
+			rtl: rtl,
 			start(e, ui) {
 				const item = $(ui.item);
 				const placeholder = $('.wphm-sort-placeholder');

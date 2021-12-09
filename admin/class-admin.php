@@ -119,11 +119,11 @@ class Wp_Help_Manager_Admin {
 		
 		if( $this->is_plugin_documents_page() === true ) {
 			
-			// Documents CSS libraries
-			wp_enqueue_style( $this->plugin_name . '-documents-libs', plugin_dir_url( __FILE__ ) . 'assets/css/documents-libs.css', array(), $this->version, 'all' );
+			// Magnific Popup CSS
+			wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/magnific-popup.min.css', array(), $this->version, 'all' );
 			
 			// Documents main CSS
-			wp_enqueue_style( $this->plugin_name . '-documents', plugin_dir_url( __FILE__ ) . 'assets/css/documents.css', array( $this->plugin_name . '-documents-libs' ), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name . '-documents', plugin_dir_url( __FILE__ ) . 'assets/css/documents.css', array( $this->plugin_name . '-magnific-popup' ), $this->version, 'all' );
 		
 		} elseif( $this->is_plugin_settings_page() === true ) {
 
@@ -146,14 +146,18 @@ class Wp_Help_Manager_Admin {
 
 		if( $this->is_plugin_documents_page() === true ) {
 			
-			// Documents JS libraries
-			wp_enqueue_script( $this->plugin_name . '-documents-libs', plugin_dir_url( __FILE__ ) . 'assets/js/documents-libs.js', array(), $this->version, false );
+			// Magnific Popup JS
+			wp_enqueue_script( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/jquery.magnific-popup-rtl.min.js', array( 'jquery-core' ), $this->version, false );
 
-			// NestedSortable plugin for jQuery UI Sortable
-			wp_register_script( $this->plugin_name . '-nestedsortable', plugin_dir_url( __FILE__ ) . 'assets/js/nested-sortable.js', array(), $this->version, false );
+			// Nested Sortable plugin for jQuery UI Sortable
+			wp_register_script( $this->plugin_name . '-nested-sortable', plugin_dir_url( __FILE__ ) . 'libs/nested-sortable/nested-sortable.min.js', array( 'jquery-core', 'jquery-ui-sortable' ), $this->version, false );
+
+			// Reframe.js JS
+			wp_enqueue_script( $this->plugin_name . '-reframe', plugin_dir_url( __FILE__ ) . 'libs/reframe.js/dist/reframe.min.js', array(), $this->version, false );
 
 			// Documents main JS
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/js/documents.js', array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-nestedsortable', $this->plugin_name . '-documents-libs' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/js/documents.js', array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-magnific-popup', $this->plugin_name . '-nested-sortable', $this->plugin_name . '-reframe' ), $this->version, false );
+
 			$document_settings = get_option( $this->plugin_name . '-document' );
 			$format_iframes = ( isset( $document_settings ) && isset( $document_settings['format_iframes'] ) ) ? json_encode( $document_settings['format_iframes'] ) : json_encode( true );
 			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? json_encode( $document_settings['image_popup'] ) : json_encode( true );
@@ -175,13 +179,72 @@ class Wp_Help_Manager_Admin {
 		}
 
 	}
+
+	/**
+	 * Add custom CSS globally to admin.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function custom_admin_css() {
+		echo '<style type="text/css">
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-icon:before { 
+				top: 2px; 
+			}
+			@media screen and (max-width: 782px) {
+				#wpadminbar #wp-admin-bar-wphm-admin-bar-edit {
+					display: list-item;
+				}
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-edit .ab-icon:before {
+				content: "\f464";
+    			top: 2px;
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-wrapper .ab-item {
+				display: flex;
+    			align-items: center;
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-label {
+				margin-right: 16px;
+				align-items: center;
+    			display: flex;
+			}
+			body.rtl #wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-label {
+				margin-right: 0;
+				margin-left: 16px;
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon { 
+				position: relative;
+				float: none;
+				font: normal 16px/1 dashicons;
+				speak: never;
+				padding: 0;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				background-image: none!important;
+				margin-right: 6px;
+			}
+			body.rtl #wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon { 
+				margin-right: 0;
+				margin-left: 6px;
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon:before { 
+				position: relative;
+				transition: all .1s ease-in-out;
+				color: rgba(240,246,252,.6);
+			}
+			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu li:hover .ab-sub-icon:before { 
+				color: #72aee6;
+			}
+		</style>';
+	}
 	
 	/**
 	 * Add custom CSS to document page.
 	 *
 	 * @since    1.0.0
 	 */
-	public function custom_admin_css() {
+	public function custom_document_css() {
 		if( $this->is_plugin_documents_page() === true ) {
 			$custom_css = get_option( $this->plugin_name . '-custom-css' );
 			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
@@ -337,19 +400,106 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Set default order when creating a new document.
+	 * Add admin bar menu.
 	 *
 	 * @since    1.0.0
 	 * @access   public
 	 */
-	public function set_default_document_order( $data, $postarr ) {
-		if( $data['post_type'] === 'wp-help-docs' ) {
+	public function admin_bar_menu( $admin_bar ) {
+
+		if( ! current_user_can( 'read_documents' ) ) {
+		    return;
+		}
+
+		if( is_admin() ) {
+
+			$admin_settings = get_option( $this->plugin_name . '-admin' );
+
+			// Edit document button
+			if( $this->is_plugin_documents_page() && current_user_can( 'edit_documents' ) ) {
+
+				if( isset( $_GET['document'] ) ) {
+					$document_id = intval( $_GET['document'] );
+				} else {
+					$document_id = $this->get_default_document();
+				}
+
+				if( $document_id ) {
+					$admin_bar->add_node( array(
+						'id' 		=> 'wphm-admin-bar-edit',
+						'title' 	=> '<span class="ab-icon"></span><span class="ab-label">' . __( 'Edit document', 'wp-help-manager' ) . '</span>',
+						'parent' 	=> false,
+						'href' 		=> esc_url( get_edit_post_link( $document_id ) )
+					) );
+				}
+				
+			}
+
+			// Help documents menu
+			if( $admin_settings['admin_bar'] === true ) {
+
+				// Make headline WPML translatable
+				if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+					$current_language = sanitize_key( ICL_LANGUAGE_CODE );
+					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+				} else {
+					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+				}
+
+				$menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] ) && $admin_settings['menu_icon'] ) ? esc_html( $admin_settings['menu_icon'] ) : 'dashicons-editor-help';
+
+				// Add to admin bar
+				$admin_bar->add_node( array(
+					'id' 		=> 'wphm-admin-bar-menu',
+					'title' 	=> '<span class="ab-icon ' . $menu_icon . '"></span><span class="ab-label">' . $headline . '</span>',
+					'parent' 	=> 'top-secondary',
+					'href' 		=> admin_url( 'admin.php?page=wp-help-manager-documents' )
+				) );
+
+				// Get all top level documents
+				$documents = get_posts( array( 
+					'post_type' 		=> 'wp-help-docs', 
+					'post_status' 		=> array( 'publish', 'private' ), 
+					'posts_per_page' 	=> 20,
+					'fields' 			=> 'ids',
+					'post_parent' 		=> 0,
+					'suppress_filters'	=> false
+				) );
+
+				// Add documents as submenu items
+				if( $documents ) {
+					foreach( $documents as $document_id ) {
+						$admin_bar->add_node( array(
+							'id' 		=> 'wphm-admin-bar-menu-' . $document_id, 
+							'title' 	=> '<span class="ab-sub-icon dashicons-external"></span><span class="ab-sub-label">' . esc_attr( get_the_title( $document_id ) ) . '</span>', 
+							'parent' 	=> 'wphm-admin-bar-menu', 
+							'href' 		=> esc_attr( esc_url( get_permalink( $document_id ) ) ), 
+							'meta' 		=> array( 'target' => '_blank' )
+						) );
+					}
+				}
+
+			}
+
+		}
+		
+	}
+
+	/**
+	 * Set default menu order for newly created document.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+	public function set_menu_order_for_new_document( $data, $postarr ) {
+		if( $data['post_type'] === 'wp-help-docs' && $data['post_status'] === 'auto-draft' ) {
 			$last_post = get_posts( array(
 				'post_type' 		=> 'wp-help-docs',
 				'posts_per_page' 	=> 1,
 				'post_status'		=> array( 'publish', 'private' ),
 				'orderby'          	=> 'menu_order',
 				'order'            	=> 'DESC',
+				'suppress_filters'	=> false
 			) );
 			if( $last_post ) {
 				$data['menu_order'] = $last_post[0]->menu_order + 10;
@@ -670,7 +820,7 @@ class Wp_Help_Manager_Admin {
 			} elseif( $_GET['wphm-notice'] === 'not-found' ) {
 				?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
-					<p><?php esc_html_e( 'We are sorry. The requested document was not found. We automatically redirected you to the default document.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'The requested document was not found. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
 
@@ -678,7 +828,7 @@ class Wp_Help_Manager_Admin {
 			} elseif( $_GET['wphm-notice'] === 'translation-not-found' ) {
 				?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
-					<p><?php esc_html_e( 'We are sorry. No translation is available for this document. We\'ve automatically redirected you to this language\'s default document.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'No translation is available for this document. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
 			}
@@ -1170,7 +1320,7 @@ class Wp_Help_Manager_Admin {
 				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
 			}
 
-			if( get_posts( array( 'post_type' => 'wp-help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids' ) ) && $this->current_user_is_reader() )
+			if( get_posts( array( 'post_type' => 'wp-help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids', 'suppress_filters' => false ) ) && $this->current_user_is_reader() )
 				wp_add_dashboard_widget( 'wphm-dashboard-docs', esc_html( $headline ), array( $this, 'dashboard_widget' ) );
 		}
 	}
@@ -1436,9 +1586,10 @@ class Wp_Help_Manager_Admin {
 
 		// Increase menu order for all items before the export is executed (so on website where documents are imported documents show on the end of list and don't mess the existing order)
 		$documents = get_posts( array(
-			'post_type' 	=> 'wp-help-docs',
-			'fields' 		=> 'ids',
-			'numberposts' 	=> -1
+			'post_type' 		=> 'wp-help-docs',
+			'fields' 			=> 'ids',
+			'numberposts' 		=> -1,
+			'suppress_filters' 	=> false
 		) );
 		foreach( $documents as $document ) {
 			$document_obj = get_post( $document );

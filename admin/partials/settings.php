@@ -279,9 +279,9 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-radio">
 								
 								<div>
-									<label>
+									<!-- <label>
 										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
-									</label>
+									</label> -->
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-child_navigation" name="<?php echo $settings_name; ?>[child_navigation]" <?php checked( $child_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-child_navigation">
@@ -316,9 +316,9 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-radio">
 
 								<div>
-									<label>
+									<!-- <label>
 										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
-									</label>
+									</label> -->
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-format_tables" name="<?php echo $settings_name; ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-format_tables">

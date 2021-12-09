@@ -102,6 +102,12 @@ body.post-type-wp-help-docs {
         }
     }
 }
+body.rtl .wphm-toolbar {
+    .wphm-search {
+        margin-right: auto;
+        margin-left: 10px;
+    }
+}
 .wphm-brand {
     display: flex;
     align-items: center;
@@ -132,6 +138,12 @@ body.post-type-wp-help-docs {
     }
     .text {
         line-height: 1;
+    }
+}
+body.rtl .wphm-brand {
+    .dashicons {
+        margin-right: 0;
+        margin-left: 7px;
     }
 }
 

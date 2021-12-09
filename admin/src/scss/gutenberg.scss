@@ -108,3 +108,15 @@
         }
     }
 }
+body.rtl .editor-styles-wrapper {
+    .alignleft,
+    .wp-block[data-align=right]>.wp-block-image {
+        margin-right: 0;
+        margin-left: 1.5em;
+    }
+    .alignright,
+    .wp-block[data-align=left]>.wp-block-image {
+        margin-left: 0;
+        margin-right: 1.5em;
+    }
+}

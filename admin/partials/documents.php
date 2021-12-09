@@ -173,14 +173,18 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                             <!-- Post navigation -->
                             <nav class="navigation post-navigation" role="navigation">
                                 <div class="nav-links">
-                                    <?php if( $document_navigation->prev_post ) { ?>
+                                    <?php if( $document_navigation->prev_post ) {
+                                    $prev_arrow = is_rtl() ? '&xrarr;' : '&xlarr;';
+                                    ?>
                                     <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
-                                        <span>&xlarr;</span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
+                                        <span><?php echo $prev_arrow; ?></span> <?php echo esc_html( $document_navigation->prev_post->post_title ); ?>
                                     </a>
                                     <?php } ?>
-                                    <?php if( $document_navigation->next_post ) { ?>
+                                    <?php if( $document_navigation->next_post ) {
+                                    $next_arrow = is_rtl() ? '&xlarr;' : '&xrarr;';
+                                    ?>
                                     <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
-                                        <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span>&xrarr;</span>
+                                        <?php echo esc_html( $document_navigation->next_post->post_title ); ?> <span><?php echo $next_arrow; ?></span>
                                     </a>
                                     <?php } ?>
                                 </div>
