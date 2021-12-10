@@ -177,6 +177,9 @@ body.rtl .wphm-settings-tabs {
     .form-field-radio {
         & > .half {
             width: calc( 50% - 10px );
+            @media (max-width: 600px) {
+                width: 100%;
+            }
         }
         & > div > label {
             margin-bottom: .75em;
@@ -236,6 +239,9 @@ body.rtl {
         border-bottom: 1px solid #8c8f94;
         box-sizing: border-box;
         background-color: #f5f5f5;
+        @media (max-width: 782px) {
+            height: 40px;
+        }
     }
     img {
         flex-shrink: 0;
@@ -278,12 +284,52 @@ body.rtl {
 .publishing-help_page_wp-help-manager-tools {
     .notice {
         margin: 5px 0;
-        width: 681px;
+        width: 736px;
+        box-sizing: border-box;
+        max-width: 100%;
     }
 }
 .publishing-help_page_wp-help-manager-settings {
     .notice {
         margin: 5px 0;
-        width: 929px;
+        width: 984px;
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+}
+
+// Export documents - multiple cols
+#wphm-export-form {
+    .wphm-export-documents-list {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        div {
+            line-height: 20px;
+            margin: 3px 0;
+            padding-right: 20px;
+            display: flex;
+            align-content: flex-start;
+            width: calc( 100% / 3 );
+            word-wrap: break-word;
+            box-sizing: border-box;
+            @media (max-width: 782px) {
+                width: calc( 100% / 2 );
+            }
+            @media (max-width: 600px) {
+                width: 100%;
+            }
+            label {
+                @media (max-width: 782px) {
+                    line-height: 25px;
+                }
+            }
+            input {
+                position: relative;
+                top: 2px;
+                @media (max-width: 782px) {
+                    top: auto;
+                }
+            }
+        }
     }
 }

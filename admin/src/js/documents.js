@@ -155,9 +155,11 @@
 		// Remove query args after dismissing the admin notice
 		$(document).on('click', '.wphm-notice .notice-dismiss', function(e) {
 			e.preventDefault();
-			var close_url = $(this).parent().data('close');
-			if( close_url ) {
-				window.location.href = close_url;
+			if ( history.pushState ) {
+				let searchParams = new URLSearchParams( window.location.search );
+				searchParams.delete( 'wphm-notice' );
+				let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+				window.history.replaceState( {path: newurl}, '', newurl );
 			}
 		});
 

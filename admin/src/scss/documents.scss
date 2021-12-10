@@ -48,7 +48,9 @@ body.rtl {
 .wphm-wrap {
     .notice {
         margin: 5px 0 0;
-        width: 997px;
+        width: 1051px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 

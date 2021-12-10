@@ -32,7 +32,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 		<div class="wphm-settings-tabs">
 			<div class="inner">
 				<a <?php if( $tab === null ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings">
-					<?php esc_html_e( 'Admin', 'wp-help-manager' ); ?>
+					<?php esc_html_e( 'Appearance', 'wp-help-manager' ); ?>
 				</a>
 				<a <?php if( $tab === 'document' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=document">
 					<?php esc_html_e( 'Document', 'wp-help-manager') ?>
@@ -40,11 +40,11 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<a <?php if( $tab === 'permissions' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=permissions">
 					<?php esc_html_e( 'Permissions', 'wp-help-manager' ); ?>
 				</a>
-				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=custom-css">
-					<?php esc_html_e( 'Custom CSS', 'wp-help-manager') ?>
-				</a>
 				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=advanced">
 					<?php esc_html_e( 'Advanced', 'wp-help-manager') ?>
+				</a>
+				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=custom-css">
+					<?php esc_html_e( 'Custom CSS', 'wp-help-manager') ?>
 				</a>
 			</div>
 		</div>
@@ -103,7 +103,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin Appearance', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin Menu', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -176,7 +176,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Dashboard', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin Dashboard', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -320,9 +320,9 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
 									</label> -->
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-format_tables" name="<?php echo $settings_name; ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-format_tables">
-											<?php echo esc_html__( 'Responsive tables', 'wp-help-manager' ); ?>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-image_popup" name="<?php echo $settings_name; ?>[image_popup]" <?php checked( $image_popup, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-image_popup">
+											<?php echo esc_html__( 'Open linked images in a popup using', 'wp-help-manager' ) . ' <a href="https://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a>'; ?>
 										</label>
 									</div>
 									<div>
@@ -332,9 +332,9 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-image_popup" name="<?php echo $settings_name; ?>[image_popup]" <?php checked( $image_popup, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-image_popup">
-											<?php echo esc_html__( 'Open linked images in a popup using', 'wp-help-manager' ) . ' <a href="https://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a>'; ?>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-format_tables" name="<?php echo $settings_name; ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-format_tables">
+											<?php echo esc_html__( 'Responsive tables', 'wp-help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -409,7 +409,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 											$i++;
 											?>
 											<div>
-												<input type="checkbox" id="<?php echo $settings_name; ?>-admin_<?php echo $i; ?>" name="<?php echo $settings_name; ?>[admin][]" value="<?php echo $user->ID; ?>" <?php checked( in_array( $user->ID, $admin ), true ); ?>>
+												<input type="checkbox" id="<?php echo $settings_name; ?>-admin_<?php echo $i; ?>" name="<?php echo $settings_name; ?>[admin][]" value="<?php echo $user->ID; ?>" <?php if( $user->ID == get_current_user_id() ) { echo 'data-current-user="1"'; } ?> <?php checked( in_array( $user->ID, $admin ), true ); ?>>
 												<label for="<?php echo $settings_name; ?>-admin_<?php echo $i; ?>"><?php echo $user->user_login . ' (' . $user->user_email . ')'; ?></label>
 											</div>
 										<?php } ?>

@@ -109,22 +109,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php if( $docs ) { ?>
                         <div class="full">
                             <label><?php esc_html_e( 'Select documents' ); ?></label>
-                            <div>
-                                <input type="checkbox" name="wphm_docs_all" id="wphm_docs_all">
-                                <label for="wphm_docs_all">
-                                    <?php esc_html_e( 'Toggle All', 'wp-help-manager' ); ?>
-                                </label>
-                            </div>
-                            <?php
-                            foreach( $docs as $document ) {
-                            ?>
+                            <div class="wphm-export-documents-list">
                                 <div>
-                                    <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo $document; ?>" value="<?php echo $document; ?>">
-                                    <label for="wphm_docs-<?php echo $document; ?>">
-                                        <?php echo get_the_title( $document ); ?>
+                                    <input type="checkbox" name="wphm_docs_all" id="wphm_docs_all">
+                                    <label for="wphm_docs_all">
+                                        <?php esc_html_e( 'Toggle All', 'wp-help-manager' ); ?>
                                     </label>
                                 </div>
-                            <?php } ?>
+                                <?php
+                                foreach( $docs as $document ) {
+                                ?>
+                                    <div>
+                                        <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo $document; ?>" value="<?php echo $document; ?>">
+                                        <label for="wphm_docs-<?php echo $document; ?>">
+                                            <?php echo get_the_title( $document ); ?>
+                                        </label>
+                                    </div>
+                                <?php } ?>
+                            </div>
                         </div>
                         <?php } ?>
 

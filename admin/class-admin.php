@@ -118,12 +118,22 @@ class Wp_Help_Manager_Admin {
 		}
 		
 		if( $this->is_plugin_documents_page() === true ) {
+
+			// See if functions are active
+			$document_settings = get_option( $this->plugin_name . '-document' );
+			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? $document_settings['image_popup'] : true;
+
+			// Documents style dependency array
+			$dependencies = array();
 			
 			// Magnific Popup CSS
-			wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/magnific-popup.min.css', array(), $this->version, 'all' );
+			if( $image_popup ) {
+				wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/magnific-popup.min.css', array(), $this->version, 'all' );
+				array_push( $dependencies, $this->plugin_name . '-magnific-popup' );
+			}
 			
 			// Documents main CSS
-			wp_enqueue_style( $this->plugin_name . '-documents', plugin_dir_url( __FILE__ ) . 'assets/css/documents.css', array( $this->plugin_name . '-magnific-popup' ), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name . '-documents', plugin_dir_url( __FILE__ ) . 'assets/css/documents.css', $dependencies, $this->version, 'all' );
 		
 		} elseif( $this->is_plugin_settings_page() === true ) {
 
@@ -146,24 +156,34 @@ class Wp_Help_Manager_Admin {
 
 		if( $this->is_plugin_documents_page() === true ) {
 			
-			// Magnific Popup JS
-			wp_enqueue_script( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/jquery.magnific-popup-rtl.min.js', array( 'jquery-core' ), $this->version, false );
+			// See if functions are active
+			$document_settings = get_option( $this->plugin_name . '-document' );
+			$format_iframes = ( isset( $document_settings ) && isset( $document_settings['format_iframes'] ) ) ? $document_settings['format_iframes'] : true;
+			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? $document_settings['image_popup'] : true;
 
 			// Nested Sortable plugin for jQuery UI Sortable
 			wp_register_script( $this->plugin_name . '-nested-sortable', plugin_dir_url( __FILE__ ) . 'libs/nested-sortable/nested-sortable.min.js', array( 'jquery-core', 'jquery-ui-sortable' ), $this->version, false );
 
+			// Main script dependency array
+			$dependencies = array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-nested-sortable' );
+
+			// Magnific Popup JS
+			if( $image_popup ) {
+				wp_enqueue_script( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/jquery.magnific-popup-rtl.min.js', array( 'jquery-core' ), $this->version, false );
+				array_push( $dependencies, $this->plugin_name . '-magnific-popup' );
+			}
+
 			// Reframe.js JS
-			wp_enqueue_script( $this->plugin_name . '-reframe', plugin_dir_url( __FILE__ ) . 'libs/reframe.js/dist/reframe.min.js', array(), $this->version, false );
+			if( $format_iframes ) {
+				wp_enqueue_script( $this->plugin_name . '-reframe', plugin_dir_url( __FILE__ ) . 'libs/reframe.js/dist/reframe.min.js', array(), $this->version, false );
+				array_push( $dependencies, $this->plugin_name . '-reframe' );
+			}
 
 			// Documents main JS
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/js/documents.js', array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-magnific-popup', $this->plugin_name . '-nested-sortable', $this->plugin_name . '-reframe' ), $this->version, false );
-
-			$document_settings = get_option( $this->plugin_name . '-document' );
-			$format_iframes = ( isset( $document_settings ) && isset( $document_settings['format_iframes'] ) ) ? json_encode( $document_settings['format_iframes'] ) : json_encode( true );
-			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? json_encode( $document_settings['image_popup'] ) : json_encode( true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/js/documents.js', $dependencies, $this->version, false );
 			wp_localize_script( $this->plugin_name, 'wphm_vars', array( 
-				'format_iframes' => $format_iframes,
-				'image_popup' => $image_popup
+				'format_iframes' => json_encode( $format_iframes ),
+				'image_popup' => json_encode( $image_popup )
 			) );
 		
 		} elseif( $this->is_plugin_settings_page() === true ) {
@@ -641,26 +661,36 @@ class Wp_Help_Manager_Admin {
 		$valid = array();
 
 		$valid['admin'] = array();
-		foreach( $input['admin'] as $user_id ) {
-			$user = get_userdata( $user_id );
-			if( $user && $user->roles ) {
-				if( in_array( 'administrator', (array) $user->roles ) ) {
-					array_push( $valid['admin'], intval( $user_id ) );
+		if( ! empty( $input['admin'] ) ) {
+			foreach( $input['admin'] as $user_id ) {
+				$user = get_userdata( $user_id );
+				if( $user && $user->roles ) {
+					if( in_array( 'administrator', (array) $user->roles ) ) {
+						array_push( $valid['admin'], intval( $user->ID ) );
+					}
+				}
+			}
+		} else {
+			// show notice if no admin was selected
+			wp_redirect( add_query_arg( 'wphm-notice', 'no-admin-selected', admin_url( '/admin.php?page=wp-help-manager-settings&tab=permissions' ) ) );
+			exit;
+		}
+
+		$valid['editor'] = array();
+		if( ! empty( $input['editor'] ) ) {
+			foreach( $input['editor'] as $role_allowed_to_edit ) {
+				if( get_role( $role_allowed_to_edit ) ) {
+					array_push( $valid['editor'], sanitize_key( $role_allowed_to_edit ) );
 				}
 			}
 		}
 
-		$valid['editor'] = array();
-		foreach( $input['editor'] as $role_allowed_to_edit ) {
-			if( get_role( $role_allowed_to_edit ) ) {
-				array_push( $valid['editor'], sanitize_key( $role_allowed_to_edit ) );
-			}
-		}
-
 		$valid['reader'] = array();
-		foreach( $input['reader'] as $role_allowed_to_read ) {
-			if( get_role( $role_allowed_to_read ) ) {
-				array_push( $valid['reader'], sanitize_key( $role_allowed_to_read ) );
+		if( ! empty( $input['reader'] ) ) {
+			foreach( $input['reader'] as $role_allowed_to_read ) {
+				if( get_role( $role_allowed_to_read ) ) {
+					array_push( $valid['reader'], sanitize_key( $role_allowed_to_read ) );
+				}
 			}
 		}
 
@@ -825,7 +855,7 @@ class Wp_Help_Manager_Admin {
 			// No documents selected for export
 			if ( $_GET['wphm-notice'] === 'empty-export' ) {
 				?>
-				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'No documents selected.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
@@ -833,7 +863,7 @@ class Wp_Help_Manager_Admin {
 			// Document not found
 			} elseif( $_GET['wphm-notice'] === 'not-found' ) {
 				?>
-				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'The requested document was not found. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
@@ -841,8 +871,16 @@ class Wp_Help_Manager_Admin {
 			// Translation not found
 			} elseif( $_GET['wphm-notice'] === 'translation-not-found' ) {
 				?>
-				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice" data-close="<?php echo remove_query_arg( 'wphm-notice' ); ?>">
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'No translation is available for this document. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
+				</div>
+				<?php
+
+			// No admin selected in settings
+			} elseif( $_GET['wphm-notice'] === 'no-admin-selected' ) {
+				?>
+				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
+					<p><?php esc_html_e( 'Please select at least one plugin admin.', 'wp-help-manager' ); ?></p>
 				</div>
 				<?php
 			}
@@ -1074,7 +1112,7 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Check if current plugin admin still ihas administrator role -> if not, revoke capabilities
+	 * Check if current plugin admin still has administrator role -> if not, revoke capabilities.
 	 *
 	 * @since    1.0.0
 	 * @access   public
@@ -1226,7 +1264,7 @@ class Wp_Help_Manager_Admin {
 	public function change_left_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
 			$plugin_footer_text = sprintf(
-				'%s <a href="https://www.wphelpmanager.com" target="_blank">WP Help Manager</a>.',
+				'%s <a href="https://wordpress.org/plugins/wp-help-manager/" target="_blank">WP Help Manager</a>.',
 				esc_html__( 'Thank you for creating with', 'wp-help-manager' )
 			);
 			return $plugin_footer_text;
@@ -1248,73 +1286,6 @@ class Wp_Help_Manager_Admin {
 			return $footer_text;
 		}
 	}
-
-	/**
-	 * Add help tab to all plugin pages.
-	 *
-	 * @since    1.0.0
-	 */
-	// public function add_help_tab() {
-	// 	if ( is_plugin_page() === true ) {
-	// 		$this->setup_help_tab();
-	// 	}
-	// 	return false;
-	// }
-
-	/**
-	 * Sets up the admin help tab.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	// public function setup_help_tab() {
-	// 	$screen = get_current_screen();
-
-	// 	// Overview tab.
-	// 	$screen->add_help_tab(
-	// 		array(
-	// 			'id'      => 'overview',
-	// 			'title'   => __( 'Overview', 'wp-help-manager' ),
-	// 			'content' =>
-	// 				'<p><strong>' . __( 'Overview', 'wp-help-manager' ) . '</strong></p>' .
-	// 				'<p>' . __( 'Lorem ipsum dolor sit amet.' ) . '</p>'
-	// 		)
-	// 	);
-
-	// 	// Help tab.
-	// 	// $screen->add_help_tab(
-	// 	// 	array(
-	// 	// 		'id'      => 'help',
-	// 	// 		'title'   => __( 'Help & Support', 'wp-help-manager' ),
-	// 	// 		'content' =>
-	// 	// 			'<p><strong>' . __( 'Help & Support', 'wp-help-manager' ) . '</strong></p>' .
-	// 	// 			'<p>' . __( 'We are fanatical about support, and want you to get the best out of your website with ACF. If you run into any difficulties, there are several places you can find help:', 'wp-help-manager' ) . '</p>' .
-	// 	// 			'<ul>' .
-	// 	// 				'<li>' . sprintf(
-	// 	// 					__( '<a href="%s" target="_blank">Documentation</a>. Our extensive documentation contains references and guides for most situations you may encounter.', 'wp-help-manager' ),
-	// 	// 					'https://www.advancedcustomfields.com/resources/'
-	// 	// 				) . '</li>' .
-	// 	// 				'<li>' . sprintf(
-	// 	// 					__( '<a href="%s" target="_blank">Discussions</a>. We have an active and friendly community on our Community Forums who may be able to help you figure out the 'how-tos' of the ACF world.', 'wp-help-manager' ),
-	// 	// 					'https://support.advancedcustomfields.com/'
-	// 	// 				) . '</li>' .
-	// 	// 				'<li>' . sprintf(
-	// 	// 					__( '<a href="%s" target="_blank">Help Desk</a>. The support professionals on our Help Desk will assist with your more in depth, technical challenges.', 'wp-help-manager' ),
-	// 	// 					'https://www.advancedcustomfields.com/support/'
-	// 	// 				) . '</li>' .
-	// 	// 			'</ul>',
-	// 	// 	)
-	// 	// );
-
-	// 	// Sidebar.
-	// 	$screen->set_help_sidebar(
-	// 		'<p><strong>' . __( 'WP Help Manager', 'wp-help-manager' ) . '</strong></p>' .
-	// 		'<p><span class="dashicons dashicons-admin-plugins"></span> ' . sprintf( __( 'Version %s', 'wp-help-manager' ), $this->version ) . '</p>' .
-	// 		'<p><span class="dashicons dashicons-wordpress"></span> <a href="https://wordpress.org/plugins/wp-help-manager/" target="_blank">' . __( 'View details', 'wp-help-manager' ) . '</a></p>' .
-	// 		'<p><span class="dashicons dashicons-admin-home"></span> <a href="https://www.wphelpmanager.com/" target="_blank">' . __( 'Visit website', 'wp-help-manager' ) . '</a></p>' .
-	// 		''
-	// 	);
-	// }
 
 	/**
 	 * Add dashboard widget.
