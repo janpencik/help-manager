@@ -142,6 +142,16 @@
 			fixDocumentFigcaptions();
 		});
 
+		// Add anchors to headings
+		if( $('.wphm-docs-content').length > 0 ) {
+			$('.wphm-docs-content h1, .wphm-docs-content h2, .wphm-docs-content h3, .wphm-docs-content h4, .wphm-docs-content h5, .wphm-docs-content h6').each(function() {
+				var html = $(this).html();
+				var id = $(this).attr('id');
+				var newHtml = html + '<a class="wphm-docs-anchor" href="#' + id + '">#</a>';
+				$(this).html(newHtml);
+			});
+		}
+
 		// Scroll to top
 		if( $('.wphm-back-to-top').length > 0 ) {
 			$('.wphm-back-to-top').on('click', function(e) {

@@ -315,6 +315,12 @@ body.rtl .wphm-sidebar {
             @media (max-width: 782px) {
                 line-height: 1.35;
             }
+            &:hover {
+                .wphm-docs-anchor {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
         }
         h1 {
             font-size: 2em;
@@ -548,6 +554,16 @@ body.rtl .wphm-sidebar {
                     }
                 }
             }
+        }
+
+        // Anchor links
+        .wphm-docs-anchor {
+            transition: opacity .2s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+            text-decoration: none;
+            padding-left: 8px;
+            font-weight: 700;
         }
 
     }

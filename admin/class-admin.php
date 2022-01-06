@@ -1414,6 +1414,26 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
+	 * Automatically add IDs to headings.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @author	 Jeroen Sormani
+	 * @link	 https://jeroensormani.com/automatically-add-ids-to-your-headings/
+	 */
+	function auto_id_headings( $content ) {
+		if( get_post_type() === 'wp-help-docs' ) {
+			$content = preg_replace_callback( '/(\<h[1-6](.*?))\>(.*)(<\/h[1-6]>)/i', function( $matches ) {
+				if ( ! stripos( $matches[0], 'id=' ) ) :
+					$matches[0] = $matches[1] . $matches[2] . ' id="' . sanitize_title( $matches[3] ) . '">' . $matches[3] . $matches[4];
+				endif;
+				return $matches[0];
+			}, $content );
+			return $content;
+		}
+	}
+
+	/**
 	 * Get all user roles.
 	 *
 	 * @since    1.0.0
@@ -1433,13 +1453,6 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function plugin_tools() {
 
-		// Import documents
-		if( isset( $_POST['action'] ) && $_POST['action'] === 'import_help_documents' ) {
-			if( check_admin_referer( 'wphm_import_form', 'wphm_import_nonce' ) ) {
-				$this->import_help_documents();
-			}
-		}
-
 		// Export documents
 		if( isset( $_POST['action'] ) && $_POST['action'] === 'export_help_documents' ) {
 			if( isset( $_POST['wphm_docs'] ) ) {
@@ -1452,16 +1465,6 @@ class Wp_Help_Manager_Admin {
 			}
 		}
 
-	}
-
-	/**
-	 * Import help documents.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public function import_help_documents() {
-		die( 'import' );
 	}
 
 	/**

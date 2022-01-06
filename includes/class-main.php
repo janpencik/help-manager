@@ -206,7 +206,6 @@ class Wp_Help_Manager {
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'dashboard_setup' );
 
 		// Add admin bar CSS to both front-end and back-end
-		// $this->loader->add_action( 'wp_head', $plugin_admin, 'custom_admin_css' );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
 		
 		// Add custom CSS to document page
@@ -217,6 +216,9 @@ class Wp_Help_Manager {
 
 		// Responsive tables
 		$this->loader->add_filter( 'the_content', $plugin_admin, 'responsive_tables' );
+
+		// Automaticlly add IDs to headings
+		$this->loader->add_filter( 'the_content', $plugin_admin, 'auto_id_headings' );
 
 		// Redirect in case of wrong document ID
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'redirect_to_default_document' );
