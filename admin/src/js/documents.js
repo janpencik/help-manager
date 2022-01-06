@@ -133,14 +133,16 @@
 				});
 			},
 		});
-		$(document).ajaxComplete(function () {
-			if( $('audio').length > 0 || $('video').length > 0 ) {
-				$('audio, video').mediaelementplayer();
+		$(document).ajaxComplete( function( event, xhr, settings ) {
+			if( settings.url.includes('wp-help-manager-documents') ) {
+				if( $('audio').length > 0 || $('video').length > 0 ) {
+					$('audio, video').mediaelementplayer();
+				}
+				reframeIframes();
+				initPopupGallery();
+				fixDocumentFigcaptions();
+				setAnchorsAndQuickNav();
 			}
-			reframeIframes();
-			initPopupGallery();
-			fixDocumentFigcaptions();
-			setAnchorsAndQuickNav();
 		});
 
 		// Add anchors to headings
@@ -148,18 +150,20 @@
 			const headings = new Array();
 			if( $('.wphm-docs-content').length > 0 ) {
 				$('.wphm-docs-content h1, .wphm-docs-content h2, .wphm-docs-content h3, .wphm-docs-content h4, .wphm-docs-content h5, .wphm-docs-content h6').each(function() {
-					var html = $(this).html();
-					var id = $(this).attr('id');
-					var newHtml = html + '<a class="wphm-docs-anchor" href="#' + id + '">#</a>';
-					$(this).html(newHtml);
+					if( $(this).find('.wphm-docs-anchor').length === 0 ) {
+						var html = $(this).html();
+						var id = $(this).attr('id');
+						var newHtml = html + '<a class="wphm-docs-anchor" href="#' + id + '">#</a>';
+						$(this).html(newHtml);
 
-					// push heading to array for quick navigation
-					var headingClone = $(this).clone();
-					headingClone.find('a').remove();
-					var headingLevel = headingClone.prop('tagName');
-					var headingCloneId = headingClone.attr('id');
-					var headingCloneText = headingClone.text();
-					headings.push([headingLevel, headingCloneId, headingCloneText]);
+						// push heading to array for quick navigation
+						var headingClone = $(this).clone();
+						headingClone.find('a').remove();
+						var headingLevel = headingClone.prop('tagName');
+						var headingCloneId = headingClone.attr('id');
+						var headingCloneText = headingClone.text();
+						headings.push([headingLevel, headingCloneId, headingCloneText]);
+					}
 				});
 			}
 

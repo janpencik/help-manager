@@ -40,10 +40,8 @@ class Wp_Help_Manager_Post_Type {
 	 * @param    string    $post_type_slug    The slug of the created post type.
 	 */
     public function __construct() {
-
         $this->post_type_slug = 'wp-help-docs';
         $this->taxonomy_slug = 'wp-help-category';
-
     }
 
     /**
@@ -53,7 +51,6 @@ class Wp_Help_Manager_Post_Type {
      * @access   public
 	 */
     public function register_post_type() {      
-
         $labels = array(
             'name'                  => _x( 'Help Documents', 'post type general name', 'wp-help-manager' ),
             'singular_name'         => _x( 'Help Document', 'post type singular name', 'wp-help-manager' ),
@@ -76,7 +73,6 @@ class Wp_Help_Manager_Post_Type {
             'items_list_navigation' => __( 'Help Documents list navigation', 'wp-help-manager' ),
             'items_list'            => __( 'Help Documents list', 'wp-help-manager' )
         );
-     
         $args = array(
             'labels'             => $labels,
             'public'             => true,
@@ -107,9 +103,7 @@ class Wp_Help_Manager_Post_Type {
             ), 
             'map_meta_cap'       => true
         );
-      
         register_post_type( $this->post_type_slug, $args );
-        
     }
 
     /**
@@ -119,9 +113,7 @@ class Wp_Help_Manager_Post_Type {
      * @access   public
 	 */
     public function unregister_post_type() {
-        
         unregister_post_type( $this->post_type_slug );
-
     }
 
     /**
@@ -131,14 +123,33 @@ class Wp_Help_Manager_Post_Type {
      * @access   public
 	 */
     public function post_link( $link, $post ) {
-
 		$post = get_post( $post );
 		if ( $post->post_type == $this->post_type_slug ) {
 			return admin_url( 'admin.php?page=wp-help-manager-documents' ) . '&document=' . absint( $post->ID );
         } else {
 			return $link;
         }
-
 	}
+
+    /**
+	 * Remove post type from WP sitemap.
+	 *
+	 * @since    1.0.0
+     * @access   public
+	 */
+    function remove_post_type_from_sitemap( $post_types ) {
+        unset( $post_types[ $this->post_type_slug ] );
+        return $post_types;
+    }
+
+    /**
+	 * Remove post type from Yoast SEO sitemap.
+	 *
+	 * @since    1.0.0
+     * @access   public
+	 */
+    function remove_post_type_from_yoast_sitemap( $excluded, $post_type ) {
+        return $post_type === $this->post_type_slug;
+    }
 
 }

@@ -957,8 +957,8 @@ class Wp_Help_Manager_Admin {
 
 			}
 
-			// Send success=true
-			wp_send_json_success();
+			// Send success=true + info about ajax call
+			wp_send_json_success( 'wphm_docs_reorder' );
 
 		}
 	}

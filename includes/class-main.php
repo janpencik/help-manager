@@ -167,6 +167,10 @@ class Wp_Help_Manager {
 		// Change custom post type permalink
 		$this->loader->add_filter( 'post_type_link', $post_type, 'post_link', 1, 2 );
 
+		// Remove post type from sitemap
+		$this->loader->add_filter( 'wp_sitemaps_post_types', $post_type, 'remove_post_type_from_sitemap', 10, 2 );
+		$this->loader->add_filter( 'wpseo_sitemap_exclude_post_type', $post_type, 'remove_post_type_from_yoast_sitemap', 10, 2 );
+
 		// Set order on document save
 		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_menu_order_for_new_document', 10, 2 );
 
