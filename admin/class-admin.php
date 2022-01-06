@@ -675,6 +675,7 @@ class Wp_Help_Manager_Admin {
 		} else {
 			// show notice if no admin was selected
 			wp_redirect( add_query_arg( 'wphm-notice', 'no-admin-selected', admin_url( '/admin.php?page=wp-help-manager-settings&tab=permissions' ) ) );
+			remove_query_arg('wphm-notice');
 			exit;
 		}
 
@@ -1091,9 +1092,9 @@ class Wp_Help_Manager_Admin {
 		) );
 		foreach( $admin_users as $admin_user ) {
 			$user = new WP_User( $admin_user );
-			if ( ! in_array( 'administrator', (array) $user->roles ) ) {
+			if ( ! in_array( 'administrator', (array) $user->roles ) || ! in_array( $user->ID, (array) $permissions['admin'] ) ) {
 				$user->remove_cap( 'edit_document' );
-				$user->remove_cap( 'read_document' );
+				$user->remove_cap( 'read_docum;ent' );
 				$user->remove_cap( 'delete_document' );
 				$user->remove_cap( 'edit_documents' );
 				$user->remove_cap( 'edit_others_documents' );

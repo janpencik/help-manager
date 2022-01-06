@@ -3,16 +3,31 @@
 
 	$(document).ready(function() {
 
+        // Get search parameters
+        let searchParams = new URLSearchParams( window.location.search );
+
+        // Remove admin notice parameter from WP referer
+        function fixWpReferer() {
+            if( searchParams.has('wphm-notice') ) {
+                searchParams.delete( 'wphm-notice' );
+                $("input[name=_wp_http_referer]").val( window.location.pathname + '?' + searchParams.toString() );
+            }
+        }
+
         // Remove query args after dismissing the admin notice
 		$(document).on('click', '.wphm-notice .notice-dismiss', function(e) {
 			e.preventDefault();
 			if ( history.pushState ) {
-				let searchParams = new URLSearchParams( window.location.search );
-				searchParams.delete( 'wphm-notice' );
+				fixWpReferer();
 				let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
-				window.history.replaceState( {path: newurl}, '', newurl );
+				window.history.replaceState( { path: newurl }, '', newurl );
 			}
 		});
+
+        // Update WP referer to not show admin notice after form update
+        $('form[name=wp-help-manager_options]').submit(function() {
+            fixWpReferer();
+        });
 
         // CodeMirror editor
         if( $('#wp-help-manager-custom-css-custom-css').length > 0 ) {

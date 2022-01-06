@@ -109,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php if( $docs ) { ?>
                         <div class="full">
                             <label><?php esc_html_e( 'Select documents' ); ?></label>
-                            <div class="wphm-export-documents-list">
+                            <div class="wphm-list-half">
                                 <div>
                                     <input type="checkbox" name="wphm_docs_all" id="wphm_docs_all">
                                     <label for="wphm_docs_all">

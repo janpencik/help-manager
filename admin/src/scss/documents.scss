@@ -691,6 +691,10 @@ body.rtl .wphm-content {
         }
     } 
 }
+body.rtl .wphm-quick-navigation {
+    margin-left: 0;
+    margin-right: 24px;
+}
 
 // Search and empty document
 .wphm-search,

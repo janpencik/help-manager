@@ -32,19 +32,19 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 		<div class="wphm-settings-tabs">
 			<div class="inner">
 				<a <?php if( $tab === null ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings">
-					<?php esc_html_e( 'Appearance', 'wp-help-manager' ); ?>
+					<?php esc_html_e( 'Admin settings', 'wp-help-manager' ); ?>
 				</a>
 				<a <?php if( $tab === 'document' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=document">
-					<?php esc_html_e( 'Document', 'wp-help-manager') ?>
+					<?php esc_html_e( 'Document settings', 'wp-help-manager') ?>
 				</a>
 				<a <?php if( $tab === 'permissions' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=permissions">
-					<?php esc_html_e( 'Permissions', 'wp-help-manager' ); ?>
-				</a>
-				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=advanced">
-					<?php esc_html_e( 'Advanced', 'wp-help-manager') ?>
+					<?php esc_html_e( 'User permissions', 'wp-help-manager' ); ?>
 				</a>
 				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=custom-css">
 					<?php esc_html_e( 'Custom CSS', 'wp-help-manager') ?>
+				</a>
+				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=advanced">
+					<?php esc_html_e( 'Advanced settings', 'wp-help-manager') ?>
 				</a>
 			</div>
 		</div>
@@ -103,7 +103,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin Menu', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin menu', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -176,7 +176,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin Dashboard', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin dashboard', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -202,7 +202,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin Bar', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin bar', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -273,7 +273,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Navigation Features', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Navigation features', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -322,7 +322,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Formatting Features', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Formatting features', 'wp-help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
@@ -413,7 +413,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-flex form-field-radio form-field-highlight">
 
 								<div class="full">
-									<label><?php esc_html_e( 'Can access plugin settings and change user permissions', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Admins - can access plugin settings and change user permissions', 'wp-help-manager' ); ?></label>
+									<div class="wphm-list-half">
 									<?php 
 									$users = get_users( array( 
 										'role' => 'administrator',
@@ -430,10 +431,11 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 											</div>
 										<?php } ?>
 									<?php } ?>
+									</div>
 								</div>
 
 								<div class="half">
-									<label><?php esc_html_e( 'Can add, edit and delete help documents', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Editors - can add, edit and delete help documents', 'wp-help-manager' ); ?></label>
 									<?php 
 									$roles = $this->get_all_user_roles();
 									if( $roles ) {
@@ -450,7 +452,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 								</div>
 
 								<div class="half">
-									<label><?php esc_html_e( 'Can view help documents', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Readers - can view help documents', 'wp-help-manager' ); ?></label>
 									<?php 
 									$roles = $this->get_all_user_roles();
 									if( $roles ) {
@@ -571,7 +573,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 						<div class="wphm-settings-box-inside">
 								
-							<p><?php esc_html_e( 'Select which data you want to delete when uninstalling the plugin. Please note that it will not be possible to recover data after deletion.', 'wp-help-manager' ); ?></p>
+							<p><?php echo wp_kses_post( __( 'Choose which data you want to delete upon uninstallation. Please note that <strong>it is not possible</strong> to recover data after deletion.', 'wp-help-manager' ) ); ?></p>
 
 							<div class="form-field form-field-radio">
 								

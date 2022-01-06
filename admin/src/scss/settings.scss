@@ -298,34 +298,33 @@ body.rtl {
     }
 }
 
-// Export documents - multiple cols
-#wphm-export-form {
-    .wphm-export-documents-list {
-        flex-wrap: wrap;
-        align-items: flex-start;
-        div {
-            line-height: 20px;
-            margin: 3px 0;
-            padding-right: 20px;
-            display: flex;
-            align-content: flex-start;
-            width: calc( 100% / 2 );
-            word-wrap: break-word;
-            box-sizing: border-box;
-            @media (max-width: 600px) {
-                width: 100%;
+// Checkboxes - two columns
+.wphm-list-half {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: -3px!important;
+    div {
+        line-height: 20px;
+        margin: 3px 0;
+        padding-right: 20px;
+        display: flex;
+        align-content: flex-start;
+        width: calc( 100% / 2 );
+        word-wrap: break-word;
+        box-sizing: border-box;
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+        label {
+            @media (max-width: 782px) {
+                line-height: 25px;
             }
-            label {
-                @media (max-width: 782px) {
-                    line-height: 25px;
-                }
-            }
-            input {
-                position: relative;
-                top: 2px;
-                @media (max-width: 782px) {
-                    top: auto;
-                }
+        }
+        input {
+            position: relative;
+            top: 2px;
+            @media (max-width: 782px) {
+                top: auto;
             }
         }
     }
