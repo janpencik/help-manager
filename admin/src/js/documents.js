@@ -140,17 +140,70 @@
 			reframeIframes();
 			initPopupGallery();
 			fixDocumentFigcaptions();
+			setAnchorsAndQuickNav();
 		});
 
 		// Add anchors to headings
-		if( $('.wphm-docs-content').length > 0 ) {
-			$('.wphm-docs-content h1, .wphm-docs-content h2, .wphm-docs-content h3, .wphm-docs-content h4, .wphm-docs-content h5, .wphm-docs-content h6').each(function() {
-				var html = $(this).html();
-				var id = $(this).attr('id');
-				var newHtml = html + '<a class="wphm-docs-anchor" href="#' + id + '">#</a>';
-				$(this).html(newHtml);
-			});
+		function setAnchorsAndQuickNav() {
+			const headings = new Array();
+			if( $('.wphm-docs-content').length > 0 ) {
+				$('.wphm-docs-content h1, .wphm-docs-content h2, .wphm-docs-content h3, .wphm-docs-content h4, .wphm-docs-content h5, .wphm-docs-content h6').each(function() {
+					var html = $(this).html();
+					var id = $(this).attr('id');
+					var newHtml = html + '<a class="wphm-docs-anchor" href="#' + id + '">#</a>';
+					$(this).html(newHtml);
+
+					// push heading to array for quick navigation
+					var headingClone = $(this).clone();
+					headingClone.find('a').remove();
+					var headingLevel = headingClone.prop('tagName');
+					var headingCloneId = headingClone.attr('id');
+					var headingCloneText = headingClone.text();
+					headings.push([headingLevel, headingCloneId, headingCloneText]);
+				});
+			}
+
+			// Quick navigation
+			if( $('.wphm-docs-content').length > 0 ) {
+				if( headings.length > 0 ) {
+					$('.wphm-quick-navigation').css('display', 'block');
+					$('.wphm-quick-navigation ul li').remove();
+					let headingLevelMax = headings[0][0].replace('H', '');
+					headings.forEach(function(heading, index, array) {
+						var headingLevel = heading[0].replace('H', '');
+						$('.wphm-quick-navigation ul').append('<li data-level="' + headingLevel + '"><a href="#' + heading[1] + '">' + heading[2] + '</a></li>');
+						if( headingLevel < headingLevelMax ) {
+							headingLevelMax = headingLevel;
+						}
+					})
+					// Set margin for lower heading levels
+					$('.wphm-quick-navigation ul li').each(function() {
+						var adjustStart = headingLevelMax * 8;
+						var level = $(this).attr('data-level');
+						$(this).css('margin-left', (level * 8 - adjustStart) + 'px');
+					})
+				}
+			}
+
+			// Quick navigation - calculate fixed position
+			if( $('.wphm-quick-navigation').length > 0 ) {
+				var adminBarHeight = $('#wpadminbar').outerHeight();
+				var fixedNav = $('.wphm-quick-navigation-fixed');
+				$(window).on('scroll', function() {
+					if( $('.wphm-quick-navigation:visible').length > 0 ) {
+						var contentDistanceFromTop = $('.wphm-content').offset().top - adminBarHeight - $(window).scrollTop();
+						if( contentDistanceFromTop <= 0 ) {
+							fixedNav.addClass('fixed');
+							fixedNav.css('top', adminBarHeight + 8);
+						} else {
+							fixedNav.removeClass('fixed');
+							fixedNav.css('top', 'auto');
+						}
+					}
+				})
+			}
 		}
+		setAnchorsAndQuickNav();
 
 		// Scroll to top
 		if( $('.wphm-back-to-top').length > 0 ) {

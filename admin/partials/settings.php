@@ -108,7 +108,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 						<div class="wphm-settings-box-inside">
 							
-							<p><?php esc_html_e( 'Change the appearance of WP Help Manager in the WordPress admin.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Change the appearance of WP Help Manager in the WordPress admin menu.', 'wp-help-manager' ); ?></p>
 
 							<div class="form-field">
 								<div>
@@ -144,7 +144,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-flex form-field-three">
 								<div>
 									<label for="<?php echo $settings_name; ?>-menu_icon">
-										<?php esc_html_e( 'Plugin icon', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Dashicon class', 'wp-help-manager' ); ?>
 									</label>
 									<input type="text" id="<?php echo $settings_name; ?>-menu_icon" name="<?php echo $settings_name; ?>[menu_icon]" value="<?php esc_attr_e( $menu_icon ); ?>">
 									<p class="description">
@@ -155,7 +155,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 								</div>
 								<div>
 									<label for="<?php echo $settings_name; ?>-menu_position">
-										<?php esc_html_e( 'Position in the menu order', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Menu order', 'wp-help-manager' ); ?>
 									</label>
 									<input type="number" id="<?php echo $settings_name; ?>-menu_position" name="<?php echo $settings_name; ?>[menu_position]"  value="<?php esc_attr_e( $menu_position ); ?>">
 									<p class="description">
@@ -243,14 +243,18 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				$options = get_option( $this->plugin_name . '-document' );
 
 				if( $options !== false ) {
+					$quick_navigation = isset( $options['quick_navigation'] ) ? boolval( $options['quick_navigation'] ) : true;
 					$child_navigation = isset( $options['child_navigation'] ) ? boolval( $options['child_navigation'] ) : true;
 					$post_navigation = isset( $options['post_navigation'] ) ? boolval( $options['post_navigation'] ) : true;
+					$scroll_to_top = isset( $options['scroll_to_top'] ) ? boolval( $options['scroll_to_top'] ) : true;
 					$format_tables = isset( $options['format_tables'] ) ? boolval( $options['format_tables'] ) : true;
 					$format_iframes = isset( $options['format_iframes'] ) ? boolval( $options['format_iframes'] ) : true;
 					$image_popup = isset( $options['image_popup'] ) ? boolval( $options['image_popup'] ) : true;
 				} else {
+					$quick_navigation = true;
 					$child_navigation = true;
 					$post_navigation = true;
+					$scroll_to_top = true;
 					$format_tables = true;
 					$format_iframes = true;
 					$image_popup = true;
@@ -283,6 +287,12 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
 									</label> -->
 									<div>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-quick_navigation" name="<?php echo $settings_name; ?>[quick_navigation]" <?php checked( $quick_navigation, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-quick_navigation">
+											<?php echo esc_html__( 'Document navigation', 'wp-help-manager' ); ?>
+										</label>
+									</div>
+									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-child_navigation" name="<?php echo $settings_name; ?>[child_navigation]" <?php checked( $child_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-child_navigation">
 											<?php echo esc_html__( 'Child documents list', 'wp-help-manager' ); ?>
@@ -292,6 +302,12 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<input type="checkbox" id="<?php echo $settings_name; ?>-post_navigation" name="<?php echo $settings_name; ?>[post_navigation]" <?php checked( $post_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-post_navigation">
 											<?php echo esc_html__( 'Previous and next document links', 'wp-help-manager' ); ?>
+										</label>
+									</div>
+									<div>
+										<input type="checkbox" id="<?php echo $settings_name; ?>-scroll_to_top" name="<?php echo $settings_name; ?>[scroll_to_top]" <?php checked( $scroll_to_top, true ); ?>>
+										<label for="<?php echo $settings_name; ?>-scroll_to_top">
+											<?php echo esc_html__( 'Scroll to top link', 'wp-help-manager' ); ?>
 										</label>
 									</div>
 								</div>

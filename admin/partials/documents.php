@@ -221,6 +221,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
             </div>
             
+            <?php if( isset( $document_settings ) && isset( $document_settings['scroll_to_top'] ) && $document_settings['scroll_to_top'] || ! $document_settings ) { ?>
             <!-- Document footer -->
             <div class="wphm-document-footer">
                 
@@ -230,17 +231,21 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                     <span><?php esc_html_e( 'Scroll to top', 'wp-help-manager' ); ?></span>
                 </span>
 
-                <?php if( ! $search_string && $document_id && $this->current_user_is_editor() ) { ?>
-                <!-- Edit document -->
-                <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>">
-                    <span class="dashicons dashicons-edit"></span>
-                    <span><?php esc_html_e( 'Edit document', 'wp-help-manager' ); ?></span>
-                </a>
-                <?php } ?>
-
             </div>
+            <?php } ?>
 
         </div>
+
+        <?php if( isset( $document_settings ) && isset( $document_settings['quick_navigation'] ) && $document_settings['quick_navigation'] || ! $document_settings ) { ?>
+        <!-- Quick navigation -->
+        <div class="wphm-quick-navigation">
+            <div class="wphm-quick-navigation-fixed">
+                <h3><?php esc_html_e( 'In this article', 'wp-help-manager' ); ?></h3>
+                <!-- Links are appended by js -->
+                <ul></ul>
+            </div>
+        </div>
+        <?php } ?>
 
     </div>
 

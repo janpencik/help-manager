@@ -640,8 +640,10 @@ class Wp_Help_Manager_Admin {
 
 		$valid = array();
 
+		$valid['quick_navigation'] = boolval( $input['quick_navigation'] );
 		$valid['child_navigation'] = boolval( $input['child_navigation'] );
 		$valid['post_navigation'] = boolval( $input['post_navigation'] );
+		$valid['scroll_to_top'] = boolval( $input['scroll_to_top'] );
 		$valid['format_tables'] = boolval( $input['format_tables'] );
 		$valid['format_iframes'] = boolval( $input['format_iframes'] );
 		$valid['image_popup'] = boolval( $input['image_popup'] );
