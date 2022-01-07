@@ -143,9 +143,6 @@ body.rtl {
                 box-shadow: none;
             }
         }
-        @media (min-width: 783px) {
-            // min-height: 300px;
-        }
     }
 }
 body.rtl .wphm-sidebar {
@@ -204,11 +201,9 @@ body.rtl .wphm-sidebar {
 	height: 40px;
     width: 100%;
     max-width: 100%;
-	// padding-left: 17px;
 	position: relative;
 	list-style: none;
 	border: 1px dashed #bbb;
-    // border-left: 1px dashed #000;
     border-radius: 5px;
 }
 .sort-handle {
@@ -246,16 +241,11 @@ body.rtl .wphm-sidebar {
         line-height: 1.65;
         color: #191e23;
         clear: none;
-        // border-radius: 0 0 3px 3px;
         border-radius: 3px;
-        // transition: width .15s;
         @media (max-width: 782px) {
             padding: 20px;
             margin: 10px 0;
         }
-        // @media (max-width: 600px) {
-        //     border-radius: 3px;
-        // }
         .wphm-document-title {
             padding-right: 25px;
             margin-bottom: 1.5em;
@@ -338,9 +328,6 @@ body.rtl .wphm-sidebar {
         h1 {
             font-size: 2em;
         }
-        // & > h1:first-child > small { // the edit link
-        //     font-size: 16px;
-        // }
         h2 {
             font-size: 1.5em;
         }
@@ -440,10 +427,6 @@ body.rtl .wphm-sidebar {
                 position: relative;
                 z-index: 1;
             }
-            // a:focus {
-            //     box-shadow: none;
-            //     outline: none;
-            // }
             img {
                 display: block;
             }
@@ -470,7 +453,6 @@ body.rtl .wphm-sidebar {
                 background-color: #f0f0f1;
             }
             th {
-                // text-align: left;
                 background-color: #2271b1;
                 color: #fff;
                 border-color: darken( #2271b1, 10 );
@@ -490,12 +472,9 @@ body.rtl .wphm-sidebar {
                 display: inline-block;
                 width: 100%;
                 max-width: 100%;
-                // background-color: #f9f9f9;
-                // border: 1px solid #d5d9dd;
                 border: 1px solid #e8e8e8;
                 background: #f6f7f7;
                 border-radius: 3px;
-                // border-style: dashed;
                 padding: 12px 18px 12px;
                 ul {
                     margin: 0 5px 0 21px;
@@ -717,8 +696,6 @@ body.rtl .wphm-quick-navigation {
     top: 21px;
     right: 21px;
     color: #babbbc;
-    // border-radius: 2px;
-    // transition: all .15s;
     @media (max-width: 782px) {
         top: 15px;
         right: 15px;
@@ -727,9 +704,7 @@ body.rtl .wphm-quick-navigation {
         transition: all .05s;
     }
     &:hover {
-        // background-color: #f6f7f7;
         color: #2271b1;
-        // box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
 }
 body.rtl .wphm-print-button {
@@ -740,12 +715,8 @@ body.rtl .wphm-print-button {
 // Document footer
 .wphm-document-footer {
     display: flex;
-    // justify-content: center;
     max-width: 100%;
     margin-top: 15px;
-    // padding-left: 30px;
-    // display: flex;
-    // justify-content: center;
     a {
         margin-left: auto;
         text-decoration: none;
@@ -763,9 +734,6 @@ body.rtl .wphm-print-button {
         align-items: center;
         font-size: 1.15em;
     }
-    // span:last-child {
-    //     text-decoration: underline;
-    // }
 }
 
 // Search results
@@ -776,23 +744,6 @@ body.rtl .wphm-print-button {
         }
     }
 }
-
-// Settings
-// .wphm-settings-box {
-//     width: 50%;
-//     margin: 14px 7.5px 10px 0;
-//     background: #fff;
-//     border: 1px solid #ccc;
-//     box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
-//     box-sizing: border-box;
-//     padding: 15px 15px 20px;
-//     @media (max-width: 782px) {
-//         margin: 14px 0 10px 0;
-//     }
-//     @media (min-width: 783px) {
-//         min-height: 300px;
-//     }
-// }
 
 // Printing styling
 @media print {
