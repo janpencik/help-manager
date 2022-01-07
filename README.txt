@@ -2,8 +2,8 @@
 Contributors: bohemiaplugins, janpencik
 Donate link: https://bohemiaplugins.com/
 Tags: help, documentation, client sites, clients, docs
-Requires at least: 5.0
-Tested up to: 5.8.1
+Requires at least: 4.9
+Tested up to: 5.8.3
 Stable tag: 1.0.0
 Requires PHP: 5.6
 License: GPLv3 or later
@@ -19,7 +19,7 @@ This is the long description.  No limit, and you can use Markdown (as well as in
 
 1. Upload `wp-help-manager.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Add help documents
 
 == Frequently Asked Questions ==
 
