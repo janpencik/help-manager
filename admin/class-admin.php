@@ -441,7 +441,7 @@ class Wp_Help_Manager_Admin {
 				// Get search parameter
 				$search_string = '';
 				if( isset( $_GET['s'] ) ) {
-					$search_string = esc_attr( $_GET['s'] );
+					$search_string = sanitize_text_field( $_GET['s'] );
 				}
 
 				// Get document parameter
@@ -840,7 +840,7 @@ class Wp_Help_Manager_Admin {
 		// Get search parameter
 		$search_string = '';
 		if( isset( $_GET['s'] ) ) {
-			$search_string = esc_attr( $_GET['s'] );
+			$search_string = sanitize_text_field( $_GET['s'] );
 		}
 
 		include_once( 'partials/documents.php' );
@@ -857,35 +857,35 @@ class Wp_Help_Manager_Admin {
 
 			// No documents selected for export
 			if ( $_GET['wphm-notice'] === 'empty-export' ) {
-				?>
+			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'No documents selected.', 'wp-help-manager' ); ?></p>
 				</div>
-				<?php
+			<?php
 			
 			// Document not found
 			} elseif( $_GET['wphm-notice'] === 'not-found' ) {
-				?>
+			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'The requested document was not found. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
 				</div>
-				<?php
+			<?php
 
 			// Translation not found
 			} elseif( $_GET['wphm-notice'] === 'translation-not-found' ) {
-				?>
+			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'No translation is available for this document. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
 				</div>
-				<?php
+			<?php
 
 			// No admin selected in settings
 			} elseif( $_GET['wphm-notice'] === 'no-admin-selected' ) {
-				?>
+			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
 					<p><?php esc_html_e( 'Please select at least one plugin admin.', 'wp-help-manager' ); ?></p>
 				</div>
-				<?php
+			<?php
 			}
 
 		}
@@ -1249,7 +1249,7 @@ class Wp_Help_Manager_Admin {
 		// Get search parameter
 		$search_string = '';
 		if( isset( $_GET['s'] ) ) {
-			$search_string = esc_attr( $_GET['s'] );
+			$search_string = sanitize_text_field( $_GET['s'] );
 		}
 
 		if( $this->is_plugin_page() === true ) {
@@ -1636,26 +1636,42 @@ class Wp_Help_Manager_Admin {
 	}
 
 	/**
-	 * Inject sub-query to export documents with specific IDs
+	 * Inject sub-query to export help documents with specific IDs.
 	 *
 	 * @since    1.0.0
 	 * @access   public
 	 */
 	public function filter_exported_docs( $query ) {
 		global $wpdb;
-		$exported_docs = implode( ',', $_POST['wphm_docs'] );
 
-		// Make sure that we target only the query for our post type
-		if( false === strpos( $query, "{$wpdb->posts}.post_type = 'wp-help-docs'" ) ) 
-			return $query;
+		// Check if we have array
+		if( is_array( $_POST['wphm_docs'] ) ) {
+			
+			// Sanitize values
+			$wphm_docs = array();
+			foreach( $_POST['wphm_docs'] as $wphm_doc ) {
+				array_push( $wphm_docs, absint( $wphm_doc ) );
+			}
 
-		// Remove filter callback
-    	remove_filter( current_filter(), __FUNCTION__ );
+			// Prepare list of docs
+			$exported_docs = implode( ',', $wphm_docs );
 
-		// Inject sub-query to export only selected documents
-		$sql = " {$wpdb->posts}.ID IN ($exported_docs) AND ";
+			// Make sure that we target only the query for our post type
+			if( false === strpos( $query, "{$wpdb->posts}.post_type = 'wp-help-docs'" ) ) 
+				return $query;
 
-		return str_replace( ' WHERE ', ' WHERE ' . $sql, $query );
+			// Remove filter callback
+			remove_filter( current_filter(), __FUNCTION__ );
+
+			// Inject sub-query to export only selected documents
+			$sql = " {$wpdb->posts}.ID IN ($exported_docs) AND ";
+
+			return str_replace( ' WHERE ', ' WHERE ' . $sql, $query );
+
+		}
+
+		return $query;
+		
 	}
 
 }

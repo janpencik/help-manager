@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $screen = get_current_screen();
 $screen_id = isset( $screen->id ) ? $screen->id : false;
 $screen_base = isset( $screen->base ) ? $screen->base : false;
-$screen_action = isset( $_GET['action'] ) ? $_GET['action'] : false;
+$screen_action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : false;
 
 // Highlight current page in toolbar
 $current_screen = false;
