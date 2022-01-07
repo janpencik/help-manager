@@ -1,4 +1,4 @@
-=== WP Help Manager ===
+=== Help Manager ===
 Contributors: bohemiaplugins, janpencik
 Donate link: https://bohemiaplugins.com/
 Tags: help, documentation, client sites, clients, docs
@@ -17,7 +17,7 @@ This is the long description.  No limit, and you can use Markdown (as well as in
 
 == Installation ==
 
-1. Upload `wp-help-manager.php` to the `/wp-content/plugins/` directory
+1. Upload `help-manager.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Add help documents
 

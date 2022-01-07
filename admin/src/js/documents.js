@@ -134,7 +134,7 @@
 			},
 		});
 		$(document).ajaxComplete( function( event, xhr, settings ) {
-			if( settings.url.includes('wp-help-manager-documents') ) {
+			if( settings.url.includes('help-manager-documents') ) {
 				if( $('audio').length > 0 || $('video').length > 0 ) {
 					$('audio, video').mediaelementplayer();
 				}

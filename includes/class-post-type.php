@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 /**
  * Register custom post type for the plugin.
@@ -8,11 +8,11 @@ namespace Wp_Help_Manager;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  */
 
-class Wp_Help_Manager_Post_Type {
+class Help_Manager_Post_Type {
 
     /**
     * The slug of the created post type.
@@ -40,8 +40,8 @@ class Wp_Help_Manager_Post_Type {
 	 * @param    string    $post_type_slug    The slug of the created post type.
 	 */
     public function __construct() {
-        $this->post_type_slug = 'wp-help-docs';
-        $this->taxonomy_slug = 'wp-help-category';
+        $this->post_type_slug = 'help-docs';
+        $this->taxonomy_slug = 'help-category';
     }
 
     /**
@@ -52,26 +52,26 @@ class Wp_Help_Manager_Post_Type {
 	 */
     public function register_post_type() {      
         $labels = array(
-            'name'                  => _x( 'Help Documents', 'post type general name', 'wp-help-manager' ),
-            'singular_name'         => _x( 'Help Document', 'post type singular name', 'wp-help-manager' ),
-            'menu_name'             => __( 'Help Documents', 'wp-help-manager' ),
-            'name_admin_bar'        => __( 'Help Documents', 'wp-help-manager' ),
-            'add_new'               => __( 'Add New', 'wp-help-manager' ),
-            'add_new_item'          => __( 'Add New Help Document', 'wp-help-manager' ),
-            'new_item'              => __( 'New Help Document', 'wp-help-manager' ),
-            'edit_item'             => __( 'Edit Help Document', 'wp-help-manager' ),
-            'view_item'             => __( 'View Help Document', 'wp-help-manager' ),
-            'all_items'             => __( 'Help Documents', 'wp-help-manager' ),
-            'search_items'          => __( 'Search Help Documents', 'wp-help-manager' ),
-            'parent_item_colon'     => __( 'Parent Help Documents:', 'wp-help-manager' ),
-            'not_found'             => __( 'No Help Documents found.', 'wp-help-manager' ),
-            'not_found_in_trash'    => __( 'No Help Documents found in Trash.', 'wp-help-manager' ),
-            'archives'              => __( 'Help Documents archives', 'wp-help-manager' ),
-            'insert_into_item'      => __( 'Insert into Help Document', 'wp-help-manager' ),
-            'uploaded_to_this_item' => __( 'Uploaded to this Help Document', 'wp-help-manager' ),
-            'filter_items_list'     => __( 'Filter Help Document list', 'wp-help-manager' ),
-            'items_list_navigation' => __( 'Help Documents list navigation', 'wp-help-manager' ),
-            'items_list'            => __( 'Help Documents list', 'wp-help-manager' )
+            'name'                  => _x( 'Help Documents', 'post type general name', 'help-manager' ),
+            'singular_name'         => _x( 'Help Document', 'post type singular name', 'help-manager' ),
+            'menu_name'             => __( 'Help Documents', 'help-manager' ),
+            'name_admin_bar'        => __( 'Help Documents', 'help-manager' ),
+            'add_new'               => __( 'Add New', 'help-manager' ),
+            'add_new_item'          => __( 'Add New Help Document', 'help-manager' ),
+            'new_item'              => __( 'New Help Document', 'help-manager' ),
+            'edit_item'             => __( 'Edit Help Document', 'help-manager' ),
+            'view_item'             => __( 'View Help Document', 'help-manager' ),
+            'all_items'             => __( 'Help Documents', 'help-manager' ),
+            'search_items'          => __( 'Search Help Documents', 'help-manager' ),
+            'parent_item_colon'     => __( 'Parent Help Documents:', 'help-manager' ),
+            'not_found'             => __( 'No Help Documents found.', 'help-manager' ),
+            'not_found_in_trash'    => __( 'No Help Documents found in Trash.', 'help-manager' ),
+            'archives'              => __( 'Help Documents archives', 'help-manager' ),
+            'insert_into_item'      => __( 'Insert into Help Document', 'help-manager' ),
+            'uploaded_to_this_item' => __( 'Uploaded to this Help Document', 'help-manager' ),
+            'filter_items_list'     => __( 'Filter Help Document list', 'help-manager' ),
+            'items_list_navigation' => __( 'Help Documents list navigation', 'help-manager' ),
+            'items_list'            => __( 'Help Documents list', 'help-manager' )
         );
         $args = array(
             'labels'             => $labels,
@@ -125,7 +125,7 @@ class Wp_Help_Manager_Post_Type {
     public function post_link( $link, $post ) {
 		$post = get_post( $post );
 		if ( $post->post_type == $this->post_type_slug ) {
-			return admin_url( 'admin.php?page=wp-help-manager-documents' ) . '&document=' . absint( $post->ID );
+			return admin_url( 'admin.php?page=help-manager-documents' ) . '&document=' . absint( $post->ID );
         } else {
 			return $link;
         }

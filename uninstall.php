@@ -6,10 +6,10 @@
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
+ * @package    Help_Manager
  */
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 use WP_User;
 
 // If uninstall not called from WordPress, then exit.
@@ -65,7 +65,7 @@ foreach( $roles as $role_slug => $role ) {
 }
 
 // Get advanced settings to see if we should delete or preserve data
-$options = get_option( 'wp-help-manager-advanced' );
+$options = get_option( 'help-manager-advanced' );
 if( $options !== false ) {
 	$delete_options = isset( $options['delete_options'] ) ? boolval( $options['delete_options'] ) : true;
 	$delete_documents = isset( $options['delete_documents'] ) ? boolval( $options['delete_documents'] ) : false;
@@ -76,16 +76,16 @@ if( $options !== false ) {
 
 // Delete plugin options
 if( $delete_options === true ) {
-	delete_option( 'wp-help-manager-admin' );
-	delete_option( 'wp-help-manager-document' );
-	delete_option( 'wp-help-manager-permissions' );
-	delete_option( 'wp-help-manager-custom-css' );
-	delete_option( 'wp-help-manager-advanced' );
+	delete_option( 'help-manager-admin' );
+	delete_option( 'help-manager-document' );
+	delete_option( 'help-manager-permissions' );
+	delete_option( 'help-manager-custom-css' );
+	delete_option( 'help-manager-advanced' );
 }
 
 // Delete help documents
 if( $delete_documents === true ) {
-	$documents = get_posts( 'numberposts=-1&post_type=wp-help-docs&post_status=any&fields=ids' );
+	$documents = get_posts( 'numberposts=-1&post_type=help-docs&post_status=any&fields=ids' );
 	foreach( $documents as $document_id ) {
 		wp_delete_post( $document_id, true );
 	}

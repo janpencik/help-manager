@@ -6,8 +6,8 @@
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/admin/partials
+ * @package    Help_Manager
+ * @subpackage Help_Manager/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wphm-dashboard-docs-search">
     <form action="">
         <div class="search-box">
-            <input type="hidden" name="page" value="wp-help-manager-documents"> 
-            <input type="search" id="post-search-input" name="s" value="" placeholder="<?php esc_attr_e( 'Search in help documents', 'wp-help-manager' );?>">
-            <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search', 'wp-help-manager' ); ?>">
+            <input type="hidden" name="page" value="help-manager-documents"> 
+            <input type="search" id="post-search-input" name="s" value="" placeholder="<?php esc_attr_e( 'Search in help documents', 'help-manager' );?>">
+            <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search', 'help-manager' ); ?>">
         </div>
     </form>
 </div>
@@ -33,17 +33,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <?php if( $this->current_user_is_editor() ) { ?>
 <p class="community-events-footer wphm-dashboard-docs-actions">
-    <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>">
-        <?php esc_html_e( 'Add new', 'wp-help-manager' ); ?>
+    <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=help-docs' ) ) ); ?>">
+        <?php esc_html_e( 'Add new', 'help-manager' ); ?>
     </a>
     |
-    <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=wp-help-docs' ) ) ); ?>">
-        <?php esc_html_e( 'Manage', 'wp-help-manager' ); ?>
+    <a href="<?php echo esc_attr( esc_url( admin_url( 'edit.php?post_type=help-docs' ) ) ); ?>">
+        <?php esc_html_e( 'Manage', 'help-manager' ); ?>
     </a>
     <?php if( $this->current_user_is_admin() ) { ?>
     |
-    <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-settings' ) ) ); ?>">
-        <?php esc_html_e( 'Settings', 'wp-help-manager' ); ?>
+    <a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=help-manager-settings' ) ) ); ?>">
+        <?php esc_html_e( 'Settings', 'help-manager' ); ?>
     </a>
     <?php } ?>
 </p>

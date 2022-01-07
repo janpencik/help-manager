@@ -7,10 +7,10 @@ html {
 }
 
 // Fix position of toolbar under admin bar
-body.toplevel_page_wp-help-manager-documents,
-body.publishing-help_page_wp-help-manager-settings,
-body.publishing-help_page_wp-help-manager-tools,
-body.post-type-wp-help-docs {
+body.toplevel_page_help-manager-documents,
+body.publishing-help_page_help-manager-settings,
+body.publishing-help_page_help-manager-tools,
+body.post-type-help-docs {
     
     .contextual-help-sidebar {
         p span {

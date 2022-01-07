@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 /**
  * Register all actions and filters for the plugin
@@ -8,8 +8,8 @@ namespace Wp_Help_Manager;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  */
 
 /**
@@ -19,11 +19,11 @@ namespace Wp_Help_Manager;
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  * @author     Bohemia Plugins <contact@bohemiaplugins.com>
  */
-class Wp_Help_Manager_Loader {
+class Help_Manager_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

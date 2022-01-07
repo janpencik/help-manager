@@ -6,8 +6,8 @@
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/admin/partials
+ * @package    Help_Manager
+ * @subpackage Help_Manager/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,9 +25,9 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 <!-- Main wrapper -->
 <div class="wrap wphm-wrap">
 
-    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Documents', 'wp-help-manager' ); ?></h1>
+    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Documents', 'help-manager' ); ?></h1>
     <?php if( $this->current_user_is_editor() ) { ?>
-        <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=wp-help-docs' ) ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'wp-help-manager' ) ?></a>
+        <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=help-docs' ) ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'help-manager' ) ?></a>
     <?php } ?>
     <hr class="wp-header-end">
 
@@ -38,9 +38,9 @@ $document_settings = get_option( $this->plugin_name . '-document' );
         <div class="wphm-search wphm-search-mobile inner">
             <form action="">
                 <div class="search-box">
-                    <input type="hidden" name="page" value="wp-help-manager-documents"> 
+                    <input type="hidden" name="page" value="help-manager-documents"> 
                     <input type="search" id="post-search-input" name="s" value="<?php echo $search_string; ?>">
-                    <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search Help Documents', 'wp-help-manager' ); ?>">
+                    <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search Help Documents', 'help-manager' ); ?>">
                 </div>
             </form>
         </div>
@@ -53,10 +53,10 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                 <!-- Topics -->
                 <div class="wphm-sidebar-topics">
-                    <h3><a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=wp-help-manager-documents' ) ) ); ?>"><?php esc_html_e( 'Topics', 'wp-help-manager' ); ?></a></h3>
+                    <h3><a href="<?php echo esc_attr( esc_url( admin_url( 'admin.php?page=help-manager-documents' ) ) ); ?>"><?php esc_html_e( 'Topics', 'help-manager' ); ?></a></h3>
                     <?php
                     $docs = wp_list_pages( array(
-                        'post_type'         => 'wp-help-docs',
+                        'post_type'         => 'help-docs',
                         'post_status'       => array( 'publish', 'private' ),
                         'hierarchical'      => true,
                         'echo'              => false,
@@ -84,11 +84,11 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 if( $search_string ) {
                 ?>
 
-                    <h1 class="wp-heading-inline"><?php echo esc_html__( 'Search results for:', 'wp-help-manager' ) . ' ' . $search_string; ?></h1>
+                    <h1 class="wp-heading-inline"><?php echo esc_html__( 'Search results for:', 'help-manager' ) . ' ' . $search_string; ?></h1>
 
                     <?php 
                     $search_results = new WP_Query( array(
-                        'post_type'         => 'wp-help-docs',
+                        'post_type'         => 'help-docs',
                         'post_status'       => array( 'publish', 'private' ),
                         'posts_per_page'    => -1,
                         's'                 => $search_string
@@ -111,7 +111,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 } elseif( $document_id ) {
 
                     $document = new WP_Query( array( 
-                        'post_type'     => 'wp-help-docs', 
+                        'post_type'     => 'help-docs', 
                         'p'             => $document_id,
                     ) );
 
@@ -127,7 +127,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                         </style>
 
                         <!-- Print button -->
-                        <span title="<?php esc_attr_e( 'Print this document', 'wp-help-manager' ); ?>" onclick="window.print();return false;" class="wphm-print-button">
+                        <span title="<?php esc_attr_e( 'Print this document', 'help-manager' ); ?>" onclick="window.print();return false;" class="wphm-print-button">
                             <span class="dashicons dashicons-printer"></span>
                         </span>
 
@@ -138,7 +138,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                             <!-- Edit link -->
                             <?php if( $this->current_user_is_editor() ) { ?>
-                            <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="page-title-action"><?php esc_html_e( 'Edit', 'wp-help-manager' );?></a>
+                            <a href="<?php echo esc_attr( get_edit_post_link( $document_id ) ); ?>" class="page-title-action"><?php esc_html_e( 'Edit', 'help-manager' );?></a>
                             <?php } ?>
 
                         </div>
@@ -179,7 +179,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                                     <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
                                         <span class="icon"><?php echo $prev_arrow; ?></span>
                                         <span class="text"><?php echo esc_html( $document_navigation->prev_post->post_title ); ?></span>
-                                        <div class="text-mobile"><?php esc_attr_e( 'Previous', 'wp-help-manager' ); ?></div>
+                                        <div class="text-mobile"><?php esc_attr_e( 'Previous', 'help-manager' ); ?></div>
                                     </a>
                                     <?php } ?>
                                     <?php if( $document_navigation->next_post ) {
@@ -187,7 +187,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                                     ?>
                                     <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
                                         <span class="text"><?php echo esc_html( $document_navigation->next_post->post_title ); ?></span>
-                                        <div class="text-mobile"><?php esc_attr_e( 'Next', 'wp-help-manager' ); ?></div>
+                                        <div class="text-mobile"><?php esc_attr_e( 'Next', 'help-manager' ); ?></div>
                                         <span class="icon"><?php echo $next_arrow; ?></span>
                                     </a>
                                     <?php } ?>
@@ -199,8 +199,8 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                     <?php } else { ?>
 
-                        <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'wp-help-manager' ); ?></h1>
-                        <p><?php esc_html_e( 'The requested document could not be found.', 'wp-help-manager' ); ?></p>
+                        <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'help-manager' ); ?></h1>
+                        <p><?php esc_html_e( 'The requested document could not be found.', 'help-manager' ); ?></p>
 
                     <?php } ?>
 
@@ -208,14 +208,14 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 
                 <?php } elseif( $document_id === false ) { ?>
 
-                    <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'wp-help-manager' ); ?></h1>
-                    <p><?php esc_html_e( 'The requested document could not be found.', 'wp-help-manager' ); ?></p>
+                    <h1 class="wp-heading-inline"><?php esc_html_e( 'Document not found', 'help-manager' ); ?></h1>
+                    <p><?php esc_html_e( 'The requested document could not be found.', 'help-manager' ); ?></p>
 
                 <?php } else { ?>
 
-                    <h1 class="wp-heading-inline"><?php esc_html_e( 'No documents', 'wp-help-manager' ); ?></h1>
-                    <p><?php esc_html_e( 'There are no published documents.', 'wp-help-manager' ); ?></p>
-                    <p><a href="<?php echo esc_attr( admin_url( 'post-new.php?post_type=wp-help-docs' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Add help document', 'wp-help-manager' ); ?></a></p>
+                    <h1 class="wp-heading-inline"><?php esc_html_e( 'No documents', 'help-manager' ); ?></h1>
+                    <p><?php esc_html_e( 'There are no published documents.', 'help-manager' ); ?></p>
+                    <p><a href="<?php echo esc_attr( admin_url( 'post-new.php?post_type=help-docs' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Add help document', 'help-manager' ); ?></a></p>
                 
                 <?php } ?>
 
@@ -228,7 +228,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 <!-- Back to top -->
                 <span class="wphm-back-to-top">
                     <span class="dashicons dashicons-arrow-up-alt2"></span>
-                    <span><?php esc_html_e( 'Scroll to top', 'wp-help-manager' ); ?></span>
+                    <span><?php esc_html_e( 'Scroll to top', 'help-manager' ); ?></span>
                 </span>
 
             </div>
@@ -240,7 +240,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
         <!-- Quick navigation -->
         <div class="wphm-quick-navigation">
             <div class="wphm-quick-navigation-fixed">
-                <h3><?php esc_html_e( 'In this article', 'wp-help-manager' ); ?></h3>
+                <h3><?php esc_html_e( 'In this article', 'help-manager' ); ?></h3>
                 <!-- Links are appended by js -->
                 <ul></ul>
             </div>

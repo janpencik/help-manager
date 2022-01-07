@@ -10,22 +10,22 @@
  *
  * @link              https://bohemiaplugins.com/
  * @since             1.0.0
- * @package           Wp_Help_Manager
+ * @package           Help_Manager
  *
  * @wordpress-plugin
- * Plugin Name:       WP Help Manager
- * Plugin URI:        https://wphelpmanager.com/
+ * Plugin Name:       Help Manager
+ * Plugin URI:        https://bohemiaplugins.com/help-manager
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
  * Author:            Bohemia Plugins
  * Author URI:        https://bohemiaplugins.com/
  * License:           GPL-3.0+
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       wp-help-manager
+ * Text Domain:       help-manager
  * Domain Path:       /languages
  */
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -37,24 +37,24 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WP_HELP_MANAGER_VERSION', '1.0.0' );
+define( 'HELP_MANAGER_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-wp-help-manager-activator.php
+ * This action is documented in includes/class-help-manager-activator.php
  */
 register_activation_hook( __FILE__, function() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-activator.php';
-	Wp_Help_Manager_Activator::activate();
+	Help_Manager_Activator::activate();
 } );
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wp-help-manager-deactivator.php
+ * This action is documented in includes/class-help-manager-deactivator.php
  */
 register_deactivation_hook( __FILE__, function() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-deactivator.php';
-	Wp_Help_Manager_Deactivator::deactivate();
+	Help_Manager_Deactivator::deactivate();
 } );
 
 /**
@@ -72,10 +72,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-main.php';
  *
  * @since    1.0.0
  */
-function run_wp_help_manager() {
+function run_help_manager() {
 
-	$plugin = new Wp_Help_Manager();
+	$plugin = new Help_Manager();
 	$plugin->run();
 
 }
-run_wp_help_manager();
+run_help_manager();

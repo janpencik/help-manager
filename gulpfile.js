@@ -144,7 +144,7 @@ gulp.task("rootFiles", function() {
                 "./LICENSE.txt",
                 "./README.txt",
                 "./uninstall.php",
-                "./wp-help-manager.php",
+                "./help-manager.php",
                 "./wpml-config.xml",
             ])
             .pipe(gulp.dest("./dist"))

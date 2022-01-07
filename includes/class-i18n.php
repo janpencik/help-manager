@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 /**
  * Define the internationalization functionality
@@ -11,8 +11,8 @@ namespace Wp_Help_Manager;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  */
 
 /**
@@ -22,11 +22,11 @@ namespace Wp_Help_Manager;
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  * @author     Bohemia Plugins <contact@bohemiaplugins.com>
  */
-class Wp_Help_Manager_i18n {
+class Help_Manager_i18n {
 
 
 	/**
@@ -37,7 +37,7 @@ class Wp_Help_Manager_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'wp-help-manager',
+			'help-manager',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

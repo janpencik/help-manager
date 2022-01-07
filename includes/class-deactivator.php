@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 /**
  * Fired during plugin deactivation
@@ -8,8 +8,8 @@ namespace Wp_Help_Manager;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  */
 
 /**
@@ -18,11 +18,11 @@ namespace Wp_Help_Manager;
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  * @author     Bohemia Plugins <contact@bohemiaplugins.com>
  */
-class Wp_Help_Manager_Deactivator {
+class Help_Manager_Deactivator {
 
 	/**
 	 * Deactivation.

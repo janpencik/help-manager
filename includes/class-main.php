@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 
 /**
  * The file that defines the core plugin class
@@ -11,8 +11,8 @@ namespace Wp_Help_Manager;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  */
 
 /**
@@ -25,11 +25,11 @@ namespace Wp_Help_Manager;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/includes
+ * @package    Help_Manager
+ * @subpackage Help_Manager/includes
  * @author     Bohemia Plugins <contact@bohemiaplugins.com>
  */
-class Wp_Help_Manager {
+class Help_Manager {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -37,7 +37,7 @@ class Wp_Help_Manager {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Wp_Help_Manager_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Help_Manager_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -69,12 +69,12 @@ class Wp_Help_Manager {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'WP_HELP_MANAGER_VERSION' ) ) {
-			$this->version = WP_HELP_MANAGER_VERSION;
+		if ( defined( 'HELP_MANAGER_VERSION' ) ) {
+			$this->version = HELP_MANAGER_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'wp-help-manager';
+		$this->plugin_name = 'help-manager';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -87,10 +87,10 @@ class Wp_Help_Manager {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Wp_Help_Manager_Loader. Orchestrates the hooks of the plugin.
-	 * - Wp_Help_Manager_i18n. Defines internationalization functionality.
-	 * - Wp_Help_Manager_Admin. Defines all hooks for the admin area.
-	 * - Wp_Help_Manager_Public. Defines all hooks for the public side of the site.
+	 * - Help_Manager_Loader. Orchestrates the hooks of the plugin.
+	 * - Help_Manager_i18n. Defines internationalization functionality.
+	 * - Help_Manager_Admin. Defines all hooks for the admin area.
+	 * - Help_Manager_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -122,14 +122,14 @@ class Wp_Help_Manager {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
 
-		$this->loader = new Wp_Help_Manager_Loader();
+		$this->loader = new Help_Manager_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Wp_Help_Manager_i18n class in order to set the domain and to register the hook
+	 * Uses the Help_Manager_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Wp_Help_Manager {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Wp_Help_Manager_i18n();
+		$plugin_i18n = new Help_Manager_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,8 +152,8 @@ class Wp_Help_Manager {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Wp_Help_Manager_Admin( $this->get_plugin_name(), $this->get_version() );
-		$post_type = new Wp_Help_Manager_Post_Type();
+		$plugin_admin = new Help_Manager_Admin( $this->get_plugin_name(), $this->get_version() );
+		$post_type = new Help_Manager_Post_Type();
 
 		// Enqueue plugin scripts and styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -253,7 +253,7 @@ class Wp_Help_Manager {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Wp_Help_Manager_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Help_Manager_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

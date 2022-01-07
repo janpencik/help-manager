@@ -1,6 +1,6 @@
 <?php
 
-namespace Wp_Help_Manager;
+namespace Help_Manager;
 use WP_User;
 
 /**
@@ -9,10 +9,10 @@ use WP_User;
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/admin
+ * @package    Help_Manager
+ * @subpackage Help_Manager/admin
  */
-class Wp_Help_Manager_Admin {
+class Help_Manager_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -53,11 +53,11 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function is_plugin_page() {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_wp-help-manager-documents'
-			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_wp-help-manager-settings'
-			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_wp-help-manager-tools'
-			|| isset( $screen->id ) && $screen->id === 'edit-wp-help-docs'
-			|| ( isset( $screen->id ) && $screen->id === 'wp-help-docs' && $screen->is_block_editor == false ) 
+		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_help-manager-documents'
+			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_help-manager-settings'
+			|| isset( $screen->id ) && $screen->id === 'publishing-help_page_help-manager-tools'
+			|| isset( $screen->id ) && $screen->id === 'edit-help-docs'
+			|| ( isset( $screen->id ) && $screen->id === 'help-docs' && $screen->is_block_editor == false ) 
 		) {
 			return true;
 		}
@@ -71,7 +71,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function is_plugin_documents_page() {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_wp-help-manager-documents' ) {
+		if ( isset( $screen->id ) && $screen->id === 'toplevel_page_help-manager-documents' ) {
 			return true;
 		}
 		return false;
@@ -84,7 +84,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function is_plugin_document_edit_page() {
 		$screen = get_current_screen();
-		if( isset( $screen->base ) && isset( $screen->id ) && isset( $_GET['action'] ) && $screen->base === 'post' && $screen->id === 'wp-help-docs' && $_GET['action'] === 'edit' ) {
+		if( isset( $screen->base ) && isset( $screen->id ) && isset( $_GET['action'] ) && $screen->base === 'post' && $screen->id === 'help-docs' && $_GET['action'] === 'edit' ) {
 			return true;
 		}
 		return false;
@@ -97,7 +97,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function is_plugin_settings_page() {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && ( $screen->id === 'publishing-help_page_wp-help-manager-settings' || $screen->id === 'publishing-help_page_wp-help-manager-tools' ) ) {
+		if ( isset( $screen->id ) && ( $screen->id === 'publishing-help_page_help-manager-settings' || $screen->id === 'publishing-help_page_help-manager-tools' ) ) {
 			return true;
 		}
 		return false;
@@ -282,7 +282,7 @@ class Wp_Help_Manager_Admin {
 		$screen = get_current_screen();
 
 		// Classic editor
-		if ( $screen->base === 'post' && $screen->post_type === 'wp-help-docs' ) {
+		if ( $screen->base === 'post' && $screen->post_type === 'help-docs' ) {
 			remove_editor_styles();
 		}
 	}
@@ -296,7 +296,7 @@ class Wp_Help_Manager_Admin {
 		$screen = get_current_screen();
 
 		// Gutenberg
-		if ( $screen->is_block_editor && $screen->post_type === 'wp-help-docs' ) {
+		if ( $screen->is_block_editor && $screen->post_type === 'help-docs' ) {
 			wp_dequeue_style( 'twentytwenty-block-editor-styles' );
 			wp_enqueue_style( $this->plugin_name . '-gutenberg', plugin_dir_url( __FILE__ ) . 'assets/css/gutenberg.css', array( 'wp-edit-blocks' ), $this->version, 'all' );
 		}
@@ -317,10 +317,10 @@ class Wp_Help_Manager_Admin {
 
 		// Top level menu item
 		add_menu_page(
-			__( 'Publishing Help', 'wp-help-manager' ),
-			__( 'Publishing Help', 'wp-help-manager' ),
+			__( 'Publishing Help', 'help-manager' ),
+			__( 'Publishing Help', 'help-manager' ),
 			'read_documents',
-			'wp-help-manager-documents',
+			'help-manager-documents',
 			array( $this, 'display_documents_page' ),
 			$menu_icon,
 			$menu_position
@@ -328,41 +328,41 @@ class Wp_Help_Manager_Admin {
 
 		// Submenu item - Manage
 		add_submenu_page(
-			'wp-help-manager-documents',
-			__( 'Manage', 'wp-help-manager' ),
-			__( 'Manage', 'wp-help-manager' ),
+			'help-manager-documents',
+			__( 'Manage', 'help-manager' ),
+			__( 'Manage', 'help-manager' ),
 			'edit_documents',
-			'edit.php?post_type=wp-help-docs',
+			'edit.php?post_type=help-docs',
 			null
 		);
 
 		// Submenu item - Add new
 		add_submenu_page(
-			'wp-help-manager-documents',
-			__( 'Add New', 'wp-help-manager' ),
-			__( 'Add New', 'wp-help-manager' ),
+			'help-manager-documents',
+			__( 'Add New', 'help-manager' ),
+			__( 'Add New', 'help-manager' ),
 			'edit_documents',
-			'post-new.php?post_type=wp-help-docs',
+			'post-new.php?post_type=help-docs',
 			null
 		);
 
 		// Submenu item - Settings
 		add_submenu_page(
-			'wp-help-manager-documents',
-			__( 'Settings', 'wp-help-manager' ),
-			__( 'Settings', 'wp-help-manager' ),
+			'help-manager-documents',
+			__( 'Settings', 'help-manager' ),
+			__( 'Settings', 'help-manager' ),
 			'access_wphm_settings',
-			'wp-help-manager-settings',
+			'help-manager-settings',
 			array( $this, 'display_settings_page' )
 		);
 
 		// Submenu item - Tools
 		add_submenu_page(
-			'wp-help-manager-documents',
-			__( 'Tools', 'wp-help-manager' ),
-			__( 'Tools', 'wp-help-manager' ),
+			'help-manager-documents',
+			__( 'Tools', 'help-manager' ),
+			__( 'Tools', 'help-manager' ),
 			'access_wphm_settings',
-			'wp-help-manager-tools',
+			'help-manager-tools',
 			array( $this, 'display_tools_page' )
 		);
 
@@ -382,7 +382,7 @@ class Wp_Help_Manager_Admin {
 
 		// Change plugin's menu item name according to user settings
 		foreach( $menu as $key => $m ) {
-			if( $m[2] === 'wp-help-manager-documents' ) {
+			if( $m[2] === 'help-manager-documents' ) {
 				$menu_item_key = $key;
 			}
 		}
@@ -390,15 +390,15 @@ class Wp_Help_Manager_Admin {
 		// Make headline WPML translatable
 		if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
 			$current_language = sanitize_key( ICL_LANGUAGE_CODE );
-			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'help-manager' );
 		} else {
-			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+			$menu[$menu_item_key][0] = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'help-manager' );
 
 		}
 
 		// Change post type menu item name
-		if( isset( $submenu['wp-help-manager-documents'] ) ) {
-			$submenu['wp-help-manager-documents'][0][0] = __( 'Documents', 'wp-help-manager' );
+		if( isset( $submenu['help-manager-documents'] ) ) {
+			$submenu['help-manager-documents'][0][0] = __( 'Documents', 'help-manager' );
 		}
 
 	}
@@ -413,7 +413,7 @@ class Wp_Help_Manager_Admin {
 		global $plugin_page;
 
         if( $this->is_plugin_document_edit_page() === true ) {
-			$plugin_page = 'wp-help-manager-documents';
+			$plugin_page = 'help-manager-documents';
 		}
 
         return $parent_file;
@@ -462,7 +462,7 @@ class Wp_Help_Manager_Admin {
 				if( ! $search_string && $document_id ) {
 					$admin_bar->add_node( array(
 						'id' 		=> 'wphm-admin-bar-edit',
-						'title' 	=> '<span class="ab-icon"></span><span class="ab-label">' . __( 'Edit document', 'wp-help-manager' ) . '</span>',
+						'title' 	=> '<span class="ab-icon"></span><span class="ab-label">' . __( 'Edit document', 'help-manager' ) . '</span>',
 						'parent' 	=> false,
 						'href' 		=> esc_url( get_edit_post_link( $document_id ) )
 					) );
@@ -476,9 +476,9 @@ class Wp_Help_Manager_Admin {
 				// Make headline WPML translatable
 				if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
 					$current_language = sanitize_key( ICL_LANGUAGE_CODE );
-					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'help-manager' );
 				} else {
-					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+					$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'help-manager' );
 				}
 
 				$menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] ) && $admin_settings['menu_icon'] ) ? esc_html( $admin_settings['menu_icon'] ) : 'dashicons-editor-help';
@@ -488,12 +488,12 @@ class Wp_Help_Manager_Admin {
 					'id' 		=> 'wphm-admin-bar-menu',
 					'title' 	=> '<span class="ab-icon ' . $menu_icon . '"></span><span class="ab-label">' . $headline . '</span>',
 					'parent' 	=> 'top-secondary',
-					'href' 		=> admin_url( 'admin.php?page=wp-help-manager-documents' )
+					'href' 		=> admin_url( 'admin.php?page=help-manager-documents' )
 				) );
 
 				// Get all top level documents
 				$documents = get_posts( array( 
-					'post_type' 		=> 'wp-help-docs', 
+					'post_type' 		=> 'help-docs', 
 					'post_status' 		=> array( 'publish', 'private' ), 
 					'posts_per_page' 	=> 20,
 					'fields' 			=> 'ids',
@@ -527,9 +527,9 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function set_menu_order_for_new_document( $data, $postarr ) {
-		if( $data['post_type'] === 'wp-help-docs' && $data['post_status'] === 'auto-draft' ) {
+		if( $data['post_type'] === 'help-docs' && $data['post_status'] === 'auto-draft' ) {
 			$last_post = get_posts( array(
-				'post_type' 		=> 'wp-help-docs',
+				'post_type' 		=> 'help-docs',
 				'posts_per_page' 	=> 1,
 				'post_status'		=> array( 'publish', 'private' ),
 				'orderby'          	=> 'menu_order',
@@ -674,7 +674,7 @@ class Wp_Help_Manager_Admin {
 			}
 		} else {
 			// show notice if no admin was selected
-			wp_redirect( add_query_arg( 'wphm-notice', 'no-admin-selected', admin_url( '/admin.php?page=wp-help-manager-settings&tab=permissions' ) ) );
+			wp_redirect( add_query_arg( 'wphm-notice', 'no-admin-selected', admin_url( '/admin.php?page=help-manager-settings&tab=permissions' ) ) );
 			remove_query_arg('wphm-notice');
 			exit;
 		}
@@ -746,7 +746,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function get_default_document() {
 		$oldest_docs = get_posts( array(
-			'post_type' 		=> 'wp-help-docs',
+			'post_type' 		=> 'help-docs',
 			'posts_per_page' 	=> 1,
 			'post_status'		=> array( 'publish', 'private' ),
 			'orderby'          	=> 'menu_order',
@@ -778,20 +778,20 @@ class Wp_Help_Manager_Admin {
 			if( class_exists( 'SitePress' ) ) {
 				
 				global $sitepress;
-				$wpml_post_id = $sitepress->get_element_trid( $requested_id, 'post_wp-help-docs' );
-				$translations = $sitepress->get_element_translations( $wpml_post_id, 'post_wp-help-docs', false, true );
+				$wpml_post_id = $sitepress->get_element_trid( $requested_id, 'post_help-docs' );
+				$translations = $sitepress->get_element_translations( $wpml_post_id, 'post_help-docs', false, true );
 
 				// Document doesn't exist
 				if( ! $wpml_post_id ) {
 					$default_document_id = $this->get_default_document();
-					wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+					wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=help-manager-documents&document=' . $default_document_id ) ) );
 					exit;
 				}
 
 				// Document is not available for current language
 				if( defined( 'ICL_LANGUAGE_CODE' ) && ! isset( $translations[ICL_LANGUAGE_CODE] ) ) {
 					$default_document_id = $this->get_default_document();
-					wp_redirect( add_query_arg( 'wphm-notice', 'translation-not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+					wp_redirect( add_query_arg( 'wphm-notice', 'translation-not-found', admin_url( 'admin.php?page=help-manager-documents&document=' . $default_document_id ) ) );
 					exit;
 				}
 
@@ -800,7 +800,7 @@ class Wp_Help_Manager_Admin {
 			// Document doesn't exist
 			if( get_post_status( $requested_id ) === false ) {
 				$default_document_id = $this->get_default_document();
-				wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=wp-help-manager-documents&document=' . $default_document_id ) ) );
+				wp_redirect( add_query_arg( 'wphm-notice', 'not-found', admin_url( 'admin.php?page=help-manager-documents&document=' . $default_document_id ) ) );
 				exit;
 			}
 
@@ -823,7 +823,7 @@ class Wp_Help_Manager_Admin {
 			
 			// WPML compatibility
 			if( class_exists( 'SitePress' ) ) {
-				$requested_id = icl_object_id( $requested_id, 'wp-help-docs', false, ICL_LANGUAGE_CODE );
+				$requested_id = icl_object_id( $requested_id, 'help-docs', false, ICL_LANGUAGE_CODE );
 			}
 
 			// Check if document exists
@@ -859,7 +859,7 @@ class Wp_Help_Manager_Admin {
 			if ( $_GET['wphm-notice'] === 'empty-export' ) {
 			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
-					<p><?php esc_html_e( 'No documents selected.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'No documents selected.', 'help-manager' ); ?></p>
 				</div>
 			<?php
 			
@@ -867,7 +867,7 @@ class Wp_Help_Manager_Admin {
 			} elseif( $_GET['wphm-notice'] === 'not-found' ) {
 			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
-					<p><?php esc_html_e( 'The requested document was not found. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'The requested document was not found. You\'ve been redirected to the default document.', 'help-manager' ); ?></p>
 				</div>
 			<?php
 
@@ -875,7 +875,7 @@ class Wp_Help_Manager_Admin {
 			} elseif( $_GET['wphm-notice'] === 'translation-not-found' ) {
 			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
-					<p><?php esc_html_e( 'No translation is available for this document. You\'ve been redirected to the default document.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'No translation is available for this document. You\'ve been redirected to the default document.', 'help-manager' ); ?></p>
 				</div>
 			<?php
 
@@ -883,7 +883,7 @@ class Wp_Help_Manager_Admin {
 			} elseif( $_GET['wphm-notice'] === 'no-admin-selected' ) {
 			?>
 				<div class="notice notice-warning my-dismiss-notice is-dismissible wphm-notice">
-					<p><?php esc_html_e( 'Please select at least one plugin admin.', 'wp-help-manager' ); ?></p>
+					<p><?php esc_html_e( 'Please select at least one plugin admin.', 'help-manager' ); ?></p>
 				</div>
 			<?php
 			}
@@ -1024,7 +1024,7 @@ class Wp_Help_Manager_Admin {
 		}
 
 		// Remove capabilities from not allowed roles
-		$all_roles = Wp_Help_Manager_Admin::get_all_user_roles();
+		$all_roles = Help_Manager_Admin::get_all_user_roles();
 		foreach( $all_roles as $role_slug => $role ) {
 			if( ! in_array( $role_slug, $allowed_roles ) ) {
 				$role = get_role( $role_slug );
@@ -1083,7 +1083,7 @@ class Wp_Help_Manager_Admin {
 	public static function revoke_capabilities( $permissions ) {
 
 		if( ! $permissions ) {
-			$permissions = get_option( 'wp-help-manager-permissions' );
+			$permissions = get_option( 'help-manager-permissions' );
 		}
 
 		// Remove admin capabilities from unchecked/past admin users
@@ -1194,7 +1194,7 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function get_allowed_user_roles() {
-		$permissions = get_option( 'wp-help-manager-permissions' );
+		$permissions = get_option( 'help-manager-permissions' );
 		$allowed_roles = array_unique( array_merge( $permissions['admin'], $permissions['editor'], $permissions['reader'] ) );
 		return $allowed_roles;
 	}
@@ -1207,7 +1207,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function get_document_children( $id ) {
 		$children = wp_list_pages( array(
-			'post_type'         => 'wp-help-docs',
+			'post_type'         => 'help-docs',
 			'post_status'       => array( 'publish', 'private' ),
 			'child_of'          => $id,
 			'hierarchical'      => true,
@@ -1267,8 +1267,8 @@ class Wp_Help_Manager_Admin {
 	public function change_left_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
 			$plugin_footer_text = sprintf(
-				'%s <a href="https://wordpress.org/plugins/wp-help-manager/" target="_blank">WP Help Manager</a>.',
-				esc_html__( 'Thank you for creating with', 'wp-help-manager' )
+				'%s <a href="https://wordpress.org/plugins/help-manager/" target="_blank">Help Manager</a>.',
+				esc_html__( 'Thank you for creating with', 'help-manager' )
 			);
 			return $plugin_footer_text;
 		} else {
@@ -1284,7 +1284,7 @@ class Wp_Help_Manager_Admin {
 	 */
 	public function change_right_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
-			return __( 'Version', 'wp-help-manager' ) . ' ' . $this->version;
+			return __( 'Version', 'help-manager' ) . ' ' . $this->version;
 		} else {
 			return $footer_text;
 		}
@@ -1303,18 +1303,18 @@ class Wp_Help_Manager_Admin {
 			// Make headline WPML translatable
 			if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
 				$current_language = sanitize_key( ICL_LANGUAGE_CODE );
-				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline_' . $current_language] ) && $admin_settings['headline_' . $current_language] !== '' ) ? esc_html( $admin_settings['headline_' . $current_language] ) : __( 'Publishing Help', 'help-manager' );
 			} else {
-				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+				$headline = ( isset( $admin_settings ) && isset( $admin_settings['headline'] ) && $admin_settings['headline'] !== '' ) ? esc_html( $admin_settings['headline'] ) : __( 'Publishing Help', 'help-manager' );
 			}
 
-			if( get_posts( array( 'post_type' => 'wp-help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids', 'suppress_filters' => false ) ) && $this->current_user_is_reader() )
+			if( get_posts( array( 'post_type' => 'help-docs', 'post_status' => array( 'publish', 'private' ), 'posts_per_page' => 1, 'fields' => 'ids', 'suppress_filters' => false ) ) && $this->current_user_is_reader() )
 				wp_add_dashboard_widget( 'wphm-dashboard-docs', esc_html( $headline ), array( $this, 'dashboard_widget' ) );
 		}
 	}
 	public function dashboard_widget() {
 		$docs = wp_list_pages( array(
-			'post_type'         => 'wp-help-docs',
+			'post_type'         => 'help-docs',
 			'post_status'       => array( 'publish', 'private' ),
 			'sort_column'		=> 'menu_order',
 			'sort_order'		=> 'ASC',
@@ -1363,7 +1363,7 @@ class Wp_Help_Manager_Admin {
 
 		// Get all documents
 		$pages = get_pages( array(
-			'post_type'         => 'wp-help-docs',
+			'post_type'         => 'help-docs',
 			'post_status'       => array( 'publish', 'private' ),
 			'sort_column'		=> 'menu_order',
 			'sort_order'		=> 'ASC',
@@ -1425,7 +1425,7 @@ class Wp_Help_Manager_Admin {
 	 * @link	 https://jeroensormani.com/automatically-add-ids-to-your-headings/
 	 */
 	function auto_id_headings( $content ) {
-		if( get_post_type() === 'wp-help-docs' ) {
+		if( get_post_type() === 'help-docs' ) {
 			$content = preg_replace_callback( '/(\<h[1-6](.*?))\>(.*)(<\/h[1-6]>)/i', function( $matches ) {
 				if ( ! stripos( $matches[0], 'id=' ) ) :
 					$matches[0] = $matches[1] . $matches[2] . ' id="' . sanitize_title( $matches[3] ) . '">' . $matches[3] . $matches[4];
@@ -1463,7 +1463,7 @@ class Wp_Help_Manager_Admin {
 					$this->export_help_documents();
 				}
 			} else {
-				wp_redirect( admin_url( '/admin.php?page=wp-help-manager-tools&wphm-notice=empty-export' ) );
+				wp_redirect( admin_url( '/admin.php?page=help-manager-tools&wphm-notice=empty-export' ) );
 				exit;
 			}
 		}
@@ -1577,7 +1577,7 @@ class Wp_Help_Manager_Admin {
 
 		// Increase menu order for all items before the export is executed (so on website where documents are imported documents show on the end of list and don't mess the existing order)
 		$documents = get_posts( array(
-			'post_type' 		=> 'wp-help-docs',
+			'post_type' 		=> 'help-docs',
 			'fields' 			=> 'ids',
 			'numberposts' 		=> -1,
 			'suppress_filters' 	=> false
@@ -1594,7 +1594,7 @@ class Wp_Help_Manager_Admin {
 		}
 
 		// Execute export
-		export_wp( array( 'content' => 'wp-help-docs' ) );
+		export_wp( array( 'content' => 'help-docs' ) );
 
 		// Change menu order back to original values
 		foreach( $documents as $document ) {
@@ -1618,7 +1618,7 @@ class Wp_Help_Manager_Admin {
 	 * @access   public
 	 */
 	public function export_change_filename( $wp_filename, $sitename, $date ) {
-		$wp_filename = 'wp-help-export-' . $date . '.xml';
+		$wp_filename = 'help-export-' . $date . '.xml';
 		return $wp_filename;
 	}
 
@@ -1657,7 +1657,7 @@ class Wp_Help_Manager_Admin {
 			$exported_docs = implode( ',', $wphm_docs );
 
 			// Make sure that we target only the query for our post type
-			if( false === strpos( $query, "{$wpdb->posts}.post_type = 'wp-help-docs'" ) ) 
+			if( false === strpos( $query, "{$wpdb->posts}.post_type = 'help-docs'" ) ) 
 				return $query;
 
 			// Remove filter callback

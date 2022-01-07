@@ -6,8 +6,8 @@
  * @link       https://bohemiaplugins.com/
  * @since      1.0.0
  *
- * @package    Wp_Help_Manager
- * @subpackage Wp_Help_Manager/admin/partials
+ * @package    Help_Manager
+ * @subpackage Help_Manager/admin/partials
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 <div class="wrap wphm-wrap">
 
 	<h1 class="wphm-page-title">
-		<?php esc_html_e( 'Settings', 'wp-help-manager' ); ?>
+		<?php esc_html_e( 'Settings', 'help-manager' ); ?>
 	</h1>
 
 	<?php settings_errors(); ?>
@@ -31,26 +31,26 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 		<!-- Tabs -->
 		<div class="wphm-settings-tabs">
 			<div class="inner">
-				<a <?php if( $tab === null ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings">
-					<?php esc_html_e( 'Admin settings', 'wp-help-manager' ); ?>
+				<a <?php if( $tab === null ) echo 'class="active" ';?>href="admin.php?page=help-manager-settings">
+					<?php esc_html_e( 'Admin settings', 'help-manager' ); ?>
 				</a>
-				<a <?php if( $tab === 'document' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=document">
-					<?php esc_html_e( 'Document settings', 'wp-help-manager') ?>
+				<a <?php if( $tab === 'document' ) echo 'class="active" ';?>href="admin.php?page=help-manager-settings&tab=document">
+					<?php esc_html_e( 'Document settings', 'help-manager') ?>
 				</a>
-				<a <?php if( $tab === 'permissions' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=permissions">
-					<?php esc_html_e( 'User permissions', 'wp-help-manager' ); ?>
+				<a <?php if( $tab === 'permissions' ) echo 'class="active" ';?>href="admin.php?page=help-manager-settings&tab=permissions">
+					<?php esc_html_e( 'User permissions', 'help-manager' ); ?>
 				</a>
-				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=custom-css">
-					<?php esc_html_e( 'Custom CSS', 'wp-help-manager') ?>
+				<a <?php if( $tab === 'custom-css' ) echo 'class="active" ';?>href="admin.php?page=help-manager-settings&tab=custom-css">
+					<?php esc_html_e( 'Custom CSS', 'help-manager') ?>
 				</a>
-				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=wp-help-manager-settings&tab=advanced">
-					<?php esc_html_e( 'Advanced settings', 'wp-help-manager') ?>
+				<a <?php if( $tab === 'advanced' ) echo 'class="active" ';?>href="admin.php?page=help-manager-settings&tab=advanced">
+					<?php esc_html_e( 'Advanced settings', 'help-manager') ?>
 				</a>
 			</div>
 		</div>
 
 		<!-- Settings form -->
-		<form method="post" name="wp-help-manager_options" action="options.php" autocomplete="off">
+		<form method="post" name="help-manager_options" action="options.php" autocomplete="off">
 		
 			<!------------------------------------
 			---- Admin Settings
@@ -65,9 +65,9 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					// Make headline WPML translatable
 					if( class_exists( 'SitePress' ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
 						$current_language = sanitize_key( ICL_LANGUAGE_CODE );
-						$headline = ( isset( $options ) && isset( $options['headline_' . $current_language] ) && $options['headline_' . $current_language] !== '' ) ? esc_html( $options['headline_' . $current_language] ) : __( 'Publishing Help', 'wp-help-manager' );
+						$headline = ( isset( $options ) && isset( $options['headline_' . $current_language] ) && $options['headline_' . $current_language] !== '' ) ? esc_html( $options['headline_' . $current_language] ) : __( 'Publishing Help', 'help-manager' );
 					} else {
-						$headline = ( isset( $options ) && isset( $options['headline'] ) && $options['headline'] !== '' ) ? esc_html( $options['headline'] ) : __( 'Publishing Help', 'wp-help-manager' );
+						$headline = ( isset( $options ) && isset( $options['headline'] ) && $options['headline'] !== '' ) ? esc_html( $options['headline'] ) : __( 'Publishing Help', 'help-manager' );
 					}
 
 					$menu_icon = isset( $options['menu_icon'] ) && $options['menu_icon'] !== '' 
@@ -83,7 +83,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 						? boolval( $options['admin_bar'] ) 
 						: true;
 				} else {
-					$headline = _x( 'Publishing Help', 'default plugin headline', 'wp-help-manager' );
+					$headline = _x( 'Publishing Help', 'default plugin headline', 'help-manager' );
 					$menu_icon = 'dashicons-editor-help';
 					$menu_position = 2;
 					$dashboard_widget = true;
@@ -103,17 +103,17 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin menu', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin menu', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 							
-							<p><?php esc_html_e( 'Change the appearance of WP Help Manager in the WordPress admin menu.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Change the appearance of Help Manager in the WordPress admin menu.', 'help-manager' ); ?></p>
 
 							<div class="form-field">
 								<div>
 									<label for="<?php echo $settings_name; ?>-headline">
-										<?php esc_html_e( 'Headline', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Headline', 'help-manager' ); ?>
 									</label>
 									<?php if( class_exists( 'SitePress' ) ) { ?>
 										<div class="headline-wpml">
@@ -136,7 +136,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 									<?php } else { ?>
 										<input type="text" id="<?php echo $settings_name; ?>-headline" name="<?php echo $settings_name; ?>[headline]" value="<?php esc_attr_e( $headline ); ?>">
 									<?php } ?>
-									<p class="description"><?php esc_html_e( 'Headline is displayed in the admin menu, in the dashboard widget and on the document listing page.', 'wp-help-manager' ); ?>
+									<p class="description"><?php esc_html_e( 'The headline is displayed in the admin menu, dashboard widget, and document listing page.', 'help-manager' ); ?>
 									</p>
 								</div>
 							</div>
@@ -144,25 +144,25 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-flex form-field-three">
 								<div>
 									<label for="<?php echo $settings_name; ?>-menu_icon">
-										<?php esc_html_e( 'Dashicon class', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Dashicon class', 'help-manager' ); ?>
 									</label>
 									<input type="text" id="<?php echo $settings_name; ?>-menu_icon" name="<?php echo $settings_name; ?>[menu_icon]" value="<?php esc_attr_e( $menu_icon ); ?>">
 									<p class="description">
 										<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">
-											<?php esc_html_e( 'Browse all Dashicons', 'wp-help-manager' ); ?>
+											<?php esc_html_e( 'Browse all Dashicons', 'help-manager' ); ?>
 										</a>
 									</p>
 								</div>
 								<div>
 									<label for="<?php echo $settings_name; ?>-menu_position">
-										<?php esc_html_e( 'Menu order', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Menu order', 'help-manager' ); ?>
 									</label>
 									<input type="number" id="<?php echo $settings_name; ?>-menu_position" name="<?php echo $settings_name; ?>[menu_position]"  value="<?php esc_attr_e( $menu_position ); ?>">
 									<p class="description">
 										<?php printf( 
 											'%s <a href="https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure" target="_blank">%s</a>',
-											esc_html__( 'See values for', 'wp-help-manager' ),
-											esc_html__( 'other menu items', 'wp-help-manager' )
+											esc_html__( 'See values for', 'help-manager' ),
+											esc_html__( 'other menu items', 'help-manager' )
 										); ?>
 									</p>
 								</div>
@@ -176,19 +176,19 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin dashboard', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin dashboard', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 							
-							<p><?php esc_html_e( 'Show the list of help document on admin dashboard.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Show the list of help documents on the admin dashboard.', 'help-manager' ); ?></p>
 
 							<div class="form-field form-field-radio">
 								<div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-dashboard_widget" name="<?php echo $settings_name; ?>[dashboard_widget]" <?php checked( $dashboard_widget, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-dashboard_widget">
-											<?php esc_html_e( 'Show dashboard widget', 'wp-help-manager' ); ?>
+											<?php esc_html_e( 'Show dashboard widget', 'help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -202,19 +202,19 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-menu">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Admin bar', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Admin bar', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 							
-							<p><?php esc_html_e( 'Show the link to help documents in admin bar.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Show the link to help documents in the admin bar.', 'help-manager' ); ?></p>
 
 							<div class="form-field form-field-radio">
 								<div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-admin_bar" name="<?php echo $settings_name; ?>[admin_bar]" <?php checked( $admin_bar, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-admin_bar">
-											<?php esc_html_e( 'Show in admin bar', 'wp-help-manager' ); ?>
+											<?php esc_html_e( 'Show in the admin bar', 'help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -229,7 +229,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<!-- Submit button -->
 				<div>
 					<?php 
-					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					$submit_btn_text = esc_html__( 'Save changes', 'help-manager' );
 					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
 					?>
 				</div>
@@ -273,41 +273,41 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Navigation features', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Navigation features', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 								
-							<!-- <p><?php esc_html_e( 'Turn on/off document navigation features.', 'wp-help-manager' ); ?></p> -->
+							<!-- <p><?php esc_html_e( 'Turn on/off document navigation features.', 'help-manager' ); ?></p> -->
 
 							<div class="form-field form-field-radio">
 								
 								<div>
 									<!-- <label>
-										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-quick_navigation" name="<?php echo $settings_name; ?>[quick_navigation]" <?php checked( $quick_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-quick_navigation">
-											<?php echo esc_html__( 'Document navigation', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Document navigation', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-child_navigation" name="<?php echo $settings_name; ?>[child_navigation]" <?php checked( $child_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-child_navigation">
-											<?php echo esc_html__( 'Child documents list', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Child documents list', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-post_navigation" name="<?php echo $settings_name; ?>[post_navigation]" <?php checked( $post_navigation, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-post_navigation">
-											<?php echo esc_html__( 'Previous and next document links', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Previous and next document links', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-scroll_to_top" name="<?php echo $settings_name; ?>[scroll_to_top]" <?php checked( $scroll_to_top, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-scroll_to_top">
-											<?php echo esc_html__( 'Scroll to top link', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Scroll to top link', 'help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -322,35 +322,35 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Formatting features', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Formatting features', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 								
-							<!-- <p><?php esc_html_e( 'Turn on/off automatic formatting features.', 'wp-help-manager' ); ?></p> -->
+							<!-- <p><?php esc_html_e( 'Turn on/off automatic formatting features.', 'help-manager' ); ?></p> -->
 
 							<div class="form-field form-field-radio">
 
 								<div>
 									<!-- <label>
-										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-image_popup" name="<?php echo $settings_name; ?>[image_popup]" <?php checked( $image_popup, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-image_popup">
-											<?php echo esc_html__( 'Open linked images in a popup using', 'wp-help-manager' ) . ' <a href="https://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a>'; ?>
+											<?php echo esc_html__( 'Open linked images in a popup using', 'help-manager' ) . ' <a href="https://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a>'; ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-format_iframes" name="<?php echo $settings_name; ?>[format_iframes]" <?php checked( $format_iframes, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-format_iframes">
-											<?php echo esc_html__( 'Responsive iframes using', 'wp-help-manager' ) . ' <a href="https://dollarshaveclub.github.io/reframe.js/" target="_blank">Reframe.js</a>'; ?>
+											<?php echo esc_html__( 'Responsive iframes using', 'help-manager' ) . ' <a href="https://dollarshaveclub.github.io/reframe.js/" target="_blank">Reframe.js</a>'; ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-format_tables" name="<?php echo $settings_name; ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-format_tables">
-											<?php echo esc_html__( 'Responsive tables', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Responsive tables', 'help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -366,7 +366,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<!-- Submit button -->
 				<div>
 					<?php 
-					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					$submit_btn_text = esc_html__( 'Save changes', 'help-manager' );
 					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
 					?>
 				</div>
@@ -403,17 +403,17 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-permissions">
 
 						<div class="wphm-settings-box-header">
-							<h2><?php esc_html_e( 'Permissions', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Permissions', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 								
-							<p><?php esc_html_e( 'Define user permissions for accessing and modifying the help documents.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Define user permissions for accessing and modifying the help documents.', 'help-manager' ); ?></p>
 
 							<div class="form-field form-field-flex form-field-radio form-field-highlight">
 
 								<div class="full">
-									<label><?php esc_html_e( 'Admins - can access plugin settings and change user permissions', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Admins - can access plugin settings and change user permissions', 'help-manager' ); ?></label>
 									<div class="wphm-list-half">
 									<?php 
 									$users = get_users( array( 
@@ -435,7 +435,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 								</div>
 
 								<div class="half">
-									<label><?php esc_html_e( 'Editors - can add, edit and delete help documents', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Editors - can add, edit and delete help documents', 'help-manager' ); ?></label>
 									<?php 
 									$roles = $this->get_all_user_roles();
 									if( $roles ) {
@@ -452,7 +452,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 								</div>
 
 								<div class="half">
-									<label><?php esc_html_e( 'Readers - can view help documents', 'wp-help-manager' ); ?></label>
+									<label><?php esc_html_e( 'Readers - can view help documents', 'help-manager' ); ?></label>
 									<?php 
 									$roles = $this->get_all_user_roles();
 									if( $roles ) {
@@ -479,7 +479,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<!-- Submit button -->
 				<div>
 					<?php 
-					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					$submit_btn_text = esc_html__( 'Save changes', 'help-manager' );
 					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
 					?>
 				</div>
@@ -512,12 +512,12 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Custom CSS', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Custom CSS', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 
-							<p><?php esc_html_e( 'Add custom CSS to modify the view of your help documents.', 'wp-help-manager' ); ?></p>
+							<p><?php esc_html_e( 'Add custom CSS to modify the view of your help documents.', 'help-manager' ); ?></p>
 
 							<div class="form-field">
 								<div>
@@ -534,7 +534,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<!-- Submit button -->
 				<div>
 					<?php 
-					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					$submit_btn_text = esc_html__( 'Save changes', 'help-manager' );
 					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
 					?>
 				</div>
@@ -568,29 +568,29 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 					<div class="wphm-settings-box wphm-settings-box-import">
 
 						<div class="wphm-settings-box-header">	
-							<h2><?php esc_html_e( 'Uninstall', 'wp-help-manager' ); ?></h2>
+							<h2><?php esc_html_e( 'Uninstall', 'help-manager' ); ?></h2>
 						</div>
 
 						<div class="wphm-settings-box-inside">
 								
-							<p><?php echo wp_kses_post( __( 'Choose which data you want to delete upon uninstallation. Please note that <strong>it is not possible</strong> to recover data after deletion.', 'wp-help-manager' ) ); ?></p>
+							<p><?php echo wp_kses_post( __( 'Choose which data you want to delete upon uninstallation. Please note that <strong>it is not possible</strong> to recover data after deletion.', 'help-manager' ) ); ?></p>
 
 							<div class="form-field form-field-radio">
 								
 								<div>
 									<!-- <label>
-										<?php esc_html_e( 'Active features', 'wp-help-manager' ); ?>
+										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_options" name="<?php echo $settings_name; ?>[delete_options]" <?php checked( $delete_options, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-delete_options">
-											<?php echo esc_html__( 'Delete plugin options', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Delete plugin options', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
 										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_documents" name="<?php echo $settings_name; ?>[delete_documents]" <?php checked( $delete_documents, true ); ?>>
 										<label for="<?php echo $settings_name; ?>-delete_documents">
-											<?php echo esc_html__( 'Delete help documents', 'wp-help-manager' ); ?>
+											<?php echo esc_html__( 'Delete help documents', 'help-manager' ); ?>
 										</label>
 									</div>
 								</div>
@@ -606,7 +606,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 				<!-- Submit button -->
 				<div>
 					<?php 
-					$submit_btn_text = esc_html__( 'Save changes', 'wp-help-manager' );
+					$submit_btn_text = esc_html__( 'Save changes', 'help-manager' );
 					submit_button( $submit_btn_text, 'button button-primary', 'submit', false );
 					?>
 				</div>

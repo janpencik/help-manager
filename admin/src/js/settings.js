@@ -25,14 +25,14 @@
 		});
 
         // Update WP referer to not show admin notice after form update
-        $('form[name=wp-help-manager_options]').submit(function() {
+        $('form[name=help-manager_options]').submit(function() {
             fixWpReferer();
         });
 
         // CodeMirror editor
-        if( $('#wp-help-manager-custom-css-custom-css').length > 0 ) {
+        if( $('#help-manager-custom-css-custom-css').length > 0 ) {
             wp.codeEditor.initialize(
-                $('#wp-help-manager-custom-css-custom-css'), cm_settings
+                $('#help-manager-custom-css-custom-css'), cm_settings
             );
         }
 
