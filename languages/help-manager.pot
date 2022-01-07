@@ -1,0 +1,607 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Help Manager\n"
+"POT-Creation-Date: 2022-01-07 12:33+0100\n"
+"PO-Revision-Date: 2022-01-07 12:23+0100\n"
+"Last-Translator: Bohemia Plugins <contact@bohemiaplugins.com>\n"
+"Language-Team: Bohemia Plugins <contact@bohemiaplugins.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.13\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: help-manager.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-admin.php:320 admin/class-admin.php:321
+#: admin/class-admin.php:393 admin/class-admin.php:395
+#: admin/class-admin.php:479 admin/class-admin.php:481
+#: admin/class-admin.php:1306 admin/class-admin.php:1308
+#: admin/partials/settings.php:68 admin/partials/settings.php:70
+#: admin/partials/toolbar.php:41 admin/partials/toolbar.php:43
+msgid "Publishing Help"
+msgstr ""
+
+#: admin/class-admin.php:332 admin/class-admin.php:333
+#: admin/partials/dashboard.php:41 admin/partials/toolbar.php:71
+msgid "Manage"
+msgstr ""
+
+#: admin/class-admin.php:342 admin/class-admin.php:343
+#: admin/partials/documents.php:30 includes/class-post-type.php:59
+msgid "Add New"
+msgstr ""
+
+#: admin/class-admin.php:352 admin/class-admin.php:353
+#: admin/partials/dashboard.php:46 admin/partials/settings.php:24
+#: admin/partials/toolbar.php:78
+msgid "Settings"
+msgstr ""
+
+#: admin/class-admin.php:362 admin/class-admin.php:363
+#: admin/partials/toolbar.php:83 admin/partials/tools.php:22
+msgid "Tools"
+msgstr ""
+
+#: admin/class-admin.php:401 admin/partials/documents.php:28
+#: admin/partials/toolbar.php:65
+msgid "Documents"
+msgstr ""
+
+#: admin/class-admin.php:465
+msgid "Edit document"
+msgstr ""
+
+#: admin/class-admin.php:862
+msgid "No documents selected."
+msgstr ""
+
+#: admin/class-admin.php:870
+msgid ""
+"The requested document was not found. You've been redirected to the default "
+"document."
+msgstr ""
+
+#: admin/class-admin.php:878
+msgid ""
+"No translation is available for this document. You've been redirected to the "
+"default document."
+msgstr ""
+
+#: admin/class-admin.php:886
+msgid "Please select at least one plugin admin."
+msgstr ""
+
+#: admin/class-admin.php:1271
+msgid "Thank you for creating with"
+msgstr ""
+
+#: admin/class-admin.php:1287
+msgid "Version"
+msgstr ""
+
+#: admin/partials/dashboard.php:24
+msgid "Search in help documents"
+msgstr ""
+
+#: admin/partials/dashboard.php:25 admin/partials/toolbar.php:95
+msgid "Search"
+msgstr ""
+
+#: admin/partials/dashboard.php:37
+msgid "Add new"
+msgstr ""
+
+#: admin/partials/documents.php:43 includes/class-post-type.php:65
+msgid "Search Help Documents"
+msgstr ""
+
+#: admin/partials/documents.php:56
+msgid "Topics"
+msgstr ""
+
+#: admin/partials/documents.php:87
+msgid "Search results for:"
+msgstr ""
+
+#: admin/partials/documents.php:130
+msgid "Print this document"
+msgstr ""
+
+#: admin/partials/documents.php:141
+msgid "Edit"
+msgstr ""
+
+#: admin/partials/documents.php:182
+msgid "Previous"
+msgstr ""
+
+#: admin/partials/documents.php:190
+msgid "Next"
+msgstr ""
+
+#: admin/partials/documents.php:202 admin/partials/documents.php:211
+msgid "Document not found"
+msgstr ""
+
+#: admin/partials/documents.php:203 admin/partials/documents.php:212
+msgid "The requested document could not be found."
+msgstr ""
+
+#: admin/partials/documents.php:216
+msgid "No documents"
+msgstr ""
+
+#: admin/partials/documents.php:217
+msgid "There are no published documents."
+msgstr ""
+
+#: admin/partials/documents.php:218
+msgid "Add help document"
+msgstr ""
+
+#: admin/partials/documents.php:231
+msgid "Scroll to top"
+msgstr ""
+
+#: admin/partials/documents.php:243
+msgid "In this article"
+msgstr ""
+
+#: admin/partials/settings.php:35
+msgid "Admin settings"
+msgstr ""
+
+#: admin/partials/settings.php:38
+msgid "Document settings"
+msgstr ""
+
+#: admin/partials/settings.php:41
+msgid "User permissions"
+msgstr ""
+
+#: admin/partials/settings.php:44 admin/partials/settings.php:515
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/partials/settings.php:47
+msgid "Advanced settings"
+msgstr ""
+
+#: admin/partials/settings.php:86
+msgctxt "default plugin headline"
+msgid "Publishing Help"
+msgstr ""
+
+#: admin/partials/settings.php:106
+msgid "Admin menu"
+msgstr ""
+
+#: admin/partials/settings.php:111
+msgid "Change the appearance of Help Manager in the WordPress admin menu."
+msgstr ""
+
+#: admin/partials/settings.php:116
+msgid "Headline"
+msgstr ""
+
+#: admin/partials/settings.php:139
+msgid ""
+"The headline is displayed in the admin menu, dashboard widget, and document "
+"listing page."
+msgstr ""
+
+#: admin/partials/settings.php:147
+msgid "Dashicon class"
+msgstr ""
+
+#: admin/partials/settings.php:152
+msgid "Browse all Dashicons"
+msgstr ""
+
+#: admin/partials/settings.php:158
+msgid "Menu order"
+msgstr ""
+
+#: admin/partials/settings.php:164
+msgid "See values for"
+msgstr ""
+
+#: admin/partials/settings.php:165
+msgid "other menu items"
+msgstr ""
+
+#: admin/partials/settings.php:179
+msgid "Admin dashboard"
+msgstr ""
+
+#: admin/partials/settings.php:184
+msgid "Show the list of help documents on the admin dashboard."
+msgstr ""
+
+#: admin/partials/settings.php:191
+msgid "Show dashboard widget"
+msgstr ""
+
+#: admin/partials/settings.php:205
+msgid "Admin bar"
+msgstr ""
+
+#: admin/partials/settings.php:210
+msgid "Show the link to help documents in the admin bar."
+msgstr ""
+
+#: admin/partials/settings.php:217
+msgid "Show in the admin bar"
+msgstr ""
+
+#: admin/partials/settings.php:232 admin/partials/settings.php:369
+#: admin/partials/settings.php:482 admin/partials/settings.php:537
+#: admin/partials/settings.php:609
+msgid "Save changes"
+msgstr ""
+
+#: admin/partials/settings.php:276
+msgid "Navigation features"
+msgstr ""
+
+#: admin/partials/settings.php:281
+msgid "Turn on/off document navigation features."
+msgstr ""
+
+#: admin/partials/settings.php:287 admin/partials/settings.php:336
+#: admin/partials/settings.php:582
+msgid "Active features"
+msgstr ""
+
+#: admin/partials/settings.php:292
+msgid "Document navigation"
+msgstr ""
+
+#: admin/partials/settings.php:298
+msgid "Child documents list"
+msgstr ""
+
+#: admin/partials/settings.php:304
+msgid "Previous and next document links"
+msgstr ""
+
+#: admin/partials/settings.php:310
+msgid "Scroll to top link"
+msgstr ""
+
+#: admin/partials/settings.php:325
+msgid "Formatting features"
+msgstr ""
+
+#: admin/partials/settings.php:330
+msgid "Turn on/off automatic formatting features."
+msgstr ""
+
+#: admin/partials/settings.php:341
+msgid "Open linked images in a popup using"
+msgstr ""
+
+#: admin/partials/settings.php:347
+msgid "Responsive iframes using"
+msgstr ""
+
+#: admin/partials/settings.php:353
+msgid "Responsive tables"
+msgstr ""
+
+#: admin/partials/settings.php:406
+msgid "Permissions"
+msgstr ""
+
+#: admin/partials/settings.php:411
+msgid "Define user permissions for accessing and modifying the help documents."
+msgstr ""
+
+#: admin/partials/settings.php:416
+msgid "Admins - can access plugin settings and change user permissions"
+msgstr ""
+
+#: admin/partials/settings.php:438
+msgid "Editors - can add, edit and delete help documents"
+msgstr ""
+
+#: admin/partials/settings.php:455
+msgid "Readers - can view help documents"
+msgstr ""
+
+#: admin/partials/settings.php:520
+msgid "Add custom CSS to modify the view of your help documents."
+msgstr ""
+
+#: admin/partials/settings.php:571
+msgid "Uninstall"
+msgstr ""
+
+#: admin/partials/settings.php:576
+msgid ""
+"Choose which data you want to delete upon uninstallation. Please note that "
+"<strong>it is not possible</strong> to recover data after deletion."
+msgstr ""
+
+#: admin/partials/settings.php:587
+msgid "Delete plugin options"
+msgstr ""
+
+#: admin/partials/settings.php:593
+msgid "Delete help documents"
+msgstr ""
+
+#: admin/partials/submitbox.php:24
+msgid "Default Help Document"
+msgstr ""
+
+#: admin/partials/toolbar.php:94
+msgid "Search in documents"
+msgstr ""
+
+#: admin/partials/tools.php:31
+msgid "Migrating from WP Help"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "If you are migrating from"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "WP Help"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid ""
+"you need to convert your documents into another post type - you can use the "
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "Post Type Switcher"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "plugin or run SQL query in your database"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "When changing a post type, choose"
+msgstr ""
+
+#: admin/partials/tools.php:37 includes/class-post-type.php:57
+#: includes/class-post-type.php:58 includes/class-post-type.php:64
+msgid "Help Documents"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "from the list"
+msgstr ""
+
+#: admin/partials/tools.php:37
+msgid "Using SQL query"
+msgstr ""
+
+#: admin/partials/tools.php:47
+msgid "Import Documents"
+msgstr ""
+
+#: admin/partials/tools.php:52
+msgid ""
+"Use the WordPress Importer plugin to import help documents from the other "
+"Help Manager installation."
+msgstr ""
+
+#: admin/partials/tools.php:64
+msgid "Install WordPress Importer"
+msgstr ""
+
+#: admin/partials/tools.php:76 admin/partials/tools.php:84
+msgid "Run WordPress Importer"
+msgstr ""
+
+#: admin/partials/tools.php:96
+msgid "Export Documents"
+msgstr ""
+
+#: admin/partials/tools.php:115
+msgid ""
+"Select help documents you would like to export and use the download button "
+"to export to an XML file which you can then import to another Help Manager "
+"installation."
+msgstr ""
+
+#: admin/partials/tools.php:119
+msgid "There are no documents to export."
+msgstr ""
+
+#: admin/partials/tools.php:127
+msgid "Select documents"
+msgstr ""
+
+#: admin/partials/tools.php:132
+msgid "Toggle All"
+msgstr ""
+
+#: admin/partials/tools.php:154
+msgid "Export File"
+msgstr ""
+
+#: includes/class-activator.php:73
+msgid "Example Help Document"
+msgstr ""
+
+#: includes/class-activator.php:76
+msgid ""
+"This help document will help your editors better understand the "
+"administration. Here you can insert instructions for creating new posts, "
+"modifying WordPress settings, or using plugins you use to extend the "
+"website's functionality. Your editors will thank you for that, and you will "
+"save yourself a lot of time you would otherwise spend answering repeated "
+"questions."
+msgstr ""
+
+#: includes/class-activator.php:79
+msgid "What content can I upload"
+msgstr ""
+
+#: includes/class-activator.php:82
+msgid ""
+"You can insert formatted text, images, videos, code samples, audio "
+"recordings, anything you can think of. In addition, we have added useful "
+"features such as automatic heading anchor links, document navigation, "
+"responsive iframes (you'll appreciate that when embedding YouTube videos), "
+"responsive tables, or automatic opening of image links in a pop-up window. "
+"You can activate/deactivate those functions in"
+msgstr ""
+
+#: includes/class-activator.php:82 includes/class-activator.php:88
+msgid "the plugin settings"
+msgstr ""
+
+#: includes/class-activator.php:85
+msgid "Who can access the help documents"
+msgstr ""
+
+#: includes/class-activator.php:88
+msgid ""
+"The help documents are not public and are only visible to registered users "
+"inside the WordPress administration. You can customize the user roles "
+"allowed to edit or view documents in"
+msgstr ""
+
+#: includes/class-activator.php:88
+msgid "Custom roles are also supported."
+msgstr ""
+
+#: includes/class-activator.php:91
+msgid "Support for multilingual websites"
+msgstr ""
+
+#: includes/class-activator.php:94
+#, php-format
+msgid "The plugin is 100% compatible with the popular"
+msgstr ""
+
+#: includes/class-activator.php:94
+msgid "WPML plugin"
+msgstr ""
+
+#: includes/class-activator.php:94
+msgid ""
+"So if your team is international, you can create multilingual help in no "
+"time."
+msgstr ""
+
+#: includes/class-activator.php:97
+msgid "Easy import and export documents"
+msgstr ""
+
+#: includes/class-activator.php:100
+msgid ""
+"Once you have created help documents for the current website, we suppose you "
+"will want to use them on other sites as well. So we have prepared for you "
+"the possibility to"
+msgstr ""
+
+#: includes/class-activator.php:100
+msgid "import/export help documents easily"
+msgstr ""
+
+#: includes/class-activator.php:100
+msgid ""
+"The import uses the official WordPress import tool, which allows you to "
+"import multimedia without problems and replace links to related documents - "
+"just like you would when importing regular blog posts."
+msgstr ""
+
+#: includes/class-post-type.php:55
+msgctxt "post type general name"
+msgid "Help Documents"
+msgstr ""
+
+#: includes/class-post-type.php:56
+msgctxt "post type singular name"
+msgid "Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:60
+msgid "Add New Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:61
+msgid "New Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:62
+msgid "Edit Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:63
+msgid "View Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:66
+msgid "Parent Help Documents:"
+msgstr ""
+
+#: includes/class-post-type.php:67
+msgid "No Help Documents found."
+msgstr ""
+
+#: includes/class-post-type.php:68
+msgid "No Help Documents found in Trash."
+msgstr ""
+
+#: includes/class-post-type.php:69
+msgid "Help Documents archives"
+msgstr ""
+
+#: includes/class-post-type.php:70
+msgid "Insert into Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:71
+msgid "Uploaded to this Help Document"
+msgstr ""
+
+#: includes/class-post-type.php:72
+msgid "Filter Help Document list"
+msgstr ""
+
+#: includes/class-post-type.php:73
+msgid "Help Documents list navigation"
+msgstr ""
+
+#: includes/class-post-type.php:74
+msgid "Help Documents list"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Help Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://bohemiaplugins.com/help-manager"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Administrators can create detailed, hierarchical documentation for the "
+"site's authors and editors, viewable in the WordPress admin."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Bohemia Plugins"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://bohemiaplugins.com/"
+msgstr ""

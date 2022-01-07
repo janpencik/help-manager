@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Help Manager
  * Plugin URI:        https://bohemiaplugins.com/help-manager
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
  * Version:           1.0.0
  * Author:            Bohemia Plugins
  * Author URI:        https://bohemiaplugins.com/
@@ -23,6 +23,25 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       help-manager
  * Domain Path:       /languages
+ * 
+ * Help Manager, 
+ * Copyright (C) 2022, Bohemia Plugins, contact@bohemiaplugins.com
+ * 
+ * Help Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * Help Manager is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Help Manager. If not, see <https://www.gnu.org/licenses/>.
+ * 
+ * Help Manager is inspired by awesome WordPress plugin "WP Help" 
+ * <https://wordpress.org/plugins/wp-help/> by Mark Jaquith <https://coveredweb.com/>.
  */
 
 namespace Help_Manager;
