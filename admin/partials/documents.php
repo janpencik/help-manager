@@ -39,7 +39,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
             <form action="">
                 <div class="search-box">
                     <input type="hidden" name="page" value="help-manager-documents"> 
-                    <input type="search" id="post-search-input" name="s" value="<?php echo $search_string; ?>">
+                    <input type="search" id="post-search-input" name="s" value="<?php echo esc_attr( $search_string ); ?>">
                     <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search Help Documents', 'help-manager' ); ?>">
                 </div>
             </form>
@@ -84,7 +84,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                 if( $search_string ) {
                 ?>
 
-                    <h1 class="wp-heading-inline"><?php echo esc_html__( 'Search results for:', 'help-manager' ) . ' ' . $search_string; ?></h1>
+                    <h1 class="wp-heading-inline"><?php echo esc_html__( 'Search results for:', 'help-manager' ) . ' ' . esc_html( $search_string ); ?></h1>
 
                     <?php 
                     $search_results = new WP_Query( array(
@@ -121,7 +121,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                     ?>
 
                         <style id="wphm-menu-highlight">
-                            .wphm-sidebar .page-item-<?php echo $document_id; ?> > span a {
+                            .wphm-sidebar .page-item-<?php echo esc_html( $document_id ); ?> > span a {
                                 font-weight: 600;
                             }
                         </style>
@@ -173,22 +173,30 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                             <!-- Post navigation -->
                             <nav class="navigation post-navigation" role="navigation">
                                 <div class="nav-links">
-                                    <?php if( $document_navigation->prev_post ) {
-                                    $prev_arrow = is_rtl() ? '&xrarr;' : '&xlarr;';
-                                    ?>
+                                    <?php if( $document_navigation->prev_post ) { ?>
                                     <a class="nav-prev button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->prev_post->ID ) ) ); ?>" rel="prev">
-                                        <span class="icon"><?php echo $prev_arrow; ?></span>
+                                        <span class="icon"><?php 
+                                        if( is_rtl() ) {
+                                            echo '&xrarr;';
+                                        } else {
+                                            echo '&xlarr;';
+                                        }
+                                        ?></span>
                                         <span class="text"><?php echo esc_html( $document_navigation->prev_post->post_title ); ?></span>
                                         <div class="text-mobile"><?php esc_attr_e( 'Previous', 'help-manager' ); ?></div>
                                     </a>
                                     <?php } ?>
-                                    <?php if( $document_navigation->next_post ) {
-                                    $next_arrow = is_rtl() ? '&xlarr;' : '&xrarr;';
-                                    ?>
+                                    <?php if( $document_navigation->next_post ) { ?>
                                     <a class="nav-next button" href="<?php echo esc_attr( esc_url( get_permalink( $document_navigation->next_post->ID ) ) ); ?>" rel="next">
                                         <span class="text"><?php echo esc_html( $document_navigation->next_post->post_title ); ?></span>
                                         <div class="text-mobile"><?php esc_attr_e( 'Next', 'help-manager' ); ?></div>
-                                        <span class="icon"><?php echo $next_arrow; ?></span>
+                                        <span class="icon"><?php 
+                                        if( is_rtl() ) {
+                                            echo '&xlarr;';
+                                        } else {
+                                            echo '&xrarr;';
+                                        }
+                                        ?></span>
                                     </a>
                                     <?php } ?>
                                 </div>

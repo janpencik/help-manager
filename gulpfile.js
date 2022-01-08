@@ -59,6 +59,16 @@ gulp.task("mainScripts", function() {
     );
 })
 
+// Images
+gulp.task("images", function() {
+    return (
+        gulp
+            .src("./admin/src/img/**/*")
+            .pipe(gulp.dest("./admin/assets/img"))
+            .pipe(browserSync.stream())
+    );
+})
+
 // Watch files
 /** 
  * To be able to build, create the .env file in the root of the plugin directory with following variables:
@@ -102,7 +112,8 @@ gulp.task("default", function watchFiles(done) {
 gulp.task( "build", gulp.series( "clean", gulp.parallel( 
     "copyReframe",
     "mainStyles", 
-    "mainScripts"
+    "mainScripts",
+    "images"
 ), "default" ) )
 
 // --------------------------------------------------

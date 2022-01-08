@@ -112,7 +112,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 							<div class="form-field">
 								<div>
-									<label for="<?php echo $settings_name; ?>-headline">
+									<label for="<?php echo esc_attr( $settings_name ); ?>-headline">
 										<?php esc_html_e( 'Headline', 'help-manager' ); ?>
 									</label>
 									<?php if( class_exists( 'SitePress' ) ) { ?>
@@ -125,16 +125,16 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 													foreach( $languages as $language ) {
 														if( $language['language_code'] == $current_language ) {
 															$flag_url = $language['country_flag_url'];
-															echo '<div><img src="' . $flag_url . '"></img></div>';
+															echo '<div><img src="' . esc_attr( esc_url( $flag_url ) ) . '"></img></div>';
 														}
 													}
 												}
 											}
 											?>
-											<input type="text" id="<?php echo $settings_name; ?>-headline_<?php echo esc_attr( $current_language ); ?>" name="<?php echo $settings_name; ?>[headline_<?php echo ICL_LANGUAGE_CODE; ?>]" value="<?php esc_attr_e( $headline ); ?>">
+											<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-headline_<?php echo esc_attr( $current_language ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[headline_<?php echo ICL_LANGUAGE_CODE; ?>]" value="<?php esc_attr_e( $headline ); ?>">
 										</div>
 									<?php } else { ?>
-										<input type="text" id="<?php echo $settings_name; ?>-headline" name="<?php echo $settings_name; ?>[headline]" value="<?php esc_attr_e( $headline ); ?>">
+										<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-headline" name="<?php echo esc_attr( $settings_name ); ?>[headline]" value="<?php echo esc_attr( $headline ); ?>">
 									<?php } ?>
 									<p class="description"><?php esc_html_e( 'The headline is displayed in the admin menu, dashboard widget, and document listing page.', 'help-manager' ); ?>
 									</p>
@@ -143,10 +143,10 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 							<div class="form-field form-field-flex form-field-three">
 								<div>
-									<label for="<?php echo $settings_name; ?>-menu_icon">
+									<label for="<?php echo esc_attr( $settings_name ); ?>-menu_icon">
 										<?php esc_html_e( 'Dashicon class', 'help-manager' ); ?>
 									</label>
-									<input type="text" id="<?php echo $settings_name; ?>-menu_icon" name="<?php echo $settings_name; ?>[menu_icon]" value="<?php esc_attr_e( $menu_icon ); ?>">
+									<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-menu_icon" name="<?php echo esc_attr( $settings_name ); ?>[menu_icon]" value="<?php echo esc_attr( $menu_icon ); ?>">
 									<p class="description">
 										<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">
 											<?php esc_html_e( 'Browse all Dashicons', 'help-manager' ); ?>
@@ -154,10 +154,10 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 									</p>
 								</div>
 								<div>
-									<label for="<?php echo $settings_name; ?>-menu_position">
+									<label for="<?php echo esc_attr( $settings_name ); ?>-menu_position">
 										<?php esc_html_e( 'Menu order', 'help-manager' ); ?>
 									</label>
-									<input type="number" id="<?php echo $settings_name; ?>-menu_position" name="<?php echo $settings_name; ?>[menu_position]"  value="<?php esc_attr_e( $menu_position ); ?>">
+									<input type="number" id="<?php echo esc_attr( $settings_name ); ?>-menu_position" name="<?php echo esc_attr( $settings_name ); ?>[menu_position]"  value="<?php esc_attr_e( $menu_position ); ?>">
 									<p class="description">
 										<?php printf( 
 											'%s <a href="https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure" target="_blank">%s</a>',
@@ -186,8 +186,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-radio">
 								<div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-dashboard_widget" name="<?php echo $settings_name; ?>[dashboard_widget]" <?php checked( $dashboard_widget, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-dashboard_widget">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-dashboard_widget" name="<?php echo esc_attr( $settings_name ); ?>[dashboard_widget]" <?php checked( $dashboard_widget, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-dashboard_widget">
 											<?php esc_html_e( 'Show dashboard widget', 'help-manager' ); ?>
 										</label>
 									</div>
@@ -212,8 +212,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 							<div class="form-field form-field-radio">
 								<div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-admin_bar" name="<?php echo $settings_name; ?>[admin_bar]" <?php checked( $admin_bar, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-admin_bar">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-admin_bar" name="<?php echo esc_attr( $settings_name ); ?>[admin_bar]" <?php checked( $admin_bar, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-admin_bar">
 											<?php esc_html_e( 'Show in the admin bar', 'help-manager' ); ?>
 										</label>
 									</div>
@@ -287,26 +287,26 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-quick_navigation" name="<?php echo $settings_name; ?>[quick_navigation]" <?php checked( $quick_navigation, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-quick_navigation">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-quick_navigation" name="<?php echo esc_attr( $settings_name ); ?>[quick_navigation]" <?php checked( $quick_navigation, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-quick_navigation">
 											<?php echo esc_html__( 'Document navigation', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-child_navigation" name="<?php echo $settings_name; ?>[child_navigation]" <?php checked( $child_navigation, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-child_navigation">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-child_navigation" name="<?php echo esc_attr( $settings_name ); ?>[child_navigation]" <?php checked( $child_navigation, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-child_navigation">
 											<?php echo esc_html__( 'Child documents list', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-post_navigation" name="<?php echo $settings_name; ?>[post_navigation]" <?php checked( $post_navigation, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-post_navigation">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-post_navigation" name="<?php echo esc_attr( $settings_name ); ?>[post_navigation]" <?php checked( $post_navigation, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-post_navigation">
 											<?php echo esc_html__( 'Previous and next document links', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-scroll_to_top" name="<?php echo $settings_name; ?>[scroll_to_top]" <?php checked( $scroll_to_top, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-scroll_to_top">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-scroll_to_top" name="<?php echo esc_attr( $settings_name ); ?>[scroll_to_top]" <?php checked( $scroll_to_top, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-scroll_to_top">
 											<?php echo esc_html__( 'Scroll to top link', 'help-manager' ); ?>
 										</label>
 									</div>
@@ -336,20 +336,20 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-image_popup" name="<?php echo $settings_name; ?>[image_popup]" <?php checked( $image_popup, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-image_popup">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-image_popup" name="<?php echo esc_attr( $settings_name ); ?>[image_popup]" <?php checked( $image_popup, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-image_popup">
 											<?php echo esc_html__( 'Open linked images in a popup using', 'help-manager' ) . ' <a href="https://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a>'; ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-format_iframes" name="<?php echo $settings_name; ?>[format_iframes]" <?php checked( $format_iframes, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-format_iframes">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-format_iframes" name="<?php echo esc_attr( $settings_name ); ?>[format_iframes]" <?php checked( $format_iframes, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-format_iframes">
 											<?php echo esc_html__( 'Responsive iframes using', 'help-manager' ) . ' <a href="https://dollarshaveclub.github.io/reframe.js/" target="_blank">Reframe.js</a>'; ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-format_tables" name="<?php echo $settings_name; ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-format_tables">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-format_tables" name="<?php echo esc_attr( $settings_name ); ?>[format_tables]" <?php checked( $format_tables, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-format_tables">
 											<?php echo esc_html__( 'Responsive tables', 'help-manager' ); ?>
 										</label>
 									</div>
@@ -426,8 +426,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 											$i++;
 											?>
 											<div>
-												<input type="checkbox" id="<?php echo $settings_name; ?>-admin_<?php echo $i; ?>" name="<?php echo $settings_name; ?>[admin][]" value="<?php echo $user->ID; ?>" <?php if( $user->ID == get_current_user_id() ) { echo 'data-current-user="1"'; } ?> <?php checked( in_array( $user->ID, $admin ), true ); ?>>
-												<label for="<?php echo $settings_name; ?>-admin_<?php echo $i; ?>"><?php echo $user->user_login . ' (' . $user->user_email . ')'; ?></label>
+												<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo $i; ?>" name="<?php echo esc_attr( $settings_name ); ?>[admin][]" value="<?php echo $user->ID; ?>" <?php if( $user->ID == get_current_user_id() ) { echo 'data-current-user="1"'; } ?> <?php checked( in_array( $user->ID, $admin ), true ); ?>>
+												<label for="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo $i; ?>"><?php echo $user->user_login . ' (' . $user->user_email . ')'; ?></label>
 											</div>
 										<?php } ?>
 									<?php } ?>
@@ -444,8 +444,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										$j++;
 										?>
 										<div>
-											<input type="checkbox" id="<?php echo $settings_name; ?>-editor_<?php echo $j; ?>" name="<?php echo $settings_name; ?>[editor][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $editor ), true ); ?>>
-											<label for="<?php echo $settings_name; ?>-editor_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
+											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo $j; ?>" name="<?php echo esc_attr( $settings_name ); ?>[editor][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $editor ), true ); ?>>
+											<label for="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
 										</div>
 										<?php } ?>
 									<?php } ?>
@@ -461,8 +461,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										$j++;
 										?>
 										<div>
-											<input type="checkbox" id="<?php echo $settings_name; ?>-reader_<?php echo $j; ?>" name="<?php echo $settings_name; ?>[reader][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $reader ), true ); ?>>
-											<label for="<?php echo $settings_name; ?>-reader_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
+											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo $j; ?>" name="<?php echo esc_attr( $settings_name ); ?>[reader][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $reader ), true ); ?>>
+											<label for="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
 										</div>
 										<?php } ?>
 									<?php } ?>
@@ -521,7 +521,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 
 							<div class="form-field">
 								<div>
-									<textarea name="<?php echo $settings_name; ?>[custom-css]" id="<?php echo $settings_name; ?>-custom-css" cols="30" rows="10"><?php echo $custom_css; ?></textarea>
+									<textarea name="<?php echo esc_attr( $settings_name ); ?>[custom-css]" id="<?php echo esc_attr( $settings_name ); ?>-custom-css" cols="30" rows="10"><?php echo $custom_css; ?></textarea>
 								</div>
 							</div>
 
@@ -582,14 +582,14 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										<?php esc_html_e( 'Active features', 'help-manager' ); ?>
 									</label> -->
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_options" name="<?php echo $settings_name; ?>[delete_options]" <?php checked( $delete_options, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-delete_options">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-delete_options" name="<?php echo esc_attr( $settings_name ); ?>[delete_options]" <?php checked( $delete_options, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-delete_options">
 											<?php echo esc_html__( 'Delete plugin options', 'help-manager' ); ?>
 										</label>
 									</div>
 									<div>
-										<input type="checkbox" id="<?php echo $settings_name; ?>-delete_documents" name="<?php echo $settings_name; ?>[delete_documents]" <?php checked( $delete_documents, true ); ?>>
-										<label for="<?php echo $settings_name; ?>-delete_documents">
+										<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-delete_documents" name="<?php echo esc_attr( $settings_name ); ?>[delete_documents]" <?php checked( $delete_documents, true ); ?>>
+										<label for="<?php echo esc_attr( $settings_name ); ?>-delete_documents">
 											<?php echo esc_html__( 'Delete help documents', 'help-manager' ); ?>
 										</label>
 									</div>
