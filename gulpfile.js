@@ -30,7 +30,7 @@ gulp.task("clean", function() {
 gulp.task("copyReframe", function() {
     return (
         gulp
-            .src(['./node_modules/reframe.js/dist/**/*'])
+            .src(['./node_modules/reframe.js/dist/reframe.js', './node_modules/reframe.js/dist/reframe.min.js'])
             .pipe(gulp.dest("./admin/libs/reframe.js"))
     );
 })
