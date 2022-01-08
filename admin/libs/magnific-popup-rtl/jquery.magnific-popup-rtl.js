@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.1.0 - 2016-02-20
+/*! Magnific Popup RTL (forked from Magnific Popup and added RTL support) - v1.0.0 - 2022-01-08
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
 ;(function (factory) { 
