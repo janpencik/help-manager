@@ -133,7 +133,7 @@ class Help_Manager_Admin {
 			
 			// Magnific Popup CSS
 			if( $image_popup ) {
-				wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/magnific-popup.min.css', array(), $this->version, 'all' );
+				wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup/magnific-popup.min.css', array(), $this->version, 'all' );
 				array_push( $dependencies, $this->plugin_name . '-magnific-popup' );
 			}
 			
@@ -182,7 +182,7 @@ class Help_Manager_Admin {
 
 			// Magnific Popup JS
 			if( $image_popup ) {
-				wp_enqueue_script( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/jquery.magnific-popup-rtl.min.js', array( 'jquery-core' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup/jquery.magnific-popup.min.js', array( 'jquery-core' ), $this->version, false );
 				array_push( $dependencies, $this->plugin_name . '-magnific-popup' );
 			}
 

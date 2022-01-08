@@ -5,17 +5,12 @@
 // Magnific popup
 body.toplevel_page_help-manager-documents {
 
-    // Admin bar fix
-    .mfp-container {
-        padding-top: 32px;
-    }
-
     // Give popup z-index higher than WP menu
     .mfp-bg {
-        z-index: 9991;
+        z-index: 100000;
     }
     .mfp-wrap {
-        z-index: 9992;
+        z-index: 100010;
     }
 }
 

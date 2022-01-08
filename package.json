@@ -1,6 +1,6 @@
 {
   "name": "help-manager",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,9 +8,7 @@
   "author": "Bohemia Plugins",
   "license": "MIT",
   "dependencies": {
-    "magnific-popup": "^1.1.0",
-    "reframe.js": "^3.0.3",
-    "simple-lightbox": "^2.1.0"
+    "reframe.js": "^3.0.3"
   },
   "devDependencies": {
     "autoprefixer": "*",

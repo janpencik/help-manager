@@ -1,4 +1,4 @@
-/*! Magnific Popup RTL (forked from Magnific Popup and added RTL support) - v1.0.0 - 2022-01-08
+/*! Magnific Popup (built from newest commit from joloco adding the RTL support) - v1.1.1 - 2021-11-26
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
 ;(function (factory) { 
