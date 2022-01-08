@@ -35,6 +35,15 @@ gulp.task("copyReframe", function() {
     );
 })
 
+// Copy Simple Lightbox from node_modules to libs
+gulp.task("copySimpleLightbox", function() {
+    return (
+        gulp
+            .src(['./node_modules/simple-lightbox/dist/*'])
+            .pipe(gulp.dest("./admin/libs/simple-lightbox"))
+    );
+})
+
 // Main CSS
 gulp.task("mainStyles", function() {
     return (
@@ -111,6 +120,7 @@ gulp.task("default", function watchFiles(done) {
 // Build assets
 gulp.task( "build", gulp.series( "clean", gulp.parallel( 
     "copyReframe",
+    "copySimpleLightbox",
     "mainStyles", 
     "mainScripts",
     "images"

@@ -131,6 +131,12 @@ class Help_Manager_Admin {
 			// Documents style dependency array
 			$dependencies = array();
 			
+			// Simple lightbox CSS
+			if( $image_popup ) {
+				wp_enqueue_style( $this->plugin_name . '-simple-lightbox', plugin_dir_url( __FILE__ ) . 'libs/simple-lightbox/simpleLightbox.min.css', array(), $this->version, 'all' );
+				array_push( $dependencies, $this->plugin_name . '-simple-lightbox' );
+			}
+
 			// Magnific Popup CSS
 			if( $image_popup ) {
 				wp_enqueue_style( $this->plugin_name . '-magnific-popup', plugin_dir_url( __FILE__ ) . 'libs/magnific-popup-rtl/magnific-popup.min.css', array(), $this->version, 'all' );
@@ -179,6 +185,12 @@ class Help_Manager_Admin {
 
 			// Main script dependency array
 			$dependencies = array( 'jquery-core', 'jquery-ui-sortable', $this->plugin_name . '-nested-sortable' );
+
+			// Simple lightbox JS
+			if( $image_popup ) {
+				wp_enqueue_script( $this->plugin_name . '-simple-lightbox', plugin_dir_url( __FILE__ ) . 'libs/simple-lightbox/simpleLightbox.min.js', array( 'jquery-core' ), $this->version, false );
+				array_push( $dependencies, $this->plugin_name . '-simple-lightbox' );
+			}
 
 			// Magnific Popup JS
 			if( $image_popup ) {

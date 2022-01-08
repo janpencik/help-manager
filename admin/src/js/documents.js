@@ -34,48 +34,116 @@
 					});
 				}
 
-				// RTL
-				var langDir = 'ltr';
-				if( $('body.rtl').length > 0 ) {
-					langDir = 'rtl';
-				} 
+				// Add titles to images
+				$('.wphm-gallery').each(function() {
+					addTitlesToImageLinks( $(this) );
+				})
+				
+				// Simple lightbox
+				SimpleLightbox.defaults = {
 
-				$('.wphm-gallery').magnificPopup({
-					gallery: {
-						enabled: true,
-						tCounter: '%curr%/%total%',
-						langDir: langDir
-					},
-					type: 'image',
-					image: {
-						titleSrc: function(item) {
-							
-							// Try to find title
-							var caption = item.el.parent().find('figcaption');
-							if( caption ) {
-								return caption.text();
-							} 
-							var title = item.el.find('img').attr('title');
-							if( title ) {
-								return title;
-							}
-							var alt = item.el.find('img').attr('alt');
-							if( alt ) {
-								return alt;
-							}
-							
-							// Empty
-							if( caption.length == 0 || title.length == 0 || alt.length == 0 ) {
-								return '';
-							}
-
-						}
-					},
-					// overflowY: 'hidden'
+					// add custom classes to lightbox elements
+					elementClass: '',
+					elementLoadingClass: 'slbLoading',
+					htmlClass: 'slbActive',
+					closeBtnClass: '',
+					nextBtnClass: '',
+					prevBtnClass: '',
+					loadingTextClass: '',
+				
+					// customize / localize controls captions
+					closeBtnCaption: 'Close',
+					nextBtnCaption: 'Next',
+					prevBtnCaption: 'Previous',
+					loadingCaption: 'Loading...',
+				
+					bindToItems: true, // set click event handler to trigger lightbox on provided $items
+					closeOnOverlayClick: true,
+					closeOnEscapeKey: true,
+					nextOnImageClick: false,
+					showCaptions: true,
+				
+					captionAttribute: 'title', // choose data source for library to glean image caption from
+					urlAttribute: 'href', // where to expect large image
+				
+					startAt: 0, // start gallery at custom index
+					loadingTimeout: 100, // time after loading element will appear
+				
+					appendTarget: 'body', // append elsewhere if needed
+					
+					beforeSetContent: null, // convenient hooks for extending library behavoiur
+					beforeClose: null,
+					beforeDestroy: null,
+				
+					videoRegex: new RegExp(/youtube.com|vimeo.com/) // regex which tests load url for iframe content
+				
+				};
+				new SimpleLightbox({
+					elements: '.wphm-gallery'
 				});
+
+				// RTL
+				// var langDir = 'ltr';
+				// if( $('body.rtl').length > 0 ) {
+				// 	langDir = 'rtl';
+				// } 
+
+				// $('.wphm-gallery').magnificPopup({
+				// 	gallery: {
+				// 		enabled: true,
+				// 		tCounter: '%curr%/%total%',
+				// 		langDir: langDir
+				// 	},
+				// 	type: 'image',
+				// 	image: {
+				// 		titleSrc: function(item) {
+							
+				// 			// Try to find title
+				// 			var caption = item.el.parent().find('figcaption');
+				// 			if( caption ) {
+				// 				return caption.text();
+				// 			} 
+				// 			var title = item.el.find('img').attr('title');
+				// 			if( title ) {
+				// 				return title;
+				// 			}
+				// 			var alt = item.el.find('img').attr('alt');
+				// 			if( alt ) {
+				// 				return alt;
+				// 			}
+							
+				// 			// Empty
+				// 			if( caption.length == 0 || title.length == 0 || alt.length == 0 ) {
+				// 				return '';
+				// 			}
+
+				// 		}
+				// 	},
+				// 	// overflowY: 'hidden'
+				// });
 			}
 		}
 		initPopupGallery();
+
+		// Add titles to images
+		function addTitlesToImageLinks(link) {
+			var figcaption = link.parent().find('figcaption');
+			var caption = '';
+			if( figcaption ) {
+				caption = figcaption.text();
+			} 
+			var title = link.find('img').attr('title');
+			if( title ) {
+				caption = title;
+			}
+			var alt = link.find('img').attr('alt');
+			if( alt ) {
+				caption = alt;
+			}
+			if( caption !== '' ) {
+				link.attr('title', caption);
+			}
+		}
 
 		// Fix captions in wp-block-image
 		function fixFigcaption(el) {
