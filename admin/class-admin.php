@@ -194,7 +194,7 @@ class Help_Manager_Admin {
 			wp_enqueue_script( 'wp-theme-plugin-editor' );
 
 			// Settings main JS
-			wp_enqueue_script( $this->plugin_name . '-settings', plugin_dir_url( __FILE__ ) . 'assets/js/settings.js', array(), $this->version, $this->version, false );
+			wp_enqueue_script( $this->plugin_name . '-settings', plugin_dir_url( __FILE__ ) . 'assets/js/settings.js', array(), $this->version, false );
 
 		}
 
@@ -258,7 +258,19 @@ class Help_Manager_Admin {
 			}
 		</style>';
 	}
-	
+
+	/**
+	 * Stylesheet for dashboard widget.
+	 *
+	 * @since    1.0.0
+	 */
+	function dashboard_widget_css( $hook ) {
+		if( 'index.php' !== $hook ) {
+			return;
+		}
+		wp_enqueue_style( $this->plugin_name . '-dashboard', plugin_dir_url( __FILE__ ) . 'assets/css/dashboard.css', array(), $this->version, 'all' );
+	}
+
 	/**
 	 * Add custom CSS to document page.
 	 *

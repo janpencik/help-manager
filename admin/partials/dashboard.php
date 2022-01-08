@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<style><?php echo file_get_contents( plugin_dir_path( __FILE__ ) . '../assets/css/dashboard.css' ); ?></style>
 <div class="wphm-dashboard-docs-search">
     <form action="">
         <div class="search-box">

@@ -161,6 +161,15 @@ class Help_Manager {
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'remove_classic_editor_styles' );
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_block_editor_assets', 20 );
 		
+		// Add admin bar CSS to both front-end and back-end
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
+		
+		// Add custom CSS to document page
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_document_css' );
+
+		// Add custom CSS to admin dashboard
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'dashboard_widget_css' );
+		
 		// Register custom post type
 		$this->loader->add_action( 'init', $post_type, 'register_post_type' );
 
@@ -209,11 +218,6 @@ class Help_Manager {
 		// Add dashboard widget
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'dashboard_setup' );
 
-		// Add admin bar CSS to both front-end and back-end
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
-		
-		// Add custom CSS to document page
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_document_css' );
 
 		// Ajax reoder documents
 		$this->loader->add_action( 'wp_ajax_wphm_docs_reorder', $plugin_admin, 'ajax_reorder' );
