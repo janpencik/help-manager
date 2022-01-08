@@ -175,7 +175,7 @@ class Help_Manager_Admin {
 
 			// Reframe.js JS
 			if( $format_iframes ) {
-				wp_enqueue_script( $this->plugin_name . '-reframe', plugin_dir_url( __FILE__ ) . 'libs/reframe.js/dist/reframe.min.js', array(), $this->version, false );
+				wp_enqueue_script( $this->plugin_name . '-reframe', plugin_dir_url( __FILE__ ) . 'libs/reframe.js/reframe.min.js', array(), $this->version, false );
 				array_push( $dependencies, $this->plugin_name . '-reframe' );
 			}
 
