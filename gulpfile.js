@@ -166,6 +166,10 @@ gulp.task("rootFiles", function() {
 gulp.task("deleteSourceFiles", function() {
     return del([
         "./dist/admin/src",
+        "./dist/admin/libs/magnific-popup/jquery.magnific-popup.js",
+        "./dist/admin/libs/magnific-popup/magnific-popup.css",
+        "./dist/admin/libs/nested-sortable/nested-sortable.js",
+        "./dist/admin/libs/reframe.js/reframe.js",
     ]);
 })
 
