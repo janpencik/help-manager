@@ -8,6 +8,7 @@
   "author": "Bohemia Plugins",
   "license": "MIT",
   "dependencies": {
+    "lightgallery": "^2.3.0",
     "reframe.js": "^3.0.3"
   },
   "devDependencies": {
