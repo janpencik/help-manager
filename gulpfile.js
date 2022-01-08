@@ -70,12 +70,6 @@ gulp.task("images", function() {
 })
 
 // Watch files
-/** 
- * To be able to build, create the .env file in the root of the plugin directory with following variables:
- * URL = proxy URL (e.g. help.test)
- * SSL_KEY = path to your SSL public key (e.g. /laragon/etc/ssl/laragon.key)
- * SSL_CERT = path to your SSL certificate (e.g. /laragon/etc/ssl/laragon.crt)
- */
 gulp.task("default", function watchFiles(done) {    
     browserSync.init({
         proxy: "https://" + process.env.URL + "/",
