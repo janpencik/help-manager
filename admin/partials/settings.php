@@ -131,7 +131,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 												}
 											}
 											?>
-											<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-headline_<?php echo esc_attr( $current_language ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[headline_<?php echo ICL_LANGUAGE_CODE; ?>]" value="<?php esc_attr_e( $headline ); ?>">
+											<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-headline_<?php echo esc_attr( $current_language ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[headline_<?php echo ICL_LANGUAGE_CODE; ?>]" value="<?php echo esc_attr( $headline ); ?>">
 										</div>
 									<?php } else { ?>
 										<input type="text" id="<?php echo esc_attr( $settings_name ); ?>-headline" name="<?php echo esc_attr( $settings_name ); ?>[headline]" value="<?php echo esc_attr( $headline ); ?>">
@@ -157,7 +157,7 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 									<label for="<?php echo esc_attr( $settings_name ); ?>-menu_position">
 										<?php esc_html_e( 'Menu order', 'help-manager' ); ?>
 									</label>
-									<input type="number" id="<?php echo esc_attr( $settings_name ); ?>-menu_position" name="<?php echo esc_attr( $settings_name ); ?>[menu_position]"  value="<?php esc_attr_e( $menu_position ); ?>">
+									<input type="number" id="<?php echo esc_attr( $settings_name ); ?>-menu_position" name="<?php echo esc_attr( $settings_name ); ?>[menu_position]"  value="<?php echo esc_attr( $menu_position ); ?>">
 									<p class="description">
 										<?php printf( 
 											'%s <a href="https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure" target="_blank">%s</a>',
@@ -426,8 +426,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 											$i++;
 											?>
 											<div>
-												<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo $i; ?>" name="<?php echo esc_attr( $settings_name ); ?>[admin][]" value="<?php echo $user->ID; ?>" <?php if( $user->ID == get_current_user_id() ) { echo 'data-current-user="1"'; } ?> <?php checked( in_array( $user->ID, $admin ), true ); ?>>
-												<label for="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo $i; ?>"><?php echo $user->user_login . ' (' . $user->user_email . ')'; ?></label>
+												<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo esc_attr( $i ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[admin][]" value="<?php echo esc_attr( $user->ID ); ?>" <?php if( $user->ID == get_current_user_id() ) { echo 'data-current-user="1"'; } ?> <?php checked( in_array( $user->ID, $admin ), true ); ?>>
+												<label for="<?php echo esc_attr( $settings_name ); ?>-admin_<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $user->user_login ) . ' (' . esc_html( $user->user_email ) . ')'; ?></label>
 											</div>
 										<?php } ?>
 									<?php } ?>
@@ -444,8 +444,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										$j++;
 										?>
 										<div>
-											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo $j; ?>" name="<?php echo esc_attr( $settings_name ); ?>[editor][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $editor ), true ); ?>>
-											<label for="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
+											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo esc_attr( $j ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[editor][]" value="<?php echo esc_attr( $role_slug ); ?>" <?php checked( in_array( $role_slug, $editor ), true ); ?>>
+											<label for="<?php echo esc_attr( $settings_name ); ?>-editor_<?php echo esc_attr( $j ); ?>"><?php echo esc_html( $role['name'] ); ?></label>
 										</div>
 										<?php } ?>
 									<?php } ?>
@@ -461,8 +461,8 @@ $tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : null;
 										$j++;
 										?>
 										<div>
-											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo $j; ?>" name="<?php echo esc_attr( $settings_name ); ?>[reader][]" value="<?php echo $role_slug; ?>" <?php checked( in_array( $role_slug, $reader ), true ); ?>>
-											<label for="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo $j; ?>"><?php echo $role['name']; ?></label>
+											<input type="checkbox" id="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo esc_attr( $j ); ?>" name="<?php echo esc_attr( $settings_name ); ?>[reader][]" value="<?php echo esc_attr( $role_slug ); ?>" <?php checked( in_array( $role_slug, $reader ), true ); ?>>
+											<label for="<?php echo esc_attr( $settings_name ); ?>-reader_<?php echo esc_attr( $j ); ?>"><?php echo esc_html( $role['name'] ); ?></label>
 										</div>
 										<?php } ?>
 									<?php } ?>

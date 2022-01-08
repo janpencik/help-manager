@@ -136,8 +136,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 foreach( $docs as $document ) {
                                 ?>
                                     <div>
-                                        <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo $document; ?>" value="<?php echo $document; ?>">
-                                        <label for="wphm_docs-<?php echo $document; ?>">
+                                        <input type="checkbox" name="wphm_docs[]" id="wphm_docs-<?php echo esc_attr( $document ); ?>" value="<?php echo esc_attr( $document ); ?>">
+                                        <label for="wphm_docs-<?php echo esc_attr( $document ); ?>">
                                             <?php echo get_the_title( $document ); ?>
                                         </label>
                                     </div>

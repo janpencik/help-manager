@@ -65,7 +65,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                     $docs_handles = trim( $this->list_pages_add_handle( $docs ) );
                     ?>
                     <ul <?php if( $this->current_user_is_editor() ) { ?>class="can-sort"<?php } ?> data-nonce="<?php echo wp_create_nonce( 'wphm-docs-reorder' ); ?>">
-                        <?php echo $docs_handles; ?>
+                        <?php echo wp_kses_post( $docs_handles ); ?>
                     </ul>
                 </div>
 
@@ -151,7 +151,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
                             <div class="wphm-children">
                                 <div class="inner">
                                     <ul>
-                                        <?php echo $children; ?>
+                                        <?php echo wp_kses_post( $children ); ?>
                                     </ul>
                                 </div>
                             </div>

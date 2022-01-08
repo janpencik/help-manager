@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 <div class="wphm-dashboard-docs-list">
     <ul>
-        <?php echo $docs; ?>
+        <?php echo wp_kses_post( $docs ); ?>
     </ul>
 </div>
 <?php if( $this->current_user_is_editor() ) { ?>

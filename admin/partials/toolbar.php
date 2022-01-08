@@ -91,7 +91,7 @@ $menu_icon = ( isset( $admin_settings ) && isset( $admin_settings['menu_icon'] )
         <form action="">
             <div class="search-box">
                 <input type="hidden" name="page" value="help-manager-documents"> 
-                <input type="search" id="post-search-input" name="s" value="<?php echo $search_string; ?>" placeholder="<?php esc_attr_e( 'Search in documents', 'help-manager' );?>">
+                <input type="search" id="post-search-input" name="s" value="<?php echo esc_attr( $search_string ); ?>" placeholder="<?php esc_attr_e( 'Search in documents', 'help-manager' );?>">
                 <input type="submit" id="search-submit" class="button" value="<?php esc_attr_e( 'Search', 'help-manager' ); ?>">
             </div>
         </form>
