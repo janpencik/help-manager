@@ -2,6 +2,23 @@
  * Documents styles
  */
 
+ // Simple lightbox
+body.toplevel_page_help-manager-documents {
+
+    // Place caption slightly higher
+    .slbCaption {
+        bottom: 1em;
+    }
+
+    // Give popup z-index higher than WP menu
+    .slbOverlay {
+        z-index: 100000;
+    }
+    .slbWrapOuter {
+        z-index: 100010;
+    }
+}
+
 // Magnific popup
 body.toplevel_page_help-manager-documents {
 
