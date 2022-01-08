@@ -9,7 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "magnific-popup": "^1.1.0",
-    "reframe.js": "^3.0.3"
+    "reframe.js": "^3.0.3",
+    "simple-lightbox": "^2.1.0"
   },
   "devDependencies": {
     "autoprefixer": "*",
