@@ -1,0 +1,58 @@
+/**
+ * Global admin styles
+ */
+ 
+#wpadminbar #wp-admin-bar-wphm-admin-bar-edit {
+    .ab-icon:before {
+        content: "\f464";
+        top: 2px;
+    }
+    @media screen and (max-width: 782px) {
+        display: list-item;
+    }
+} 
+#wpadminbar #wp-admin-bar-wphm-admin-bar-menu {
+    .ab-icon:before { 
+        top: 2px; 
+    }
+    .ab-sub-wrapper .ab-item {
+        display: flex;
+        align-items: center;
+    }
+    .ab-sub-label {
+        margin-right: 16px;
+        align-items: center;
+        display: flex;
+    }
+    .ab-sub-icon { 
+        position: relative;
+        float: none;
+        font: normal 16px/1 dashicons;
+        speak: never;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-image: none!important;
+        margin-right: 6px;
+        &:before { 
+            position: relative;
+            transition: all .1s ease-in-out;
+            color: rgba(240,246,252,.6);
+        }
+    }
+    li:hover .ab-sub-icon:before { 
+        color: #72aee6;
+    }
+}
+body.rtl {
+    #wpadminbar #wp-admin-bar-wphm-admin-bar-menu {
+        .ab-sub-label {
+            margin-right: 0;
+            margin-left: 16px;
+        }
+        .ab-sub-icon { 
+            margin-right: 0;
+            margin-left: 6px;
+        }
+    }
+}

@@ -108,8 +108,12 @@ class Help_Manager_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function admin_enqueue_styles() {
 
+		// Global admin styles (for admin bar)
+		wp_enqueue_style( $this->plugin_name . '-admin-global', plugin_dir_url( __FILE__ ) . 'assets/css/admin-global.css', array(), $this->version, 'all' );
+
+		// All plugin screens
 		if( $this->is_plugin_page() === true ) {
 
 			// General admin CSS
@@ -117,12 +121,13 @@ class Help_Manager_Admin {
 
 		}
 		
+		// Document view screen
 		if( $this->is_plugin_documents_page() === true ) {
 
 			// See if functions are active
 			$document_settings = get_option( $this->plugin_name . '-document' );
 			$image_popup = ( isset( $document_settings ) && isset( $document_settings['image_popup'] ) ) ? $document_settings['image_popup'] : true;
-
+			
 			// Documents style dependency array
 			$dependencies = array();
 			
@@ -134,7 +139,14 @@ class Help_Manager_Admin {
 			
 			// Documents main CSS
 			wp_enqueue_style( $this->plugin_name . '-documents', plugin_dir_url( __FILE__ ) . 'assets/css/documents.css', $dependencies, $this->version, 'all' );
+			
+			// Custom CSS from settings
+			$custom_css = get_option( $this->plugin_name . '-custom-css' );
+			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
+				wp_add_inline_style( $this->plugin_name . '-documents', $custom_css['custom-css'] );
+			}
 		
+		// Plugin settings screen
 		} elseif( $this->is_plugin_settings_page() === true ) {
 
 			// CodeMirror editor CSS
@@ -152,8 +164,9 @@ class Help_Manager_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function admin_enqueue_scripts() {
 
+		// Document view screen
 		if( $this->is_plugin_documents_page() === true ) {
 			
 			// See if functions are active
@@ -186,6 +199,7 @@ class Help_Manager_Admin {
 				'image_popup' => json_encode( $image_popup )
 			) );
 		
+		// Plugin settings screen
 		} elseif( $this->is_plugin_settings_page() === true ) {
 
 			// CodeMirror editor JS
@@ -201,65 +215,6 @@ class Help_Manager_Admin {
 	}
 
 	/**
-	 * Add custom CSS globally to admin.
-	 *
-	 * @since    1.0.0
-	 * @access   public
-	 */
-	public function custom_admin_css() {
-		echo '<style type="text/css">
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-icon:before { 
-				top: 2px; 
-			}
-			@media screen and (max-width: 782px) {
-				#wpadminbar #wp-admin-bar-wphm-admin-bar-edit {
-					display: list-item;
-				}
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-edit .ab-icon:before {
-				content: "\f464";
-    			top: 2px;
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-wrapper .ab-item {
-				display: flex;
-    			align-items: center;
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-label {
-				margin-right: 16px;
-				align-items: center;
-    			display: flex;
-			}
-			body.rtl #wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-label {
-				margin-right: 0;
-				margin-left: 16px;
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon { 
-				position: relative;
-				float: none;
-				font: normal 16px/1 dashicons;
-				speak: never;
-				padding: 0;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-				background-image: none!important;
-				margin-right: 6px;
-			}
-			body.rtl #wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon { 
-				margin-right: 0;
-				margin-left: 6px;
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu .ab-sub-icon:before { 
-				position: relative;
-				transition: all .1s ease-in-out;
-				color: rgba(240,246,252,.6);
-			}
-			#wpadminbar #wp-admin-bar-wphm-admin-bar-menu li:hover .ab-sub-icon:before { 
-				color: #72aee6;
-			}
-		</style>';
-	}
-
-	/**
 	 * Stylesheet for dashboard widget.
 	 *
 	 * @since    1.0.0
@@ -269,20 +224,6 @@ class Help_Manager_Admin {
 			return;
 		}
 		wp_enqueue_style( $this->plugin_name . '-dashboard', plugin_dir_url( __FILE__ ) . 'assets/css/dashboard.css', array(), $this->version, 'all' );
-	}
-
-	/**
-	 * Add custom CSS to document page.
-	 *
-	 * @since    1.0.0
-	 */
-	public function custom_document_css() {
-		if( $this->is_plugin_documents_page() === true ) {
-			$custom_css = get_option( $this->plugin_name . '-custom-css' );
-			if( isset( $custom_css ) && isset( $custom_css['custom-css'] ) && $custom_css['custom-css'] !== '' ) {
-				echo '<style id="wphm-custom-css">' . $custom_css['custom-css'] . '</style>';
-			}
-		}
 	}
 
 	/**
@@ -1279,7 +1220,7 @@ class Help_Manager_Admin {
 	public function change_left_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
 			$plugin_footer_text = sprintf(
-				'%s <a href="https://wordpress.org/plugins/help-manager/" target="_blank">Help Manager</a>.',
+				wp_kses_post( '%s <a href="https://wordpress.org/plugins/help-manager/" target="_blank">Help Manager</a>.' ),
 				esc_html__( 'Thank you for creating with', 'help-manager' )
 			);
 			return $plugin_footer_text;
@@ -1296,7 +1237,7 @@ class Help_Manager_Admin {
 	 */
 	public function change_right_admin_footer_text( $footer_text ) {
 		if( $this->is_plugin_page() === true ) {
-			return __( 'Version', 'help-manager' ) . ' ' . $this->version;
+			return esc_html( __( 'Version', 'help-manager' ) . ' ' . $this->version );
 		} else {
 			return $footer_text;
 		}

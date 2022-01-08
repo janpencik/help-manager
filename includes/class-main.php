@@ -156,11 +156,9 @@ class Help_Manager {
 		$post_type = new Help_Manager_Post_Type();
 
 		// Enqueue plugin scripts and styles
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'admin_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'admin_enqueue_scripts' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'dashboard_widget_css' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_admin_css' );
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'custom_document_css' );
 		$this->loader->add_action( 'current_screen', $plugin_admin, 'remove_classic_editor_styles' );
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_block_editor_assets', 20 );
 		
