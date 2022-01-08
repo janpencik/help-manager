@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Help Manager\n"
-"POT-Creation-Date: 2022-01-07 12:33+0100\n"
-"PO-Revision-Date: 2022-01-07 12:23+0100\n"
+"POT-Creation-Date: 2022-01-08 19:52+0100\n"
+"PO-Revision-Date: 2022-01-08 19:52+0100\n"
 "Last-Translator: Bohemia Plugins <contact@bohemiaplugins.com>\n"
 "Language-Team: Bohemia Plugins <contact@bohemiaplugins.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,82 +20,82 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-admin.php:320 admin/class-admin.php:321
-#: admin/class-admin.php:393 admin/class-admin.php:395
-#: admin/class-admin.php:479 admin/class-admin.php:481
-#: admin/class-admin.php:1306 admin/class-admin.php:1308
+#: admin/class-admin.php:273 admin/class-admin.php:274
+#: admin/class-admin.php:346 admin/class-admin.php:348
+#: admin/class-admin.php:432 admin/class-admin.php:434
+#: admin/class-admin.php:1259 admin/class-admin.php:1261
 #: admin/partials/settings.php:68 admin/partials/settings.php:70
 #: admin/partials/toolbar.php:41 admin/partials/toolbar.php:43
 msgid "Publishing Help"
 msgstr ""
 
-#: admin/class-admin.php:332 admin/class-admin.php:333
-#: admin/partials/dashboard.php:41 admin/partials/toolbar.php:71
+#: admin/class-admin.php:285 admin/class-admin.php:286
+#: admin/partials/dashboard.php:40 admin/partials/toolbar.php:71
 msgid "Manage"
 msgstr ""
 
-#: admin/class-admin.php:342 admin/class-admin.php:343
+#: admin/class-admin.php:295 admin/class-admin.php:296
 #: admin/partials/documents.php:30 includes/class-post-type.php:59
 msgid "Add New"
 msgstr ""
 
-#: admin/class-admin.php:352 admin/class-admin.php:353
-#: admin/partials/dashboard.php:46 admin/partials/settings.php:24
+#: admin/class-admin.php:305 admin/class-admin.php:306
+#: admin/partials/dashboard.php:45 admin/partials/settings.php:24
 #: admin/partials/toolbar.php:78
 msgid "Settings"
 msgstr ""
 
-#: admin/class-admin.php:362 admin/class-admin.php:363
+#: admin/class-admin.php:315 admin/class-admin.php:316
 #: admin/partials/toolbar.php:83 admin/partials/tools.php:22
 msgid "Tools"
 msgstr ""
 
-#: admin/class-admin.php:401 admin/partials/documents.php:28
+#: admin/class-admin.php:354 admin/partials/documents.php:28
 #: admin/partials/toolbar.php:65
 msgid "Documents"
 msgstr ""
 
-#: admin/class-admin.php:465
+#: admin/class-admin.php:418
 msgid "Edit document"
 msgstr ""
 
-#: admin/class-admin.php:862
+#: admin/class-admin.php:815
 msgid "No documents selected."
 msgstr ""
 
-#: admin/class-admin.php:870
+#: admin/class-admin.php:823
 msgid ""
 "The requested document was not found. You've been redirected to the default "
 "document."
 msgstr ""
 
-#: admin/class-admin.php:878
+#: admin/class-admin.php:831
 msgid ""
 "No translation is available for this document. You've been redirected to the "
 "default document."
 msgstr ""
 
-#: admin/class-admin.php:886
+#: admin/class-admin.php:839
 msgid "Please select at least one plugin admin."
 msgstr ""
 
-#: admin/class-admin.php:1271
+#: admin/class-admin.php:1224
 msgid "Thank you for creating with"
 msgstr ""
 
-#: admin/class-admin.php:1287
+#: admin/class-admin.php:1240
 msgid "Version"
 msgstr ""
 
-#: admin/partials/dashboard.php:24
+#: admin/partials/dashboard.php:23
 msgid "Search in help documents"
 msgstr ""
 
-#: admin/partials/dashboard.php:25 admin/partials/toolbar.php:95
+#: admin/partials/dashboard.php:24 admin/partials/toolbar.php:95
 msgid "Search"
 msgstr ""
 
-#: admin/partials/dashboard.php:37
+#: admin/partials/dashboard.php:36
 msgid "Add new"
 msgstr ""
 
@@ -119,39 +119,39 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: admin/partials/documents.php:182
+#: admin/partials/documents.php:186
 msgid "Previous"
 msgstr ""
 
-#: admin/partials/documents.php:190
+#: admin/partials/documents.php:192
 msgid "Next"
 msgstr ""
 
-#: admin/partials/documents.php:202 admin/partials/documents.php:211
+#: admin/partials/documents.php:210 admin/partials/documents.php:219
 msgid "Document not found"
 msgstr ""
 
-#: admin/partials/documents.php:203 admin/partials/documents.php:212
+#: admin/partials/documents.php:211 admin/partials/documents.php:220
 msgid "The requested document could not be found."
 msgstr ""
 
-#: admin/partials/documents.php:216
+#: admin/partials/documents.php:224
 msgid "No documents"
 msgstr ""
 
-#: admin/partials/documents.php:217
+#: admin/partials/documents.php:225
 msgid "There are no published documents."
 msgstr ""
 
-#: admin/partials/documents.php:218
+#: admin/partials/documents.php:226
 msgid "Add help document"
 msgstr ""
 
-#: admin/partials/documents.php:231
+#: admin/partials/documents.php:239
 msgid "Scroll to top"
 msgstr ""
 
-#: admin/partials/documents.php:243
+#: admin/partials/documents.php:251
 msgid "In this article"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-activator.php:79
-msgid "What content can I upload"
+msgid "What content can I include"
 msgstr ""
 
 #: includes/class-activator.php:82
