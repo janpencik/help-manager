@@ -302,7 +302,8 @@ body.rtl .wphm-sidebar {
         }
         .wphm-docs-content {
             h1,h2,h3,h4,h5,h6 {
-                &::before { 
+                position: relative;
+                &.scroll-active::before { 
                     content: ""; 
                     display: block; 
                     position: relative; 

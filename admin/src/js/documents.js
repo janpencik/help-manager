@@ -209,6 +209,15 @@
 		}
 		setAnchorsAndQuickNav();
 
+		// Shift the anchor when clicked on quick navigation link
+		$('.wphm-quick-navigation ul li a, .wphm-docs-anchor').on('click', function(e) {
+			var targetHeading = $( $(this).attr('href') );
+			targetHeading.addClass('scroll-active');
+			setTimeout( function() {
+				targetHeading.removeClass('scroll-active');
+			}, 100);
+		});
+
 		// Scroll to top
 		if( $('.wphm-back-to-top').length > 0 ) {
 			$('.wphm-back-to-top').on('click', function(e) {
