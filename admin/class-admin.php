@@ -1385,8 +1385,8 @@ class Help_Manager_Admin {
 				}
 				return $matches[0];
 			}, $content );
-			return $content;
 		}
+		return $content;
 	}
 
 	/**
