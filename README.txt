@@ -13,9 +13,7 @@ Create documentation for the site's authors, editors, and contributors viewable 
 
 == Description ==
 
-Site operators can create detailed, hierarchical documentation for the site’s authors, editors, and contributors, viewable in the WordPress admin. 
-
-Powered by Custom Post Types, you get all the power of WordPress to create, edit, and arrange your documentation. Perfect for customized client sites.
+Site operators can create detailed, hierarchical documentation for the site’s authors, editors, and contributors, viewable in the WordPress admin. Powered by Custom Post Types, you get all the power of WordPress to create, edit, and arrange your documentation. Perfect for customized client sites.
 
 Highly inspired by the [WP Help](https://wordpress.org/plugins/wp-help/) plugin, Help Manager provides the same functionality, up-to-date compatibility with WordPress, and brings some of the most requested features by its users.
 
@@ -66,8 +64,10 @@ Highly inspired by the [WP Help](https://wordpress.org/plugins/wp-help/) plugin,
 
 = Can I migrate from WP Help plugin? =
 
-Definitely. Just convert your documents into `Help Documents` post type. You can either use the [Post Type Switcher](https://www.eventfeed.click/docs/ticket-checkout/) plugin or run this SQL query in your database:
-`UPDATE wp_posts SET post_type = 'help-docs' WHERE post_type = 'wp-help'`
+Definitely. Just convert your documents into `Help Documents` post type. You can either use the [Post Type Switcher](https://wordpress.org/plugins/post-type-switcher/) plugin or run this SQL query in your database:
+```
+UPDATE wp_posts SET post_type = 'help-docs' WHERE post_type = 'wp-help'
+```
 
 If you are using the Post Type Switcher, change the post type of your posts to `Help Documents`.
 
