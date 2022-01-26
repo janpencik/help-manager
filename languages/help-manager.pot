@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Help Manager\n"
-"POT-Creation-Date: 2022-01-08 19:52+0100\n"
-"PO-Revision-Date: 2022-01-08 19:52+0100\n"
+"POT-Creation-Date: 2022-01-26 15:06+0100\n"
+"PO-Revision-Date: 2022-01-26 15:05+0100\n"
 "Last-Translator: Bohemia Plugins <contact@bohemiaplugins.com>\n"
 "Language-Team: Bohemia Plugins <contact@bohemiaplugins.com>\n"
 "MIME-Version: 1.0\n"
@@ -50,8 +50,7 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: admin/class-admin.php:354 admin/partials/documents.php:28
-#: admin/partials/toolbar.php:65
+#: admin/class-admin.php:354 admin/partials/toolbar.php:65
 msgid "Documents"
 msgstr ""
 
@@ -97,6 +96,11 @@ msgstr ""
 
 #: admin/partials/dashboard.php:36
 msgid "Add new"
+msgstr ""
+
+#: admin/partials/documents.php:28 includes/class-post-type.php:57
+#: includes/class-post-type.php:58 includes/class-post-type.php:64
+msgid "Help Documents"
 msgstr ""
 
 #: admin/partials/documents.php:43 includes/class-post-type.php:65
@@ -348,89 +352,47 @@ msgid "Search in documents"
 msgstr ""
 
 #: admin/partials/tools.php:31
-msgid "Migrating from WP Help"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "If you are migrating from"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "WP Help"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid ""
-"you need to convert your documents into another post type - you can use the "
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "Post Type Switcher"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "plugin or run SQL query in your database"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "When changing a post type, choose"
-msgstr ""
-
-#: admin/partials/tools.php:37 includes/class-post-type.php:57
-#: includes/class-post-type.php:58 includes/class-post-type.php:64
-msgid "Help Documents"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "from the list"
-msgstr ""
-
-#: admin/partials/tools.php:37
-msgid "Using SQL query"
-msgstr ""
-
-#: admin/partials/tools.php:47
 msgid "Import Documents"
 msgstr ""
 
-#: admin/partials/tools.php:52
+#: admin/partials/tools.php:36
 msgid ""
 "Use the WordPress Importer plugin to import help documents from the other "
 "Help Manager installation."
 msgstr ""
 
-#: admin/partials/tools.php:64
+#: admin/partials/tools.php:48
 msgid "Install WordPress Importer"
 msgstr ""
 
-#: admin/partials/tools.php:76 admin/partials/tools.php:84
+#: admin/partials/tools.php:60 admin/partials/tools.php:68
 msgid "Run WordPress Importer"
 msgstr ""
 
-#: admin/partials/tools.php:96
+#: admin/partials/tools.php:80
 msgid "Export Documents"
 msgstr ""
 
-#: admin/partials/tools.php:115
+#: admin/partials/tools.php:99
 msgid ""
 "Select help documents you would like to export and use the download button "
 "to export to an XML file which you can then import to another Help Manager "
 "installation."
 msgstr ""
 
-#: admin/partials/tools.php:119
+#: admin/partials/tools.php:103
 msgid "There are no documents to export."
 msgstr ""
 
-#: admin/partials/tools.php:127
+#: admin/partials/tools.php:111
 msgid "Select documents"
 msgstr ""
 
-#: admin/partials/tools.php:132
+#: admin/partials/tools.php:116
 msgid "Toggle All"
 msgstr ""
 
-#: admin/partials/tools.php:154
+#: admin/partials/tools.php:138
 msgid "Export File"
 msgstr ""
 
@@ -440,7 +402,7 @@ msgstr ""
 
 #: includes/class-activator.php:76
 msgid ""
-"This help document will help your editors better understand the "
+"This help document can help your editors better understand the "
 "administration. Here you can insert instructions for creating new posts, "
 "modifying WordPress settings, or using plugins you use to extend the "
 "website's functionality. Your editors will thank you for that, and you will "
@@ -449,7 +411,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-activator.php:79
-msgid "What content can I include"
+msgid "What content can I add"
 msgstr ""
 
 #: includes/class-activator.php:82
@@ -467,7 +429,7 @@ msgid "the plugin settings"
 msgstr ""
 
 #: includes/class-activator.php:85
-msgid "Who can access the help documents"
+msgid "Who can access the help"
 msgstr ""
 
 #: includes/class-activator.php:88
@@ -594,8 +556,8 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Administrators can create detailed, hierarchical documentation for the "
-"site's authors and editors, viewable in the WordPress admin."
+"Create documentation for the site's authors, editors, and contributors "
+"viewable in the WordPress admin and avoid repeated \"how-to\" questions."
 msgstr ""
 
 #. Author of the plugin/theme

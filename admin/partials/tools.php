@@ -23,22 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <!-- Row -->
     <div class="wphm-docs-row wphm-settings-row">
-        
-        <!-- Migrating documents -->
-        <div class="wphm-settings-box wphm-settings-box-import">
-
-            <div class="wphm-settings-box-header">	
-                <h2><?php esc_html_e( 'Migrating from WP Help', 'help-manager' ); ?></h2>
-            </div>
-
-            <div class="wphm-settings-box-inside">
-
-                <p><?php echo wp_kses_post( 
-                    "<p>" . __( "If you are migrating from", "help-manager" ) . " <a href='https://wordpress.org/plugins/wp-help/' target='_blank' rel='noreferrer nofollow noopener'>" . __( "WP Help", "help-manager" ) . "</a>, " . __( "you need to convert your documents into another post type - you can use the ", "help-manager" ) . "<a href='https://wordpress.org/plugins/post-type-switcher/' target='_blank' rel='noreferrer nofollow noopener'>" . __( "Post Type Switcher", "help-manager" ) . "</a> " . __( "plugin or run SQL query in your database", "help-manager" ) . ".</p><h4 style='margin-bottom: 0'>" . __( "Post Type Switcher", "help-manager" ) . "</h4><p style='margin-top: .3em'>" . __( "When changing a post type, choose", "help-manager" ) . " <em>" . __( "Help Documents", "help-manager" ) . "</em> " . __("from the list", "help-manager" ) . ".</p><h4 style='margin-bottom: 0'>" . __( "Using SQL query", "help-manager" ) . "</h4><p style='margin-top: .3em'><code>UPDATE wp_posts SET post_type = 'help-docs' WHERE post_type = 'wp-help'</code></p>" ); ?></p>
-
-            </div>
-
-        </div>
 
         <!-- Import documents -->
         <div class="wphm-settings-box wphm-settings-box-import">

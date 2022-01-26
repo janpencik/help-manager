@@ -25,7 +25,7 @@ $document_settings = get_option( $this->plugin_name . '-document' );
 <!-- Main wrapper -->
 <div class="wrap wphm-wrap">
 
-    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Documents', 'help-manager' ); ?></h1>
+    <h1 class="wp-heading-inline wphm-page-title"><?php esc_html_e( 'Help Documents', 'help-manager' ); ?></h1>
     <?php if( $this->current_user_is_editor() ) { ?>
         <a href="<?php echo esc_attr( esc_url( admin_url( 'post-new.php?post_type=help-docs' ) ) ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'help-manager' ) ?></a>
     <?php } ?>

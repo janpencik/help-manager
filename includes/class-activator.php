@@ -73,16 +73,16 @@ class Help_Manager_Activator {
 				"post_title"    => wp_kses_post( __( "Example Help Document", "help-manager" ) ),
 				"post_content"  => wp_kses_post( 
 					"<!-- wp:paragraph -->" . PHP_EOL .
-						"<p>" . __( "This help document will help your editors better understand the administration. Here you can insert instructions for creating new posts, modifying WordPress settings, or using plugins you use to extend the website's functionality. Your editors will thank you for that, and you will save yourself a lot of time you would otherwise spend answering repeated questions.", "help-manager" ) . "</p>" . PHP_EOL .
+						"<p>" . __( "This help document can help your editors better understand the administration. Here you can insert instructions for creating new posts, modifying WordPress settings, or using plugins you use to extend the website's functionality. Your editors will thank you for that, and you will save yourself a lot of time you would otherwise spend answering repeated questions.", "help-manager" ) . "</p>" . PHP_EOL .
 					"<!-- /wp:paragraph -->" . PHP_EOL . PHP_EOL .
 					"<!-- wp:heading -->" . PHP_EOL . 
-						"<h2>" . __( "What content can I include", "help-manager" ) . "</h2>" . PHP_EOL . 
+						"<h2>" . __( "What content can I add", "help-manager" ) . "</h2>" . PHP_EOL . 
 					"<!-- /wp:heading -->" . PHP_EOL . PHP_EOL .
 					"<!-- wp:paragraph -->" . PHP_EOL . 
 						"<p>" . __( "You can insert formatted text, images, videos, code samples, audio recordings, anything you can think of. In addition, we have added useful features such as automatic heading anchor links, document navigation, responsive iframes (you'll appreciate that when embedding YouTube videos), responsive tables, or automatic opening of image links in a pop-up window. You can activate/deactivate those functions in", "help-manager" ) . " <a href='/wp-admin/admin.php?page=help-manager-settings&amp;tab=document' data-type='URL'>" . __( "the plugin settings", "help-manager" ) . "</a>." . "</p>" . PHP_EOL .
 					"<!-- /wp:paragraph -->" . PHP_EOL . PHP_EOL .
 					"<!-- wp:heading -->" . PHP_EOL .
-						"<h2>" . __( "Who can access the help documents", "help-manager" ) . "</h2>" . PHP_EOL . 
+						"<h2>" . __( "Who can access the help", "help-manager" ) . "</h2>" . PHP_EOL . 
 					"<!-- /wp:heading -->" . PHP_EOL . PHP_EOL .
 					"<!-- wp:paragraph -->" . PHP_EOL . 
 						"<p>" . __( "The help documents are not public and are only visible to registered users inside the WordPress administration. You can customize the user roles allowed to edit or view documents in", "help-manager" ) . " <a href='/wp-admin/admin.php?page=help-manager-settings' data-type='URL'>" . __( "the plugin settings", "help-manager" ) . "</a>. " . __( "Custom roles are also supported.", "help-manager" ) . "</p>" . PHP_EOL . 

@@ -69,7 +69,8 @@ body.rtl {
         box-sizing: border-box;
         padding: 15px 15px 5px;
         border: 1px solid #ccc;
-        border-radius: 3px;
+        // border-radius: 3px;
+        border-radius: 0;
         background: #fff;
         box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
     }
@@ -236,7 +237,8 @@ body.rtl .wphm-sidebar {
         line-height: 1.65;
         color: #191e23;
         clear: none;
-        border-radius: 3px;
+        // border-radius: 3px;
+        border-radius: 0;
         @media (max-width: 782px) {
             padding: 20px;
             margin: 10px 0;
@@ -470,7 +472,8 @@ body.rtl .wphm-sidebar {
                 max-width: 100%;
                 border: 1px solid #e8e8e8;
                 background: #f6f7f7;
-                border-radius: 3px;
+                // border-radius: 3px;
+                border-radius: 0;
                 padding: 12px 18px 12px;
                 ul {
                     margin: 0 5px 0 21px;
@@ -488,7 +491,7 @@ body.rtl .wphm-sidebar {
                 }
                 li > a {
                     display: inline-block;
-                    padding: 4px 0;
+                    padding: 3px 0;
                     text-decoration: none;
                     &:focus {
                         outline: none;

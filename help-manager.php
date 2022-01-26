@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Help Manager
  * Plugin URI:        https://bohemiaplugins.com/help-manager
- * Description:       Administrators can create detailed, hierarchical documentation for the site's authors and editors, viewable in the WordPress admin.
+ * Description:       Create documentation for the site's authors, editors, and contributors viewable in the WordPress admin and avoid repeated "how-to" questions.
  * Version:           1.0.0
  * Author:            Bohemia Plugins
  * Author URI:        https://bohemiaplugins.com/
@@ -40,7 +40,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Help Manager. If not, see <https://www.gnu.org/licenses/>.
  * 
- * Help Manager is inspired by awesome WordPress plugin "WP Help" 
+ * Help Manager is inspired by the awesome WordPress plugin "WP Help" 
  * <https://wordpress.org/plugins/wp-help/> by Mark Jaquith <https://coveredweb.com/>.
  */
 
